@@ -1,371 +1,765 @@
-// Seedling Assessment v1 (30 questions, 5 trait dimensions)
-// Likert: 1..5 (Strongly Disagree..Strongly Agree)
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Seedling Assessment</title>
 
-const LIKERT = [
-  "Strongly Disagree",
-  "Disagree",
-  "Neutral",
-  "Agree",
-  "Strongly Agree"
-];
-
-const questions = [
-  // Think & Learn
-  { id:"q1",  t:"I understand things better when I try them out, rather than only reading or watching.", d:{exec:.5,cur:.5,anal:.2} },
-  { id:"q2",  t:"I like breaking big problems into clear steps before starting.", d:{exec:1.0,anal:.6} },
-  { id:"q3",  t:"I often think about how things could be improved, even if they already work.", d:{cur:.8,anal:.5} },
-  { id:"q4",  t:"I prefer clear instructions rather than vague guidance.", d:{exec:.8} },
-  { id:"q5",  t:"I learn best when I understand the ‘why’, not just the ‘how’.", d:{anal:.6,cur:.4} },
-
-  // Execution
-  { id:"q6",  t:"I usually start tasks early rather than waiting till the last moment.", d:{exec:1.0} },
-  { id:"q7",  t:"I enjoy planning my day or week.", d:{exec:.9} },
-  { id:"q8",  t:"I feel satisfied when I finish tasks, even small ones.", d:{exec:.7} },
-  { id:"q9",  t:"I adapt quickly when plans change.", d:{exec:.4,cur:.4} },
-  { id:"q10", t:"I prefer doing something imperfectly than not starting at all.", d:{exec:.5,cur:.3} },
-
-  // Social
-  { id:"q11", t:"I often take the lead in group activities without being asked.", d:{soc:1.0,exec:.4} },
-  { id:"q12", t:"I feel comfortable sharing my opinions, even if others disagree.", d:{soc:.8,anal:.2} },
-  { id:"q13", t:"I enjoy helping others understand things better.", d:{emp:.8,soc:.3} },
-  { id:"q14", t:"I prefer working in a team rather than alone.", d:{soc:.6,emp:.4} },
-  { id:"q15", t:"I notice when people around me feel uncomfortable or left out.", d:{emp:1.0} },
-
-  // Curiosity
-  { id:"q16", t:"I explore topics out of curiosity, even if they’re not part of my syllabus/job.", d:{cur:1.0} },
-  { id:"q17", t:"I get excited by new ideas and possibilities.", d:{cur:.9} },
-  { id:"q18", t:"I like experimenting with new ways of doing things.", d:{cur:.8} },
-  { id:"q19", t:"I feel bored doing the same routine for a long time.", d:{cur:.6} },
-  { id:"q20", t:"I ask ‘why’ a lot.", d:{cur:.5,anal:.5} },
-
-  // Decision & Values
-  { id:"q21", t:"I prefer making decisions based on logic and facts rather than emotions.", d:{anal:1.0} },
-  { id:"q22", t:"I think about how my decisions affect other people.", d:{emp:.9} },
-  { id:"q23", t:"I like having clear rules and structure.", d:{exec:.7} },
-  { id:"q24", t:"I am okay questioning rules if they don’t make sense.", d:{cur:.4,anal:.4} },
-  { id:"q25", t:"I care more about doing things right than doing things fast.", d:{exec:.5,anal:.3} },
-
-  // Confidence & Resilience
-  { id:"q26", t:"I feel confident speaking in front of others.", d:{soc:.8} },
-  { id:"q27", t:"I stay calm even in stressful situations.", d:{exec:.4,anal:.4} },
-  { id:"q28", t:"I am comfortable taking responsibility if something goes wrong.", d:{exec:.8} },
-  { id:"q29", t:"I believe I can figure things out, even if I fail initially.", d:{cur:.3,exec:.4,anal:.3} },
-  { id:"q30", t:"I trust my ability to grow and improve over time.", d:{cur:.3,exec:.3} }
-];
-
-const styles = {
-  Executive: {
-    headline: "Outcome driver with structure and ownership",
-    strengths: [
-      "Turns ambiguity into clear steps and closure",
-      "Reliable execution with calm decision-making",
-      "Comfortable taking responsibility and aligning others"
-    ],
-    watchout: "Directness can sometimes sound blunt—pair clarity with warmth.",
-    resume: "Structured, execution-oriented professional who takes ownership, organizes work into clear steps, and delivers outcomes reliably. Comfortable coordinating with stakeholders, making fact-based decisions, and driving closure under deadlines.",
-    bullets: [
-      "Owned task planning and execution to deliver outcomes on time",
-      "Translated unclear requirements into structured steps and priorities",
-      "Aligned stakeholders on responsibilities and timelines to ensure closure"
-    ]
-  },
-  Builder: {
-    headline: "Hands-on doer who learns by building",
-    strengths: [
-      "Learns quickly through practical implementation",
-      "Moves ideas into tangible outputs and prototypes",
-      "Stays focused on what works in the real world"
-    ],
-    watchout: "Avoid skipping documentation—make your work easy to understand and reuse.",
-    resume: "Hands-on problem solver who learns by building, iterating, and shipping practical solutions. Comfortable experimenting, debugging, and converting concepts into working outcomes with clear ownership.",
-    bullets: [
-      "Built and iterated on solutions through hands-on experimentation",
-      "Implemented features/prototypes and validated with real use-cases",
-      "Improved reliability by debugging issues and refining implementation"
-    ]
-  },
-  Analyst: {
-    headline: "Logic-led thinker with strong scenario awareness",
-    strengths: [
-      "Breaks down complex problems and evaluates options",
-      "Thinks ahead about risks, impacts, and edge cases",
-      "Uses evidence and logic to make sound decisions"
-    ],
-    watchout: "Avoid analysis-paralysis—set decision deadlines and act on “enough” data.",
-    resume: "Analytical, evidence-driven problem solver who breaks down complexity, anticipates outcomes, and makes structured decisions. Strong at reasoning, prioritization, and translating analysis into actionable plans.",
-    bullets: [
-      "Analyzed alternatives and selected practical approaches using evidence",
-      "Anticipated risks/edge cases and proposed mitigations early",
-      "Converted analysis into clear action steps for execution"
-    ]
-  },
-  Connector: {
-    headline: "People-aware collaborator who lifts teams",
-    strengths: [
-      "Builds trust, listens well, and supports others",
-      "Improves collaboration and team clarity",
-      "Helps translate ideas so teams move together"
-    ],
-    watchout: "Don’t over-accommodate—practice clear boundaries and decisive communication.",
-    resume: "Collaborative, people-aware professional who builds trust, communicates clearly, and supports teamwork. Strong at coordination, empathy-led problem solving, and aligning people toward outcomes.",
-    bullets: [
-      "Supported teamwork through clear communication and proactive coordination",
-      "Helped peers by explaining concepts and unblocking progress",
-      "Improved collaboration by considering team dynamics and impact"
-    ]
-  },
-  Explorer: {
-    headline: "Curiosity-driven learner who finds new paths",
-    strengths: [
-      "High curiosity and fast learning across topics",
-      "Generates new ideas and alternative approaches",
-      "Comfortable exploring uncertainty and experimenting"
-    ],
-    watchout: "Channel curiosity into finish-lines—pick a goal and complete it before jumping.",
-    resume: "Curiosity-driven learner who explores ideas, experiments with approaches, and adapts quickly. Brings fresh perspectives to problem solving—best when paired with clear goals and delivery checkpoints.",
-    bullets: [
-      "Learned new concepts independently and applied them to practical problems",
-      "Experimented with alternative approaches and evaluated outcomes",
-      "Adapted quickly to new information and iterated toward improvements"
-    ]
-  }
-};
-
-// ---------- Scoring ----------
-function computeDims(ans){
-  const dims = {exec:0, anal:0, soc:0, emp:0, cur:0};
-  const wsum = {exec:0, anal:0, soc:0, emp:0, cur:0};
-
-  for (const q of questions){
-    const v = ans[q.id];
-    if (!v) continue;
-    for (const [d,w] of Object.entries(q.d)){
-      dims[d] += v * w;
-      wsum[d] += w;
+  <style>
+    :root{
+      --bg:#0b0f14;
+      --card:#111826;
+      --card2:#0f172a;
+      --border:#1f2a3a;
+      --text:#e8eef6;
+      --muted:#94a3b8;
+      --blue:#2563eb;
+      --green:#22c55e;
+      --warn:#f59e0b;
+      --red:#ef4444;
     }
-  }
-  for (const k of Object.keys(dims)){
-    dims[k] = wsum[k] ? dims[k]/wsum[k] : 0; // normalized 1..5
-  }
-  return dims;
-}
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--text);
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      line-height:1.4;
+    }
+    .wrap{max-width:980px;margin:0 auto;padding:22px}
+    h1,h2,h3{margin:10px 0}
+    p{margin:10px 0;color:var(--muted)}
+    .topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:12px}
+    .brand{display:flex;align-items:center;gap:10px}
+    .pill{font-size:12px;padding:6px 10px;border:1px solid var(--border);border-radius:999px;color:var(--muted)}
+    .card{
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:14px;
+      padding:18px;
+      margin-top:14px;
+    }
+    .progress{height:10px;background:var(--card2);border-radius:999px;overflow:hidden;border:1px solid var(--border)}
+    .bar{height:100%;background:var(--green);width:0%}
+    .row{display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:space-between;margin-top:10px}
+    .btn{
+      background:var(--blue);
+      color:#fff;
+      border:none;
+      border-radius:10px;
+      padding:12px 14px;
+      font-weight:650;
+      cursor:pointer;
+    }
+    .btn.secondary{
+      background:transparent;
+      border:1px solid var(--border);
+      color:var(--text);
+      font-weight:600;
+    }
+    .btn.ghost{
+      background:transparent;
+      color:var(--muted);
+      border:1px dashed var(--border);
+      font-weight:600;
+    }
+    .btn:disabled{
+      opacity:.5;cursor:not-allowed
+    }
+    .sub{color:var(--muted);font-size:13px}
+    .qtitle{font-size:18px;color:var(--text);margin:8px 0}
+    .scale{
+      display:grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap:10px;
+      margin-top:12px;
+    }
+    .opt{
+      background:var(--card2);
+      border:1px solid var(--border);
+      border-radius:12px;
+      padding:10px;
+      cursor:pointer;
+      text-align:center;
+      user-select:none;
+      transition:.1s transform ease;
+    }
+    .opt:hover{transform:translateY(-1px)}
+    .opt strong{display:block;font-size:16px;color:var(--text)}
+    .opt span{display:block;font-size:12px;color:var(--muted);margin-top:4px}
+    .opt.selected{
+      border-color:#60a5fa;
+      box-shadow:0 0 0 3px rgba(96,165,250,.15);
+    }
+    .tip{
+      margin-top:12px;
+      background:rgba(34,197,94,.08);
+      border:1px solid rgba(34,197,94,.25);
+      border-radius:12px;
+      padding:12px;
+    }
+    .tip .t1{font-weight:700;color:#b7f7c8}
+    .tip .t2{color:var(--muted);margin-top:6px}
+    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    @media (max-width:820px){.grid2{grid-template-columns:1fr}}
+    .tag{
+      display:inline-block;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      color:var(--muted);
+      font-size:12px;
+      margin-right:8px;
+      margin-top:6px;
+    }
+    .kpi{
+      background:var(--card2);
+      border:1px solid var(--border);
+      border-radius:12px;
+      padding:12px;
+    }
+    .kpi h3{margin:0 0 6px 0;font-size:14px;color:var(--muted)}
+    .kpi .big{font-size:18px;color:var(--text);font-weight:750}
+    .hr{height:1px;background:var(--border);margin:14px 0}
+    input,select,textarea{
+      width:100%;
+      background:#0b1220;
+      border:1px solid var(--border);
+      border-radius:10px;
+      color:var(--text);
+      padding:10px;
+      margin-top:6px;
+    }
+    label{display:block;margin-top:10px;color:var(--muted);font-size:13px}
+    .ok{color:#86efac}
+    .warn{color:#fbbf24}
+    .small{font-size:12px;color:var(--muted)}
+    .hide{display:none}
+    .copybox{
+      background:#0b1220;border:1px solid var(--border);border-radius:12px;
+      padding:12px;white-space:pre-wrap;color:var(--text);font-size:13px;
+    }
+  </style>
+</head>
 
-function pickStyle(d){
-  const exec=d.exec, anal=d.anal, soc=d.soc, emp=d.emp, cur=d.cur;
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="brand">
+        <div style="font-size:22px">🌱</div>
+        <div>
+          <div style="font-weight:800;font-size:18px">Seedling Assessment</div>
+          <div class="sub">Discover your natural working & learning mindset (10 questions)</div>
+        </div>
+      </div>
+      <div class="pill">v1 • 5–7 mins</div>
+    </div>
 
-  const score = {
-    Executive: exec*1.2 + anal*0.5 + soc*0.3,
-    Explorer:  cur*1.2 + anal*0.4,
-    Connector: (emp*1.0 + soc*1.0) + exec*0.2,
-    Analyst:   anal*1.25 + exec*0.25,
-    Builder:   (cur*0.6 + exec*0.6) + anal*0.2
+    <div class="card">
+      <div class="progress"><div class="bar" id="bar"></div></div>
+      <div class="row">
+        <div class="sub" id="progressText">Ready when you are.</div>
+        <div class="sub">Scale: 1 (Strongly Disagree) → 5 (Strongly Agree)</div>
+      </div>
+    </div>
+
+    <!-- Intro -->
+    <div class="card" id="intro">
+      <h2>What you’ll get</h2>
+      <div class="sub">A clean working-style output (like Valence-style), plus a next-step invite to our Cybersecurity workshop.</div>
+      <div style="margin-top:10px">
+        <span class="tag">Work style</span>
+        <span class="tag">Hidden superpower</span>
+        <span class="tag">Watch-outs</span>
+        <span class="tag">Learning mode</span>
+        <span class="tag">Cybersecurity workshop invite</span>
+      </div>
+      <div class="hr"></div>
+      <p class="small">Tip: Answer honestly. There is no “right” score. This is directional, not absolute.</p>
+      <button class="btn" onclick="start()">Start Assessment</button>
+      <button class="btn ghost" style="margin-left:10px" onclick="resetAll()">Reset</button>
+    </div>
+
+    <!-- Quiz -->
+    <div class="card hide" id="quiz">
+      <div class="sub" id="qMeta"></div>
+      <div class="qtitle" id="qText"></div>
+
+      <div class="scale" id="scale"></div>
+
+      <div class="tip" id="tipBox">
+        <div class="t1" id="tipTitle"></div>
+        <div class="t2" id="tipText"></div>
+      </div>
+
+      <div class="row" style="margin-top:14px">
+        <button class="btn secondary" id="prevBtn" onclick="prev()">Back</button>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <button class="btn ghost" onclick="saveDraft()">Save</button>
+          <button class="btn" id="nextBtn" onclick="next()">Next</button>
+        </div>
+      </div>
+      <div class="small" style="margin-top:8px">Saved responses stay in this browser (local).</div>
+    </div>
+
+    <!-- Results -->
+    <div class="card hide" id="result">
+      <h2>Perspective Report: My Working Style</h2>
+
+      <div class="grid2" style="margin-top:12px">
+        <div class="card" style="margin-top:0">
+          <div class="sub">Your work style</div>
+          <div style="font-size:22px;font-weight:850" id="styleName">—</div>
+          <div class="small" id="styleSub">—</div>
+
+          <div class="hr"></div>
+          <div class="sub">Explore your style</div>
+          <div style="margin-top:10px" id="tags"></div>
+        </div>
+
+        <div class="card" style="margin-top:0">
+          <div class="sub">✨ Perspective Insights</div>
+          <h3 style="margin-top:6px">The hidden superpower you bring to every team</h3>
+          <p id="insightText"></p>
+          <div class="hr"></div>
+          <div class="small"><span class="ok">Superhero mindset:</span> <span id="heroMindset"></span></div>
+        </div>
+      </div>
+
+      <div class="grid2" style="margin-top:12px">
+        <div class="kpi">
+          <h3>Top strengths</h3>
+          <div id="strengths"></div>
+        </div>
+        <div class="kpi">
+          <h3>Watch-outs</h3>
+          <div id="watchouts"></div>
+        </div>
+      </div>
+
+      <div class="grid2" style="margin-top:12px">
+        <div class="kpi">
+          <h3>Your best learning mode</h3>
+          <div id="learningMode"></div>
+        </div>
+        <div class="kpi">
+          <h3>Best-fit paths (early career)</h3>
+          <div id="paths"></div>
+        </div>
+      </div>
+
+      <div class="hr"></div>
+
+      <h3>Cybersecurity Workshop (Next Step)</h3>
+      <p class="sub">
+        Join a beginner-friendly workshop with industry experts. You’ll learn roles in cybersecurity, what to start with, and how to build skills with confidence.
+      </p>
+
+      <div class="card" style="margin-top:12px">
+        <h3 style="margin-top:0">Join the waitlist</h3>
+
+        <label>Name
+          <input id="wName" placeholder="Your name" />
+        </label>
+
+        <label>Email
+          <input id="wEmail" placeholder="you@example.com" />
+        </label>
+
+        <label>Current status
+          <select id="wStatus">
+            <option>Student</option>
+            <option>Fresher</option>
+            <option>Working</option>
+            <option>Career switch</option>
+          </select>
+        </label>
+
+        <label>Interest area
+          <select id="wInterest">
+            <option>Not sure yet</option>
+            <option>SOC / Blue Team</option>
+            <option>GRC / Compliance</option>
+            <option>AppSec</option>
+            <option>Cloud Security</option>
+            <option>Threat Intel</option>
+          </select>
+        </label>
+
+        <label>Biggest challenge (optional)
+          <textarea id="wChallenge" rows="3" placeholder="What are you stuck on right now?"></textarea>
+        </label>
+
+        <div class="row" style="margin-top:12px">
+          <button class="btn" onclick="joinWaitlist()">Email waitlist request</button>
+          <button class="btn secondary" onclick="copyResultSummary()">Copy result summary</button>
+        </div>
+
+        <div class="small" style="margin-top:8px">
+          This will open your email client and send to: <b>seedling.community@gmail.com</b>
+        </div>
+      </div>
+
+      <div class="hr"></div>
+
+      <h3>Shareable Summary</h3>
+      <div class="copybox" id="shareBox"></div>
+      <div class="row" style="margin-top:10px">
+        <button class="btn secondary" onclick="copyText(document.getElementById('shareBox').innerText)">Copy</button>
+        <button class="btn ghost" onclick="restart()">Retake</button>
+      </div>
+    </div>
+
+  </div>
+
+<script>
+  // ---- Assessment data (10 questions) ----
+  const QUESTIONS = [
+    { id:"Q1", dim:"SE", text:"I naturally take ownership and push things to completion, even when others hesitate.",
+      tipTitle:"Captain America mindset", tipText:"Leadership starts when you step up, not when you’re appointed." },
+
+    { id:"Q2", dim:"AT", text:"I prefer breaking problems into smaller parts before jumping to solutions.",
+      tipTitle:"Iron Man mindset", tipText:"Clarity comes from understanding the system, not rushing the fix." },
+
+    { id:"Q3", dim:"SE", text:"I’m comfortable creating a plan and executing it without needing constant supervision.",
+      tipTitle:"Arjuna mindset", tipText:"Focus beats noise. Pick the target, then commit." },
+
+    { id:"Q4", dim:"SI", text:"I feel energized when collaborating, debating ideas, or brainstorming with others.",
+      tipTitle:"Black Panther mindset", tipText:"Build bridges. Strong teams beat solo talent." },
+
+    { id:"Q5", dim:"EC", text:"I often consider how my decisions will impact people emotionally, not just logically.",
+      tipTitle:"Hanuman mindset", tipText:"Strength is meaningful when used in service of others." },
+
+    { id:"Q6", dim:"CE", text:"I’m curious about multiple career paths and dislike being boxed into one role.",
+      tipTitle:"Doctor Strange mindset", tipText:"Explore options early—your future self will thank you." },
+
+    { id:"Q7", dim:"AT", text:"I enjoy solving complex problems and spotting patterns others miss.",
+      tipTitle:"Sherlock-style mindset", tipText:"Your edge is seeing what others overlook—train it daily." },
+
+    { id:"Q8", dim:"EC", text:"In conflicts, I try to keep the relationship intact while still addressing the issue.",
+      tipTitle:"Krishna mindset", tipText:"Speak the truth—but deliver it with timing and wisdom." },
+
+    { id:"Q9", dim:"SI", text:"I take initiative to network, ask for help, or build communities when needed.",
+      tipTitle:"Nick Fury mindset", tipText:"Opportunity comes faster when your network is alive." },
+
+    { id:"Q10", dim:"CE", text:"I like experimenting with new tools/skills even if I’m not sure they’ll work out.",
+      tipTitle:"Miles Morales mindset", tipText:"Growth begins with a leap of faith." }
+  ];
+
+  const DIM_LABELS = {
+    SE: "Structure & Execution",
+    AT: "Analytical Thinking",
+    SI: "Social Initiative",
+    EC: "Empathy & Cooperation",
+    CE: "Curiosity & Experimentation"
   };
 
-  let best = "Executive", bestVal = -Infinity;
-  for (const [k,v] of Object.entries(score)){
-    if (v > bestVal){ bestVal=v; best=k; }
-  }
-  return { best, score };
-}
+  const STYLE_BY_DIM = {
+    SE: "Executive",
+    AT: "Analyst",
+    SI: "Connector",
+    EC: "Builder",
+    CE: "Explorer"
+  };
 
-function pct(val){ return Math.round((val/5)*100); }
+  const STYLE_CONTENT = {
+    Executive: {
+      sub: "You lead with clarity and execution. You create momentum and finish strong.",
+      tags: ["Energy","Decision Making","Organizing Work","Execution","Ownership"],
+      insight: "You don’t just talk—you move things forward. People trust you because you turn chaos into a plan and drive outcomes to completion. Your practical mindset helps teams stay focused on what matters.",
+      hero: "Captain America + Arjuna (Ownership + Focus)",
+      strengths: [
+        "Owning outcomes and finishing strong",
+        "Creating structure and clear next steps",
+        "Making decisions under uncertainty"
+      ],
+      watchouts: [
+        "May sound blunt or impatient when others move slowly",
+        "Risk of over-controlling instead of delegating"
+      ],
+      learning: [
+        "Goal-based learning (milestones + feedback)",
+        "Weekly execution rhythm (small wins)"
+      ],
+      paths: [
+        "Program/Project coordination",
+        "Security governance / GRC support",
+        "Operations & process excellence",
+        "Leadership track roles"
+      ]
+    },
+    Analyst: {
+      sub: "You win by thinking clearly. You break complexity into logic and patterns.",
+      tags: ["Processing Info","Problem Solving","Risk Thinking","Systems"],
+      insight: "You thrive on clarity. You naturally analyze, validate, and spot gaps others miss. You make decisions based on evidence, which helps teams avoid costly mistakes and choose smarter paths.",
+      hero: "Iron Man + Doctor Strange (Systems + Scenarios)",
+      strengths: [
+        "Deep problem-solving and structured thinking",
+        "Spotting risks, gaps, edge cases",
+        "Learning complex topics quickly"
+      ],
+      watchouts: [
+        "Overthinking can delay action",
+        "May undervalue networking/visibility"
+      ],
+      learning: [
+        "Concepts → case studies → practice",
+        "Teach-back learning (explain to master)"
+      ],
+      paths: [
+        "Cybersecurity (SOC / Threat Intel)",
+        "QA / Testing / Reliability",
+        "Data / AI / Analytics",
+        "Architecture support roles"
+      ]
+    },
+    Connector: {
+      sub: "You create momentum through people. You coordinate, communicate, and align.",
+      tags: ["Energy","Social Initiative","Collaboration","Communication"],
+      insight: "You’re a catalyst. You make teams work better by bringing people together, building trust, and keeping communication alive. You’re often the glue that prevents confusion and misalignment.",
+      hero: "Black Panther + Nick Fury (Bridge-builder + Alliance creator)",
+      strengths: [
+        "Starting conversations and building networks",
+        "Aligning people across teams",
+        "Keeping collaboration positive and productive"
+      ],
+      watchouts: [
+        "Too many interactions can dilute focus",
+        "May avoid hard calls to maintain harmony"
+      ],
+      learning: [
+        "Group learning + discussions + mentors",
+        "Learning by explaining to others"
+      ],
+      paths: [
+        "Business analyst / project coordination",
+        "Customer success / community roles",
+        "Security awareness programs",
+        "Stakeholder-heavy roles"
+      ]
+    },
+    Builder: {
+      sub: "You build stability through empathy + accountability. You make teams safer and stronger.",
+      tags: ["Empathy","Cooperation","Team Health","Conflict Handling"],
+      insight: "You build trust. You balance care for people with responsibility for outcomes. In stressful moments, you help teams stay calm, aligned, and productive—and that creates lasting impact.",
+      hero: "Hanuman + Krishna (Strength + Wisdom + Empathy)",
+      strengths: [
+        "Supporting people without losing accountability",
+        "Conflict resolution and collaboration",
+        "Creating psychologically safe environments"
+      ],
+      watchouts: [
+        "Absorbing others’ problems → burnout risk",
+        "Saying yes too often; weak boundaries"
+      ],
+      learning: [
+        "Mentorship + feedback loops",
+        "Real projects in safe environments"
+      ],
+      paths: [
+        "Training / enablement",
+        "Security awareness / compliance coordination",
+        "People ops / culture roles",
+        "Team leadership tracks"
+      ]
+    },
+    Explorer: {
+      sub: "You grow by experimenting. You learn fast, adapt fast, and explore new paths.",
+      tags: ["Curiosity","Experimentation","Creativity","Adaptability"],
+      insight: "You’re naturally adaptable. You learn by trying, iterating, and discovering. You spot new tools and opportunities early, and you’re comfortable building a career that isn’t “one straight line.”",
+      hero: "Miles Morales + Doctor Strange (Leap + Exploration)",
+      strengths: [
+        "Trying new tools/skills quickly",
+        "Creativity + growth mindset",
+        "Finding unique career combinations"
+      ],
+      watchouts: [
+        "Jumping too quickly can reduce depth",
+        "Starting many things, finishing fewer"
+      ],
+      learning: [
+        "2-week learning sprints + reflection",
+        "Try → learn → adjust cycles"
+      ],
+      paths: [
+        "Security research / exploration",
+        "Dev + Security (AppSec starter)",
+        "Startup-style roles",
+        "Tech education + content"
+      ]
+    }
+  };
 
-function learningModeLine(d){
-  const parts = [];
-  if (d.exec >= 3.6) parts.push("clear steps, checklists, and timelines");
-  if (d.anal >= 3.6) parts.push("understanding the ‘why’ with real examples");
-  if (d.cur  >= 3.6) parts.push("trying variations and learning by experimentation");
-  if (d.soc  >= 3.6) parts.push("group learning, discussion, and collaboration");
-  if (d.emp  >= 3.6) parts.push("supportive environments with feedback");
+  // ---- State ----
+  let idx = 0;
+  let answers = loadAnswers(); // {Q1: 1..5}
 
-  if (!parts.length) return "a balanced mix of explanation and practice with real examples.";
-  return "You learn best with " + parts.slice(0,3).join(", ") + ".";
-}
-
-function buildCopyText(styleName, s, d){
-  return [
-    "SEEDLING RESULT",
-    `Style: ${styleName}`,
-    "",
-    "Hidden strengths:",
-    ...s.strengths.map(x=>`- ${x}`),
-    "",
-    `Watch-out: ${s.watchout}`,
-    "",
-    "Resume summary:",
-    s.resume,
-    "",
-    "Bullet bank:",
-    ...s.bullets.map(b=>`- ${b}`),
-    "",
-    "Trait signals:",
-    `- Structure & Execution: ${pct(d.exec)}/100`,
-    `- Analytical Thinking: ${pct(d.anal)}/100`,
-    `- Social Initiative: ${pct(d.soc)}/100`,
-    `- Empathy & Cooperation: ${pct(d.emp)}/100`,
-    `- Curiosity & Experimentation: ${pct(d.cur)}/100`,
-  ].join("\n");
-}
-
-// ---------- UI ----------
-let idx = 0;
-let answers = {};
-
-const el = (id)=>document.getElementById(id);
-
-const screens = {
-  intro: el("screen-intro"),
-  quiz: el("screen-quiz"),
-  result: el("screen-result")
-};
-
-const qCounter = el("qCounter");
-const bar = el("bar");
-
-const qText = el("qText");
-const scale = el("scale");
-const backBtn = el("backBtn");
-const nextBtn = el("nextBtn");
-const tipLine = el("tipLine");
-
-el("startBtn").onclick = () => {
-  idx = 0; answers = {};
-  show("quiz");
-  renderQ();
-};
-
-backBtn.onclick = () => {
-  if (idx > 0){ idx--; renderQ(); }
-};
-
-nextBtn.onclick = () => {
-  if (idx < questions.length-1){
-    idx++;
-    renderQ();
-  } else {
-    showResult();
-  }
-};
-
-el("restartBtn").onclick = () => {
-  idx = 0; answers = {};
-  show("intro");
-  renderProgress();
-  el("qCounter").textContent = `1 / ${questions.length}`;
-};
-
-el("copyBtn").onclick = async () => {
-  try{
-    await navigator.clipboard.writeText(el("copyBox").value);
-    alert("Copied!");
-  } catch(e){
-    alert("Copy failed. You can manually select and copy.");
-  }
-};
-
-function show(which){
-  Object.values(screens).forEach(s=>s.classList.add("hidden"));
-  screens[which].classList.remove("hidden");
-}
-
-function renderProgress(){
-  const p = screens.quiz.classList.contains("hidden") ? 0 : Math.round((idx)/questions.length * 100);
-  bar.style.width = `${p}%`;
-}
-
-function renderQ(){
-  const q = questions[idx];
-  qCounter.textContent = `${idx+1} / ${questions.length}`;
-  bar.style.width = `${Math.round((idx)/questions.length * 100)}%`;
-
-  qText.textContent = q.t;
-
-  const selected = answers[q.id] || 0;
-  nextBtn.disabled = !selected;
-  nextBtn.textContent = (idx === questions.length-1) ? "See Result" : "Next";
-  backBtn.disabled = (idx === 0);
-
-  tipLine.textContent = (idx < 10)
-    ? "Tip: Think of your last 2–3 months and answer based on patterns."
-    : "Tip: Choose what feels true most of the time, not occasionally.";
-
-  scale.innerHTML = "";
-  for (let i=0;i<5;i++){
-    const val = i+1;
-    const opt = document.createElement("div");
-    opt.className = "opt" + (val===selected ? " selected" : "");
-    opt.innerHTML = `<strong>${val}</strong><small>${LIKERT[i]}</small>`;
-    opt.onclick = () => {
-      answers[q.id] = val;
-      renderQ();
-    };
-    scale.appendChild(opt);
-  }
-}
-
-function showResult(){
-  const dims = computeDims(answers);
-  const {best} = pickStyle(dims);
-  const s = styles[best];
-
-  bar.style.width = "100%";
-  qCounter.textContent = `${questions.length} / ${questions.length}`;
-
-  el("styleTitle").textContent = `Your Seedling Style: ${best}`;
-  el("styleHeadline").textContent = s.headline;
-
-  // strengths
-  const strengthList = el("strengthList");
-  strengthList.innerHTML = "";
-  s.strengths.forEach(x=>{
-    const li = document.createElement("li");
-    li.textContent = x;
-    strengthList.appendChild(li);
-  });
-
-  el("watchout").textContent = s.watchout;
-  el("learningMode").textContent = learningModeLine(dims);
-  el("resumeSummary").textContent = s.resume;
-
-  // bullets
-  const bulletList = el("bulletList");
-  bulletList.innerHTML = "";
-  s.bullets.forEach(b=>{
-    const li = document.createElement("li");
-    li.textContent = b;
-    bulletList.appendChild(li);
-  });
-
-  // meters
-  const meters = el("meters");
-  meters.innerHTML = "";
-  const rows = [
-    ["Structure & Execution", dims.exec],
-    ["Analytical Thinking", dims.anal],
-    ["Social Initiative", dims.soc],
-    ["Empathy & Cooperation", dims.emp],
-    ["Curiosity & Experimentation", dims.cur],
+  const scaleLabels = [
+    {v:1, t:"Strongly Disagree"},
+    {v:2, t:"Disagree"},
+    {v:3, t:"Neutral"},
+    {v:4, t:"Agree"},
+    {v:5, t:"Strongly Agree"}
   ];
-  rows.forEach(([label,val])=>{
-    const wrap = document.createElement("div");
-    wrap.className = "meterRow";
-    wrap.innerHTML = `
-      <div class="meterTop">
-        <div>${label}</div>
-        <div class="muted">${pct(val)}/100</div>
-      </div>
-      <div class="meterBar"><div class="meterFill" style="width:${pct(val)}%"></div></div>
-    `;
-    meters.appendChild(wrap);
-  });
 
-  // copy text
-  el("copyBox").value = buildCopyText(best, s, dims);
+  // ---- UI helpers ----
+  function $(id){ return document.getElementById(id); }
+  function show(id){ $(id).classList.remove("hide"); }
+  function hide(id){ $(id).classList.add("hide"); }
 
-  show("result");
-}
+  function start(){
+    hide("intro");
+    show("quiz");
+    idx = firstUnansweredIndex();
+    renderQuestion();
+  }
 
-// init
-show("intro");
-bar.style.width = "0%";
-qCounter.textContent = `1 / ${questions.length}`;
+  function restart(){
+    hide("result");
+    show("intro");
+    hide("quiz");
+    idx = 0;
+    updateProgress();
+  }
+
+  function resetAll(){
+    if(!confirm("Reset all saved answers?")) return;
+    answers = {};
+    localStorage.removeItem("seedling_answers_v1");
+    restart();
+  }
+
+  function saveDraft(){
+    localStorage.setItem("seedling_answers_v1", JSON.stringify(answers));
+    alert("Saved locally ✅");
+  }
+
+  function loadAnswers(){
+    try{
+      const s = localStorage.getItem("seedling_answers_v1");
+      return s ? JSON.parse(s) : {};
+    }catch(e){
+      return {};
+    }
+  }
+
+  function firstUnansweredIndex(){
+    for(let i=0;i<QUESTIONS.length;i++){
+      if(!answers[QUESTIONS[i].id]) return i;
+    }
+    return 0;
+  }
+
+  function updateProgress(){
+    const total = QUESTIONS.length;
+    const done = Object.keys(answers).filter(k => answers[k]).length;
+    const pct = Math.round((done/total)*100);
+    $("bar").style.width = pct + "%";
+    $("progressText").innerText = (done===0)
+      ? "Ready when you are."
+      : `Progress: ${done}/${total} (${pct}%)`;
+  }
+
+  function renderQuestion(){
+    updateProgress();
+    const q = QUESTIONS[idx];
+    $("qMeta").innerText = `Question ${idx+1} of ${QUESTIONS.length} • ${DIM_LABELS[q.dim]}`;
+    $("qText").innerText = q.text;
+
+    $("tipTitle").innerText = "Tip: " + q.tipTitle;
+    $("tipText").innerText = q.tipText;
+
+    const wrap = $("scale");
+    wrap.innerHTML = "";
+    scaleLabels.forEach(s=>{
+      const div = document.createElement("div");
+      div.className = "opt" + ((answers[q.id]===s.v) ? " selected" : "");
+      div.innerHTML = `<strong>${s.v}</strong><span>${s.t}</span>`;
+      div.onclick = ()=>selectAnswer(q.id, s.v);
+      wrap.appendChild(div);
+    });
+
+    $("prevBtn").disabled = (idx===0);
+    $("nextBtn").innerText = (idx===QUESTIONS.length-1) ? "Finish" : "Next";
+    $("nextBtn").disabled = !answers[q.id];
+  }
+
+  function selectAnswer(qid, value){
+    answers[qid] = value;
+    // auto-save
+    localStorage.setItem("seedling_answers_v1", JSON.stringify(answers));
+    renderQuestion();
+  }
+
+  function prev(){
+    if(idx>0){ idx--; renderQuestion(); }
+  }
+
+  function next(){
+    const q = QUESTIONS[idx];
+    if(!answers[q.id]){
+      alert("Please select an option to continue.");
+      return;
+    }
+    if(idx < QUESTIONS.length-1){
+      idx++;
+      renderQuestion();
+    }else{
+      finish();
+    }
+  }
+
+  // ---- Scoring ----
+  function finish(){
+    // Compute dimension totals
+    const score = {SE:0, AT:0, SI:0, EC:0, CE:0};
+
+    QUESTIONS.forEach(q=>{
+      score[q.dim] += (answers[q.id] || 0);
+    });
+
+    // Determine primary + secondary
+    const dims = Object.keys(score).map(d => ({d, v: score[d]}));
+    dims.sort((a,b)=> b.v - a.v);
+
+    // Tie-break rule:
+    // 1) If tie at top, compare each dim's second question value
+    // 2) If still tie, use Q1 as final decider
+    let primary = dims[0];
+    let secondary = dims[1];
+
+    const topVal = primary.v;
+    const tied = dims.filter(x => x.v === topVal);
+    if(tied.length > 1){
+      // second-question mapping
+      const secondQ = {SE:"Q3", AT:"Q7", SI:"Q9", EC:"Q8", CE:"Q10"};
+      tied.sort((a,b)=>{
+        const av = answers[secondQ[a.d]] || 0;
+        const bv = answers[secondQ[b.d]] || 0;
+        if(bv !== av) return bv - av;
+        // final decider: Q1 ownership
+        return (answers["Q1"]||0) - (answers["Q1"]||0);
+      });
+      primary = tied[0];
+
+      // recompute secondary = highest among remaining
+      const remaining = dims.filter(x => x.d !== primary.d);
+      remaining.sort((a,b)=> b.v - a.v);
+      secondary = remaining[0];
+    }
+
+    const primaryStyle = STYLE_BY_DIM[primary.d];
+    const secondaryStyle = STYLE_BY_DIM[secondary.d];
+
+    renderResults(primaryStyle, secondaryStyle, score);
+  }
+
+  function renderResults(primaryStyle, secondaryStyle, score){
+    hide("quiz");
+    show("result");
+    updateProgress();
+
+    const content = STYLE_CONTENT[primaryStyle];
+    $("styleName").innerText = primaryStyle;
+    $("styleSub").innerText = `Secondary influence: ${secondaryStyle} • Top dimensions: ${DIM_LABELS[dimFromStyle(primaryStyle)]} & ${DIM_LABELS[dimFromStyle(secondaryStyle)]}`;
+
+    $("insightText").innerText = content.insight;
+    $("heroMindset").innerText = content.hero;
+
+    // Tags
+    $("tags").innerHTML = content.tags.map(t=>`<span class="tag">${t}</span>`).join("");
+
+    $("strengths").innerHTML = `<ul>${content.strengths.map(x=>`<li>${x}</li>`).join("")}</ul>`;
+    $("watchouts").innerHTML = `<ul>${content.watchouts.map(x=>`<li>${x}</li>`).join("")}</ul>`;
+    $("learningMode").innerHTML = `<ul>${content.learning.map(x=>`<li>${x}</li>`).join("")}</ul>`;
+    $("paths").innerHTML = `<ul>${content.paths.map(x=>`<li>${x}</li>`).join("")}</ul>`;
+
+    // Share summary text
+    const dimOrder = ["SE","AT","SI","EC","CE"]
+      .map(d => `${DIM_LABELS[d]}: ${score[d]}/10`)
+      .join("\n");
+
+    const share = [
+      "Seedling Assessment — Result Summary",
+      "-----------------------------------",
+      `Work style: ${primaryStyle}`,
+      `Secondary influence: ${secondaryStyle}`,
+      "",
+      "Dimension scores:",
+      dimOrder,
+      "",
+      "Hidden superpower:",
+      content.insight,
+      "",
+      "Superhero mindset:",
+      content.hero,
+      "",
+      "Next step:",
+      "Join the Cybersecurity Workshop waitlist (industry experts, beginner-friendly)."
+    ].join("\n");
+
+    $("shareBox").innerText = share;
+  }
+
+  function dimFromStyle(style){
+    // reverse map
+    for(const d in STYLE_BY_DIM){
+      if(STYLE_BY_DIM[d] === style) return d;
+    }
+    return "SE";
+  }
+
+  function copyText(text){
+    navigator.clipboard.writeText(text)
+      .then(()=>alert("Copied ✅"))
+      .catch(()=>alert("Copy failed. You can manually select and copy."));
+  }
+
+  function copyResultSummary(){
+    copyText($("shareBox").innerText);
+  }
+
+  // Waitlist mailto
+  function joinWaitlist(){
+    const name = $("wName").value.trim();
+    const email = $("wEmail").value.trim();
+    const status = $("wStatus").value;
+    const interest = $("wInterest").value;
+    const challenge = $("wChallenge").value.trim();
+
+    if(!name || !email){
+      alert("Please enter name and email.");
+      return;
+    }
+
+    const subject = encodeURIComponent("Seedling: Cybersecurity Workshop Waitlist");
+    const body = encodeURIComponent(
+`Hi Seedling Team,
+
+Please add me to the Cybersecurity Workshop waitlist.
+
+Name: ${name}
+Email: ${email}
+Status: ${status}
+Interest: ${interest}
+Challenge: ${challenge || "—"}
+
+Thanks!`
+    );
+
+    window.location.href = `mailto:seedling.community@gmail.com?subject=${subject}&body=${body}`;
+  }
+
+  // Initial progress
+  updateProgress();
+
+  // If user has answers, offer quick continue by updating intro text
+  (function(){
+    const done = Object.keys(answers).filter(k => answers[k]).length;
+    if(done > 0){
+      $("progressText").innerText = `Draft found: ${done}/${QUESTIONS.length} answered. Click Start to continue.`;
+    }
+  })();
+</script>
+</body>
+</html>
