@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <title>Seedling-Assessment</title>
+    <link rel="stylesheet" href="./style.css">
+
+  </head>
+    
+  <body>
+  <div class="wrap">
+  <div class="header">
+    <div>
+      <div class="tag">Seedling • Start Right</div>
+      <h1>Seedling Assessment</h1>
+      <p class="sub">30 quick statements. No right or wrong answers. Choose what feels most like you.</p>
+    </div>
+    <div class="right">
+      <div class="pill" id="qCounter">1 / 30</div>
+      <div class="pill" id="timeHint">~6–8 min</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="progress"><div class="bar" id="bar"></div></div>
+
+    <div id="screen-intro" class="screen">
+      <h2>What you’ll get</h2>
+      <ul class="list">
+        <li>Your style: Executive / Builder / Analyst / Connector / Explorer</li>
+        <li>Hidden strengths + watch-outs</li>
+        <li>Learning mode recommendation</li>
+        <li>Resume-ready summary + bullet bank</li>
+      </ul>
+      <div class="row">
+        <button class="btn" id="startBtn">Start</button>
+      </div>
+      <p class="muted">Tip: Answer based on your natural behavior (not what sounds ideal).</p>
+    </div>
+
+    <div id="screen-quiz" class="screen hidden">
+      <div class="qTitle" id="qText"></div>
+
+      <div class="scale" id="scale">
+        <!-- options injected -->
+      </div>
+
+      <div class="row between">
+        <button class="btn secondary" id="backBtn">Back</button>
+        <button class="btn" id="nextBtn" disabled>Next</button>
+      </div>
+      <p class="muted" id="tipLine"></p>
+    </div>
+
+    <div id="screen-result" class="screen hidden">
+      <div class="resultHead">
+        <div class="tag">Result</div>
+        <h2 id="styleTitle">Your Seedling Style: —</h2>
+        <p class="sub" id="styleHeadline"></p>
+      </div>
+
+      <div class="grid2">
+        <div class="miniCard">
+          <h3>Hidden strengths</h3>
+          <ul class="list" id="strengthList"></ul>
+        </div>
+        <div class="miniCard">
+          <h3>Watch-out</h3>
+          <p id="watchout"></p>
+          <h3 class="mt">Best learning mode</h3>
+          <p id="learningMode"></p>
+        </div>
+      </div>
+
+      <div class="miniCard">
+        <h3>Resume-ready summary</h3>
+        <p id="resumeSummary"></p>
+        <h3 class="mt">Bullet bank</h3>
+        <ul class="list" id="bulletList"></ul>
+      </div>
+
+      <div class="miniCard">
+        <h3>Your trait signals</h3>
+        <div class="meter" id="meters"></div>
+      </div>
+
+      <div class="miniCard">
+        <h3>Copy your result</h3>
+        <textarea id="copyBox" readonly></textarea>
+        <div class="row">
+          <button class="btn" id="copyBtn">Copy</button>
+          <button class="btn secondary" id="restartBtn">Restart</button>
+        </div>
+        <p class="muted">Share this with colleagues to get feedback quickly.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer muted">
+    Seedling v1 • For pilot testing with colleagues
+  </div>
+</div>
+    <script  src="./script.js"></script>
+
+  </body>
+  
+</html>
