@@ -170,7 +170,7 @@
 
     <!-- HOME / INTRO (v1.1) -->
     <div class="card" id="intro">
-      <h2>🌱 Understand how you naturally think, work, and grow</h2>
+      <h2>🌱 Seedling Assessment - Understand how you naturally think, work, and grow</h2>
 
       <p class="sub">
         Not a test. Not an exam.<br>
@@ -223,7 +223,7 @@
 
       <div class="scale" id="scale"></div>
 
-      <div class="tip" id="tipBox">
+      <div class="tip hide" id="tipBox">
         <div class="t1" id="tipTitle"></div>
         <div class="t2" id="tipText"></div>
       </div>
@@ -722,9 +722,13 @@
   }
 
   function selectAnswer(qid, value){
-    answers[qid] = value;
-    localStorage.setItem("seedling_answers_v11", JSON.stringify(answers));
-    renderQuestion();
+  answers[qid] = value;
+  localStorage.setItem("seedling_answers_v11", JSON.stringify(answers));
+
+  // show reflection tip AFTER answer is locked
+  document.getElementById("tipBox").classList.remove("hide");
+
+  renderQuestion();
   }
 
   function prev(){
