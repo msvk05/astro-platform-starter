@@ -698,13 +698,19 @@
   }
 
   function renderQuestion(){
-    updateProgress();
-    const q = QUESTIONS[idx];
-    $("qMeta").innerText = `Question ${idx+1} of ${QUESTIONS.length} • ${DIM_LABELS[q.dim]}`;
-    $("qText").innerText = q.text;
+  updateProgress();
+  const q = QUESTIONS[idx];
 
-    $("tipTitle").innerText = "Tip: " + q.tipTitle;
-    $("tipText").innerText = q.tipText;
+  // ✅ Hide tip until user answers THIS question
+  const tipBox = document.getElementById("tipBox");
+  if (!answers[q.id]) tipBox.classList.add("hide");
+  else tipBox.classList.remove("hide");
+
+  $("qMeta").innerText = `Question ${idx+1} of ${QUESTIONS.length} • ${DIM_LABELS[q.dim]}`;
+  $("qText").innerText = q.text;
+
+  $("tipTitle").innerText = "Tip: " + q.tipTitle;
+  $("tipText").innerText = q.tipText;
 
     const wrap = $("scale");
     wrap.innerHTML = "";
