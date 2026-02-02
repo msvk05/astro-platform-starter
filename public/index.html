@@ -232,7 +232,7 @@
       </div>
 
       <div class="row" style="margin-top:14px">
-        <button class="btn" onclick="start()" id="startBtn">Start (10 questions)</button>
+        <button class="btn" onclick="startAssessment()" id="startBtn">Start (10 questions)</button>
         <button class="btn ghost" onclick="resetAll()" id="resetBtn">Reset</button>
       </div>
 
@@ -1044,7 +1044,7 @@
     $("tipTitle").innerText = STATIC_TEXT.reflectionLabel[currentLang];
   }
 
-  function start(){
+  function startAssessment(){
     hide("intro");
     show("quiz");
     idx = firstUnansweredIndex();
@@ -1266,17 +1266,11 @@
     $("learningMode").innerHTML = `<ul>${content.learning[currentLang].map(x=>`<li>${x}</li>`).join("")}</ul>`;
     $("paths").innerHTML = `<ul>${content.paths[currentLang].map(x=>`<li>${x}</li>`).join("")}</ul>`;
 
-    // Build share summary in current language
-    const dimLines = ["SE","AT","SI","EC","CE"].map(d=>{
-      const label = DIM_LABELS[d][currentLang];
-      return `${label}: ${score[d]}/(max ${QUESTIONS.length*4/5*?})`; // keep simple? avoid confusion
-    });
-
-    // Use simpler dimension scores without max
-    const dimLinesSimple = ["SE","AT","SI","EC","CE"].map(d=>{
-      const label = DIM_LABELS[d][currentLang];
-      return `${label}: ${score[d]}`;
-    }).join("\n");
+  // Build share summary in current language (simple)
+const dimLinesSimple = ["SE","AT","SI","EC","CE"].map(d=>{
+  const label = DIM_LABELS[d][currentLang];
+  return `${label}: ${score[d]}`;
+}).join("\n");
 
     const share = [
       (currentLang==="te" ? "Seedling — ఫలిత సారాంశం" : currentLang==="hi" ? "Seedling — परिणाम सारांश" : "Seedling — Result Summary"),
