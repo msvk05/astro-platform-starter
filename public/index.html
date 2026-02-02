@@ -1175,12 +1175,15 @@
       alert(currentLang==="te" ? "దయచేసి ఒక ఆప్షన్ ఎంచుకోండి." : currentLang==="hi" ? "कृपया एक विकल्प चुनें।" : "Please select an option.");
       return;
     }
-    if(idx < QUESTIONS.length-1){
-      idx++;
-      renderQuestion();
-    }else{
-      finish();
-    }
+  if (idx < QUESTIONS.length - 1) {
+  idx++;
+  renderQuestion();
+} else {
+  // 🔖 Mark that assessment is complete
+  document.body.setAttribute("data-seedling-stage", "results");
+
+  finish();
+}
   }
 
   // ---------- Scoring ----------
