@@ -1188,6 +1188,7 @@
 
   // ---------- Scoring ----------
   function finish(){
+    document.getElementById("microChallenges").style.display = "block";
     const score = {SE:0, AT:0, SI:0, EC:0, CE:0};
 
     QUESTIONS.forEach(q => {
@@ -1444,6 +1445,7 @@ Thanks!`
     box.style.background = "rgba(255,255,255,0.06)";
 
     const h = document.createElement("h2");
+    <div id="microChallenges" style="display:none;">
     h.innerText = "Turn Insight into Action ⚡";
     h.style.margin = "0 0 8px 0";
     h.style.fontSize = "22px";
@@ -1490,7 +1492,7 @@ Thanks!`
           }
         };
       }, 0);
-    });
+    });</div>
 
     // Optional Cyber Workshop CTA (no form, no backend)
     const cta = document.createElement("div");
