@@ -1358,240 +1358,189 @@ Thanks!`
     }
   })();
 
-  /* =========================================================
-   Seedling v1.3 — Inline Micro Challenges + Workshop (no backend)
+ <script>
+/* ================================
+   Seedling v1.3 — Micro Challenges + Workshop (NO backend)
+   - Auto-injects on results screen
    - Works even if you don't know results container id
-   - It auto-detects a "results screen" by finding visible section
-========================================================= */
+   - Works even if results are rendered later
+================================== */
 
-const SEEDLING_EMAIL = "seedling.community@gmail.com";
+(function () {
+  // ----- Config -----
+  const EMAIL_TO = "seedling.community@gmail.com";
 
-// --- micro challenge content (simple English, can be translated later) ---
-const SEEDLING_CHALLENGES = {
-  social: {
-    title: "🛡️ Social App Safety",
-    intro: "Pick one app you use daily (Instagram/Snapchat/WhatsApp). No hacking. Only thinking + explaining.",
-    bullets: [
-      "Which app did you choose and why do people use it most?",
-      "What personal info users share without thinking?",
-      "One common mistake users make",
-      "One misuse that can happen",
-      "Pick ONE risk and why it matters most",
-      "Suggest ONE simple rule/feature to reduce it",
-      "What did you learn about yourself?"
-    ],
-    template:
-`Seedling Micro Challenge – Social App Safety
+  const MICRO_CHALLENGES = [
+    {
+      title: "⚡ 3-Min Risk Spotter (Cyber)",
+      why: "Build the habit of seeing risks early — like a calm strategist.",
+      task: "Pick any app you use daily (WhatsApp / Instagram / Gmail). List 3 risks and 1 simple fix for each.",
+      output: "Example: Risk: weak password → Fix: enable passkey / 2FA."
+    },
+    {
+      title: "🧠 2-Min Focus Reset (Wellbeing)",
+      why: "Train your mind to reset under pressure — like a disciplined hero.",
+      task: "Do 10 deep breaths. Then write 1 thing you will finish in the next 15 minutes.",
+      output: "Example: 'I will finish my math homework Q1–Q3.'"
+    },
+    {
+      title: "🏙️ Civic Sense Mini-Mission",
+      why: "Small actions create big change — like a responsible leader.",
+      task: "Observe your street/college area. Note 2 issues (trash, traffic, safety) + 1 practical improvement.",
+      output: "Example: 'No zebra crossing → Request one + awareness poster.'"
+    },
+    {
+      title: "🚀 India Builder Thought (Development)",
+      why: "Think in systems, not complaints — like an innovator.",
+      task: "Pick one topic (water, roads, jobs). Write 1 problem + 1 solution idea in simple words.",
+      output: "Example: 'Water leaks → sensor alerts + local repair dashboard.'"
+    }
+  ];
 
-App chosen:
-One risk I focused on:
-Why it matters:
-One simple improvement:
-What I learned about myself:`
-  },
+  // ----- Helpers -----
+  function $(id) { return document.getElementById(id); }
 
-  ai: {
-    title: "🤖 AI Thinking",
-    intro: "Pick a real problem and explain how AI could help (logic, not code).",
-    bullets: [
-      "What problem did you choose? Who is affected?",
-      "How could AI help (logic)?",
-      "What data would be needed?",
-      "One risk/limitation",
-      "One simple improvement idea",
-      "What did you enjoy thinking about?"
-    ],
-    template:
-`Seedling Micro Challenge – AI Thinking
+  function findResultsRoot() {
+    // 1) Try common ids first
+    const candidates = ["results", "result", "resultScreen", "resultCard", "final", "done", "output"];
+    for (const id of candidates) {
+      const el = $(id);
+      if (el && el.offsetParent !== null) return el;
+    }
 
-Problem chosen:
-How AI could help:
-Data needed:
-One risk/limitation:
-One improvement idea:
-What I learned about myself:`
-  },
+    // 2) Otherwise: find a visible section that likely contains results text
+    const all = Array.from(document.querySelectorAll("section, main, .card, .wrap, body div"));
+    const visible = all.filter(el => el && el.offsetParent !== null);
 
-  civic: {
-    title: "🏫 Improve a System",
-    intro: "Pick one system around you (college, hostel, traffic, classroom).",
-    bullets: [
-      "What system did you choose?",
-      "What works well today?",
-      "What doesn’t work?",
-      "Who is affected the most?",
-      "ONE biggest problem (why?)",
-      "ONE practical improvement",
-      "Why this improvement matters"
-    ],
-    template:
-`Seedling Micro Challenge – Improve a System
+    // Heuristic: search for keywords you already display in your results
+    const keywords = ["Your", "Style", "Mindset", "Result", "Strength", "Watch-out", "Tips", "Seedling"];
+    for (const el of visible) {
+      const t = (el.innerText || "").trim();
+      if (t.length > 80 && keywords.some(k => t.includes(k))) return el;
+    }
 
-System chosen:
-Biggest problem:
-Who is affected:
-One improvement idea:
-Why it matters:
-What I learned about myself:`
-  },
-
-  cyber: {
-    title: "🔐 Cyber Basics",
-    intro: "Pick a system (UPI / Gmail / College portal). Think like a security person. No tools.",
-    bullets: [
-      "What system did you choose?",
-      "What sensitive data does it store?",
-      "One human mistake users make",
-      "One system/design mistake",
-      "ONE highest risk (why?)",
-      "ONE simple protection rule",
-      "What surprised you?"
-    ],
-    template:
-`Seedling Micro Challenge – Cyber Basics
-
-System chosen:
-Main risk:
-Why it matters:
-One protection idea:
-What I learned about myself:`
+    // fallback: just return body
+    return document.body;
   }
-};
 
-// --- HTML generator for micro section ---
-function seedlingMicroHTML() {
-  return `
-  <section id="seedlingMicroV13" style="margin-top:18px;">
-    <h3 style="margin:0 0 6px 0;">Turn Insight into Action</h3>
-    <div style="opacity:.85; font-size:13px; margin-bottom:12px;">
-      Optional • 30–60 mins • Bullet points are enough • No right/wrong answers
-    </div>
+  function alreadyInjected(root) {
+    return !!root.querySelector("#seedling-micro-challenges");
+  }
 
-    <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;" id="seedlingMicroGrid">
-      ${seedlingCard("social","🛡️ Social App Safety","Think about risks in apps you use daily.")}
-      ${seedlingCard("ai","🤖 AI Thinking","Use AI ideas to solve a real problem.")}
-      ${seedlingCard("civic","🏫 Improve a System","Fix one small problem around you.")}
-      ${seedlingCard("cyber","🔐 Cyber Basics","Think like a security person (no tools).")}
-    </div>
+  // ----- Main injection -----
+  window.seedlingInjectMicroChallenges = function seedlingInjectMicroChallenges() {
+    const root = findResultsRoot();
+    if (!root || alreadyInjected(root)) return false;
 
-    <div style="margin-top:14px; padding:14px; border:1px solid rgba(0,0,0,.12); border-radius:14px; background:rgba(0,0,0,.03);">
-      <h3 style="margin:0 0 6px 0;">Curious about how this works in real life?</h3>
-      <div style="opacity:.85; font-size:13px; margin-bottom:10px;">
-        We host informal sessions where industry professionals share how they think about cybersecurity and real-world systems.
-        Beginner friendly. No hacking.
+    const box = document.createElement("div");
+    box.id = "seedling-micro-challenges";
+    box.style.marginTop = "18px";
+    box.style.padding = "16px";
+    box.style.border = "1px solid rgba(255,255,255,0.12)";
+    box.style.borderRadius = "14px";
+    box.style.background = "rgba(255,255,255,0.06)";
+
+    const h = document.createElement("h2");
+    h.innerText = "Turn Insight into Action ⚡";
+    h.style.margin = "0 0 8px 0";
+    h.style.fontSize = "22px";
+
+    const p = document.createElement("p");
+    p.innerText = "Pick ONE micro challenge now. Finish it in 2–3 minutes. Share it if you want feedback.";
+    p.style.margin = "0 0 14px 0";
+    p.style.opacity = "0.9";
+
+    box.appendChild(h);
+    box.appendChild(p);
+
+    MICRO_CHALLENGES.forEach((c, idx) => {
+      const card = document.createElement("div");
+      card.style.padding = "12px";
+      card.style.borderRadius = "12px";
+      card.style.border = "1px solid rgba(255,255,255,0.10)";
+      card.style.background = "rgba(0,0,0,0.10)";
+      card.style.margin = "10px 0";
+
+      card.innerHTML = `
+        <div style="font-weight:700;font-size:16px;margin-bottom:6px;">${c.title}</div>
+        <div style="font-size:13px;opacity:0.9;margin-bottom:8px;">${c.why}</div>
+        <div style="font-size:14px;margin-bottom:8px;"><b>Task:</b> ${c.task}</div>
+        <div style="font-size:13px;opacity:0.9;margin-bottom:10px;"><b>Output:</b> ${c.output}</div>
+        <button id="seedCopy${idx}" style="padding:10px 12px;border-radius:10px;border:none;cursor:pointer;font-weight:700;">
+          Copy this challenge
+        </button>
+      `;
+
+      box.appendChild(card);
+
+      setTimeout(() => {
+        const btn = document.getElementById(`seedCopy${idx}`);
+        if (!btn) return;
+        btn.onclick = async () => {
+          const text = `${c.title}\nWhy: ${c.why}\nTask: ${c.task}\nOutput: ${c.output}\n\n#SeedlingChallenge`;
+          try {
+            await navigator.clipboard.writeText(text);
+            btn.innerText = "Copied ✅";
+            setTimeout(() => (btn.innerText = "Copy this challenge"), 1200);
+          } catch (e) {
+            alert("Copy failed. You can manually select and copy.");
+          }
+        };
+      }, 0);
+    });
+
+    // Optional Cyber Workshop CTA (no form, no backend)
+    const cta = document.createElement("div");
+    cta.style.marginTop = "14px";
+    cta.style.padding = "12px";
+    cta.style.borderRadius = "12px";
+    cta.style.border = "1px solid rgba(34,197,94,0.35)";
+    cta.style.background = "rgba(34,197,94,0.08)";
+    cta.innerHTML = `
+      <div style="font-weight:800;margin-bottom:6px;">Join a Cybersecurity Workshop (Industry Experts) 🛡️</div>
+      <div style="opacity:0.9;margin-bottom:10px;font-size:14px;">
+        If you want to learn real-world cyber skills in simple language, send a quick “I’m interested”.
       </div>
-      <button class="btn secondary" onclick="seedlingNotifyWorkshop()">Notify me when it happens</button>
-    </div>
+      <button id="seedWorkshopBtn" style="padding:10px 12px;border-radius:10px;border:none;cursor:pointer;font-weight:800;">
+        Email: I'm Interested
+      </button>
+    `;
+    box.appendChild(cta);
 
-    ${seedlingPanelHTML()}
-  </section>`;
-}
+    setTimeout(() => {
+      const b = document.getElementById("seedWorkshopBtn");
+      if (!b) return;
+      b.onclick = () => {
+        const subject = encodeURIComponent("Seedling Workshop — I'm interested");
+        const body = encodeURIComponent(
+          "Hi Seedling Team,\n\nI completed the Seedling Assessment and I'm interested in joining the Cybersecurity workshop.\n\nName:\nCity:\nStudent/Working:\nPreferred language (EN/HI/TE):\n\nThanks!"
+        );
+        window.location.href = `mailto:${EMAIL_TO}?subject=${subject}&body=${body}`;
+      };
+    }, 0);
 
-function seedlingCard(key, title, desc) {
-  return `
-  <div style="padding:14px; border:1px solid rgba(0,0,0,.12); border-radius:14px; background:#fff;">
-    <div style="font-weight:700; margin-bottom:6px;">${title}</div>
-    <div style="opacity:.85; font-size:13px; margin-bottom:10px;">${desc}</div>
-    <button class="btn secondary" onclick="seedlingOpenChallenge('${key}')">Open challenge</button>
-  </div>`;
-}
+    // Put it at the end of the results screen
+    root.appendChild(box);
+    return true;
+  };
 
-// --- hidden panel HTML (inline) ---
-function seedlingPanelHTML(){
-  return `
-  <div id="seedlingChallengePanel" style="display:none; margin-top:14px; padding:14px; border:1px solid rgba(0,0,0,.12); border-radius:14px; background:#fff;">
-    <div id="seedlingCTitle" style="font-weight:800; margin-bottom:6px;"></div>
-    <div id="seedlingCIntro" style="opacity:.85; font-size:13px; margin-bottom:10px;"></div>
-    <div style="opacity:.85; font-size:13px; margin-bottom:8px;">Tip: answer in bullet points. Keep it simple.</div>
-    <ul id="seedlingCBullets" style="margin:0 0 12px 18px; opacity:.92;"></ul>
+  // ----- Auto trigger (THIS is what fixes your issue) -----
+  function autoInject() {
+    try { window.seedlingInjectMicroChallenges(); } catch (e) {}
+  }
 
-    <div style="font-weight:700; margin:12px 0 6px;">Submission (one page)</div>
-    <pre id="seedlingCTemplate" style="white-space:pre-wrap; background:rgba(0,0,0,.04); padding:12px; border-radius:12px; font-size:12px;"></pre>
+  // Run a few times after load (results often appear after clicks)
+  setTimeout(autoInject, 200);
+  setTimeout(autoInject, 800);
+  setTimeout(autoInject, 1500);
 
-    <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;">
-      <button class="btn" onclick="seedlingCopyChallenge()">Copy submission</button>
-      <button class="btn secondary" onclick="seedlingSubmitChallenge()">Submit via Email</button>
-      <button class="btn secondary" onclick="seedlingCloseChallenge()">Close</button>
-    </div>
-
-    <div style="opacity:.8; font-size:13px; margin-top:8px;">Send to: <b>${SEEDLING_EMAIL}</b></div>
-  </div>`;
-}
-
-// --- panel controls ---
-function seedlingOpenChallenge(key){
-  const c = SEEDLING_CHALLENGES[key];
-  if(!c) return;
-
-  const panel = document.getElementById("seedlingChallengePanel");
-  document.getElementById("seedlingCTitle").innerText = c.title;
-  document.getElementById("seedlingCIntro").innerText = c.intro;
-  document.getElementById("seedlingCBullets").innerHTML = c.bullets.map(x=>`<li>${x}</li>`).join("");
-  document.getElementById("seedlingCTemplate").innerText = c.template;
-
-  panel.style.display = "block";
-  panel.scrollIntoView({behavior:"smooth"});
-}
-
-function seedlingCloseChallenge(){
-  const panel = document.getElementById("seedlingChallengePanel");
-  panel.style.display = "none";
-}
-
-function seedlingCopyChallenge(){
-  const txt = document.getElementById("seedlingCTemplate").innerText;
-  navigator.clipboard.writeText(txt);
-  alert("Copied. Paste into Notes/Docs, answer in bullets, and email it.");
-}
-
-function seedlingSubmitChallenge(){
-  const subject = encodeURIComponent("Seedling Micro Challenge Submission");
-  const body = encodeURIComponent(document.getElementById("seedlingCTemplate").innerText);
-  window.location.href = `mailto:${SEEDLING_EMAIL}?subject=${subject}&body=${body}`;
-}
-
-function seedlingNotifyWorkshop(){
-  const subject = encodeURIComponent("Interested in Cybersecurity Thinking Session");
-  const body = encodeURIComponent(
-`Hi Seedling team,
-
-I completed the Seedling assessment and I would like to be notified about the next Cybersecurity Thinking Session.
-
-Name:
-Student/Graduate/Working:
-City:
-
-Thanks.`
-  );
-  window.location.href = `mailto:${SEEDLING_EMAIL}?subject=${subject}&body=${body}`;
-}
-
-/* =========================================================
-   ONE CALL: inject micro challenges into the visible results screen
-   - You call this at the end of your showResults/renderResults function
-========================================================= */
-function seedlingInjectMicroChallenges(){
-  // prevent duplicate injection
-  if(document.getElementById("seedlingMicroV13")) return;
-
-  // Find a good place: the first visible "screen/card" that contains result-like text.
-  // Strategy: pick the largest visible container in the body that has lots of text.
-  const candidates = Array.from(document.body.querySelectorAll("div, section, main"))
-    .filter(el => el.offsetParent !== null) // visible
-    .filter(el => (el.innerText || "").length > 120);
-
-  // Pick the best candidate (largest text)
-  candidates.sort((a,b)=>(b.innerText||"").length - (a.innerText||"").length);
-
-  const target = candidates[0];
-  if(!target) return;
-
-  // Append micro section at end
-  const wrap = document.createElement("div");
-  wrap.innerHTML = seedlingMicroHTML();
-
-  target.appendChild(wrap);
-}
+  // Observe DOM changes (works even if results screen is created later)
+  const obs = new MutationObserver(() => {
+    const injected = window.seedlingInjectMicroChallenges();
+    if (injected) obs.disconnect();
+  });
+  obs.observe(document.body, { childList: true, subtree: true });
+})();
 </script>
 </body>
 </html>
