@@ -1187,46 +1187,43 @@
   }
 
   // ---------- Scoring ----------
-  function finish(){
+// ---------- Scoring ----------
+function finish(){
+  // 1) Calculate scores safely
+  const score = {SE:0, AT:0, SI:0, EC:0, CE:0};
+
+  QUESTIONS.forEach(q => {
+    let value = Number(answers[q.id] || 0); // 1..4
+    if (q.reverse && value) value = 5 - value; // reverse scoring
+    score[q.dim] += value;
+  });
+
+  // 2) Pick primary + secondary
+  const dims = Object.keys(score)
+    .map(d => ({d, v: score[d]}))
+    .sort((a,b)=> b.v - a.v);
+
+  const primaryDim = dims[0]?.d || "SE";
+  const secondaryDim = dims[1]?.d || "AT";
+
+  const primaryStyle = STYLE_BY_DIM[primaryDim];
+  const secondaryStyle = STYLE_BY_DIM[secondaryDim];
+
+  // Store for rerender on language change (keep your existing key)
+  localStorage.setItem("seedling_last_result_v12",
+    JSON.stringify({primaryStyle, secondaryStyle, score})
+  );
+
+  // 3) Render results
+  renderResults(primaryStyle, secondaryStyle, score);
+
+  // 4) Show micro-challenges AFTER results render
   const mc = document.getElementById("microChallenges");
-if (mc) mc.style.display = "block";
-    document.getElementById("microChallenges").style.display = "block";
-    const score = {SE:0, AT:0, SI:0, EC:0, CE:0};
+  if (mc) mc.style.display = "block";
 
-    QUESTIONS.forEach(q => {
-      let value = answers[q.id] || 0; // 1..4
-      if(q.reverse){
-        value = 5 - value; // reverse for 4-point scale
-      }
-      score[q.dim] += value;
-    });
+  // Optional scroll
+  (document.getElementById("results") || mc)?.scrollIntoView({behavior:"smooth", block:"start"});
 
-    const dims = Object.keys(score).map(d => ({d, v: score[d]})).sort((a,b)=> b.v - a.v);
-    let primary = dims[0];
-    let secondary = dims[1];
-
-    // tie-breaker using a specific question per dimension (still simple)
-    const tieVal = primary.v;
-    const tied = dims.filter(x => x.v === tieVal);
-    if(tied.length > 1){
-      const tieQ = {SE:"Q3", AT:"Q7", SI:"Q9", EC:"Q5", CE:"Q10"};
-      tied.sort((a,b)=>{
-        const av = answers[tieQ[a.d]] || 0;
-        const bv = answers[tieQ[b.d]] || 0;
-        return bv - av;
-      });
-      primary = tied[0];
-      const remain = dims.filter(x=> x.d !== primary.d).sort((a,b)=> b.v - a.v);
-      secondary = remain[0];
-    }
-
-    const primaryStyle = STYLE_BY_DIM[primary.d];
-    const secondaryStyle = STYLE_BY_DIM[secondary.d];
-
-    // Store for rerender on language change
-    localStorage.setItem("seedling_last_result_v12", JSON.stringify({primaryStyle, secondaryStyle, score}));
-
-    renderResults(primaryStyle, secondaryStyle, score);
   }
 
   function rerenderResultsFromStored(){
