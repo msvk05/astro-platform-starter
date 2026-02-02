@@ -985,6 +985,7 @@
   function setLanguage(lang){
     currentLang = lang;
     $("langSelect").value = lang;
+    localStorage.setItem("seedling_lang_v12", lang);
     renderStaticText();
     // Update visible question/results without losing progress
     if (!document.getElementById("quiz").classList.contains("hide")) renderQuestion();
@@ -1344,6 +1345,8 @@ Thanks!`
   }
 
   // ---------- Init ----------
+  const savedLang = localStorage.getItem("seedling_lang_v12");
+if(savedLang) currentLang = savedLang;
   renderStaticText();
   $("langSelect").value = currentLang;
   updateProgress();
