@@ -1188,7 +1188,7 @@
 
   // ---------- Scoring ----------
   function finish(){
-    const mc = document.getElementById("microChallenges");
+  const mc = document.getElementById("microChallenges");
 if (mc) mc.style.display = "block";
     document.getElementById("microChallenges").style.display = "block";
     const score = {SE:0, AT:0, SI:0, EC:0, CE:0};
@@ -1447,7 +1447,18 @@ Thanks!`
     box.style.background = "rgba(255,255,255,0.06)";
 
     const h = document.createElement("h2");
-    <div id="microChallenges" style="display:none;"> 
+    <!-- Results area -->
+<div id="resultArea">
+  <!-- your result summary -->
+</div>
+
+<!-- Micro section -->
+<div id="microChallenges" style="display:none;">
+  <!-- micro cards -->
+</div>
+
+<!-- Finish button OUTSIDE -->
+<button type="button" onclick="finish()">Finish</button>
     h.innerText = "Turn Insight into Action ⚡";
     h.style.margin = "0 0 8px 0";
     h.style.fontSize = "22px";
