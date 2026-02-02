@@ -1265,7 +1265,7 @@
 
     $("learningMode").innerHTML = `<ul>${content.learning[currentLang].map(x=>`<li>${x}</li>`).join("")}</ul>`;
     $("paths").innerHTML = `<ul>${content.paths[currentLang].map(x=>`<li>${x}</li>`).join("")}</ul>`;
- seedlingInjectMicroChallenges();
+ 
   // Build share summary in current language (simple)
 const dimLinesSimple = ["SE","AT","SI","EC","CE"].map(d=>{
   const label = DIM_LABELS[d][currentLang];
