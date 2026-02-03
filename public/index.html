@@ -1,683 +1,283 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Seedling Assessment</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seedling Assessment</title>
 
-  <style>
-    :root{
-      --bg:#0b1220;
-      --card:rgba(255,255,255,0.06);
-      --border:rgba(255,255,255,0.10);
-      --text:#eaf0ff;
-      --muted:rgba(234,240,255,0.72);
-      --btn:#2d6cff;
-      --btn2:rgba(255,255,255,0.10);
-      --good:rgba(34,197,94,0.15);
-      --goodb:rgba(34,197,94,0.35);
-    }
+<style>
+body{
+  margin:0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
+  background:#0e1628;
+  color:#eef2ff;
+}
+.container{
+  max-width:900px;
+  margin:auto;
+  padding:20px;
+}
+.card{
+  background:#121c34;
+  border:1px solid #233055;
+  border-radius:16px;
+  padding:20px;
+  margin-bottom:18px;
+}
+.hide{display:none}
 
-    body{
-      margin:0;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      background: radial-gradient(1200px 700px at 30% 0%, #122145 0%, var(--bg) 50%, #070b14 100%);
-      color:var(--text);
-    }
+h1{font-size:38px;margin:0}
+h2{font-size:26px;margin:0}
+h3{font-size:20px;margin:0}
+p{color:#c7d2fe;line-height:1.5}
 
-    .wrap{
-      max-width: 920px;
-      margin: 0 auto;
-      padding: 16px;
-    }
+.btn{
+  background:#3b82f6;
+  color:white;
+  border:none;
+  padding:12px 18px;
+  border-radius:12px;
+  font-size:16px;
+  font-weight:700;
+  cursor:pointer;
+}
+.btn.secondary{
+  background:#1f2a44;
+  border:1px solid #334155;
+}
 
-    .card{
-      background: var(--card);
-      border:1px solid var(--border);
-      border-radius: 16px;
-      padding: 16px;
-      margin: 12px 0;
-      backdrop-filter: blur(8px);
-    }
+.progress{
+  height:10px;
+  background:#1f2a44;
+  border-radius:20px;
+  overflow:hidden;
+}
+.bar{
+  height:100%;
+  width:0%;
+  background:linear-gradient(90deg,#22c55e,#3b82f6);
+}
 
-    h1{font-size:32px; margin:0 0 6px;}
-    h2{font-size:22px; margin:0 0 10px;}
-    h3{font-size:18px; margin:0 0 8px;}
-    h4{font-size:15px; margin:10px 0 6px;}
+.answers{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin-top:14px;
+}
+.answer{
+  background:#1b2540;
+  border:1px solid #334155;
+  padding:14px;
+  border-radius:14px;
+  cursor:pointer;
+  font-weight:600;
+}
+.answer.selected{
+  border:2px solid #60a5fa;
+  background:#1e3a8a;
+}
 
-    .muted{color:var(--muted); font-size:14px; line-height:1.45;}
-    .row{display:flex; gap:10px; flex-wrap:wrap; align-items:center;}
-    .space{height:8px;}
+ul{padding-left:20px;color:#c7d2fe}
+.section-title{margin-top:16px}
 
-    .btn{
-      background: var(--btn);
-      color:#fff;
-      border:none;
-      padding:10px 14px;
-      border-radius: 12px;
-      cursor:pointer;
-      font-weight:700;
-    }
-
-    .btn.secondary{
-      background: var(--btn2);
-      border:1px solid var(--border);
-      color:var(--text);
-      font-weight:700;
-    }
-
-    .btn.ghost{
-      background: transparent;
-      border:1px solid var(--border);
-      color:var(--text);
-      font-weight:700;
-    }
-
-    .pill{
-      display:inline-block;
-      border:1px solid var(--border);
-      padding:4px 10px;
-      border-radius:999px;
-      font-size:12px;
-      color:var(--muted);
-    }
-
-    .progress{
-      height:10px;
-      border-radius:999px;
-      background: rgba(255,255,255,0.08);
-      overflow:hidden;
-      border:1px solid var(--border);
-    }
-    .bar{
-      height:100%;
-      width:0%;
-      background: linear-gradient(90deg, #2d6cff, #4fd1ff);
-      border-radius:999px;
-    }
-
-    .answers{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:10px;
-      margin-top: 12px;
-    }
-    @media (max-width:700px){
-      .answers{grid-template-columns:1fr;}
-      h1{font-size:28px;}
-    }
-
-    .ansBtn{
-      padding:12px;
-      border-radius:14px;
-      border:1px solid var(--border);
-      background: rgba(0,0,0,0.18);
-      color: var(--text);
-      cursor:pointer;
-      font-weight:700;
-      text-align:left;
-    }
-    .ansBtn:hover{background: rgba(255,255,255,0.08);}
-
-    .copybox{
-      white-space:pre-wrap;
-      background: rgba(255,255,255,0.06);
-      border:1px solid var(--border);
-      padding: 12px;
-      border-radius: 12px;
-      font-size: 13px;
-      color: var(--text);
-    }
-
-    .grid2{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:12px;
-    }
-    @media (max-width:700px){
-      .grid2{grid-template-columns:1fr;}
-    }
-
-    .greenCard{
-      background: var(--good);
-      border:1px solid var(--goodb);
-    }
-
-    .hide{display:none;}
-  </style>
+.micro{
+  background:#0f1b33;
+  border:1px dashed #3b82f6;
+  padding:14px;
+  border-radius:14px;
+  margin-top:14px;
+}
+</style>
 </head>
 
 <body>
-  <div class="wrap">
+<div class="container">
 
-    <!-- HOME -->
-    <div class="card" id="homeCard">
-      <div class="row" style="justify-content:space-between;">
-        <div class="pill">Seedling v1.3</div>
-        <div class="pill">10 Questions • 2–3 minutes</div>
-      </div>
+<!-- HOME -->
+<div class="card" id="home">
+  <h1>Seedling Reflection</h1>
+  <p>
+    A short self-reflection to understand how you naturally think, work, and grow.
+    This is <b>not an exam</b>. There are no right or wrong answers.
+  </p>
+  <p>
+    In 3 minutes, you’ll get a clear work-style report, mindset insights,
+    and optional real-world challenges.
+  </p>
+  <button class="btn" onclick="start()">Start Assessment</button>
+</div>
 
-      <div class="space"></div>
-      <h1>Seedling Reflection</h1>
-      <div class="muted">
-        A short self-reflection to understand how you naturally think, work, and grow.
-        At the end you’ll get a clean work-style summary + optional micro challenges to try.
-      </div>
+<!-- QUIZ -->
+<div class="card hide" id="quiz">
+  <div id="qCounter"></div>
+  <div class="progress"><div class="bar" id="bar"></div></div>
+  <h2 id="question" style="margin-top:14px"></h2>
+  <p id="tip"></p>
 
-      <div class="space"></div>
-      <button class="btn" onclick="start()">Start Assessment</button>
-    </div>
-
-    <!-- QUIZ -->
-    <div class="card hide" id="quizCard">
-      <div class="row" style="justify-content:space-between;">
-        <div class="pill" id="qCounter">Question 1/10</div>
-        <div class="pill" id="qDim"></div>
-      </div>
-
-      <div class="space"></div>
-      <div class="progress"><div class="bar" id="bar"></div></div>
-
-      <div class="space"></div>
-      <h2 id="qText">Question text</h2>
-      <div class="muted" id="qTip"></div>
-
-      <div class="answers">
-        <button class="ansBtn" onclick="selectAnswer(1)">No</button>
-        <button class="ansBtn" onclick="selectAnswer(2)">Not really</button>
-        <button class="ansBtn" onclick="selectAnswer(3)">Mostly</button>
-        <button class="ansBtn" onclick="selectAnswer(4)">Yes</button>
-      </div>
-
-      <div class="space"></div>
-      <div class="row" style="justify-content:space-between;">
-        <button class="btn ghost" onclick="back()">Back</button>
-        <button class="btn secondary" id="nextBtn" onclick="next()">Next</button>
-      </div>
-    </div>
-
-    <!-- RESULTS -->
-    <div class="card hide" id="resultsCard">
-      <div class="row" style="justify-content:space-between;">
-        <div class="pill">Your Result</div>
-        <div class="pill" id="resultTag"></div>
-      </div>
-
-      <div class="space"></div>
-      <h2 id="resultTitle"></h2>
-      <div class="muted" id="resultDesc"></div>
-
-      <div class="space"></div>
-      <h4>What this means (simple)</h4>
-      <ul class="muted" id="resultBullets"></ul>
-
-      <div class="space"></div>
-      <h4>Your life patterns (based on answers)</h4>
-      <ul class="muted" id="lifePatterns"></ul>
-
-      <div class="space"></div>
-      <h4>Score snapshot</h4>
-      <div class="muted" id="scoreLine"></div>
-
-      <div class="space"></div>
-      <div class="row">
-        <button class="btn secondary" onclick="restart()">Retake</button>
-      </div>
-    </div>
-
-    <!-- MICRO CHALLENGES (hidden until finish) -->
-    <div class="card hide" id="microChallenges">
-      <h2>Turn Insight into Action ⚡</h2>
-      <div class="muted">
-        Optional • Pick ONE micro challenge • Finish in 2–5 minutes • Bullet points are enough.
-      </div>
-
-      <div class="space"></div>
-
-      <div class="grid2">
-        <div class="card" style="margin:0;">
-          <h3>🛡️ Social App Safety</h3>
-          <div class="muted">Pick any app you use daily. Spot 1 risk + 1 simple fix.</div>
-          <div class="space"></div>
-          <button class="btn secondary" onclick="openChallenge('social')">Open</button>
-        </div>
-
-        <div class="card" style="margin:0;">
-          <h3>🤖 AI Thinking</h3>
-          <div class="muted">Pick a real problem. Explain how AI could help (logic, not code).</div>
-          <div class="space"></div>
-          <button class="btn secondary" onclick="openChallenge('ai')">Open</button>
-        </div>
-
-        <div class="card" style="margin:0;">
-          <h3>🏙️ Civic Sense</h3>
-          <div class="muted">Observe around you. Note 1 issue + 1 practical improvement.</div>
-          <div class="space"></div>
-          <button class="btn secondary" onclick="openChallenge('civic')">Open</button>
-        </div>
-
-        <div class="card" style="margin:0;">
-          <h3>🔐 Cyber Basics</h3>
-          <div class="muted">Pick a system (UPI/Gmail). Write 1 risk + 1 protection.</div>
-          <div class="space"></div>
-          <button class="btn secondary" onclick="openChallenge('cyber')">Open</button>
-        </div>
-      </div>
-
-      <div class="space"></div>
-
-      <!-- Workshop CTA -->
-      <div class="card greenCard">
-        <h3>Join a Cybersecurity Workshop (Industry Experts) 🛡️</h3>
-        <div class="muted">
-          Informal, beginner-friendly sessions where experts share how they think about real-world security.
-          No hacking. Simple language.
-        </div>
-        <div class="space"></div>
-        <button class="btn secondary" onclick="notifyWorkshop()">Email: I'm Interested</button>
-      </div>
-
-      <!-- Challenge Panel -->
-      <div class="card" id="challengePanel" style="display:none;">
-        <h3 id="cTitle"></h3>
-        <div class="muted" id="cIntro"></div>
-        <div class="space"></div>
-        <ul class="muted" id="cContent"></ul>
-
-        <h4>Submission (copy & fill)</h4>
-        <div class="copybox" id="cTemplate"></div>
-
-        <div class="space"></div>
-        <div class="row">
-          <button class="btn" onclick="copyChallenge()">Copy</button>
-          <button class="btn secondary" onclick="submitChallenge()">Submit via Email</button>
-          <button class="btn ghost" onclick="closeChallenge()">Close</button>
-        </div>
-      </div>
-    </div>
-
+  <div class="answers">
+    <div class="answer" id="a1" onclick="select(1)">No</div>
+    <div class="answer" id="a2" onclick="select(2)">Not really</div>
+    <div class="answer" id="a3" onclick="select(3)">Mostly yes</div>
+    <div class="answer" id="a4" onclick="select(4)">Yes</div>
   </div>
 
+  <div style="margin-top:14px;display:flex;justify-content:space-between">
+    <button class="btn secondary" onclick="back()">Back</button>
+    <button class="btn" onclick="next()">Next</button>
+  </div>
+</div>
+
+<!-- RESULTS -->
+<div class="card hide" id="results">
+  <h2 id="resTitle"></h2>
+  <p id="resWhy"></p>
+
+  <h3 class="section-title">Strengths</h3>
+  <ul id="resStrengths"></ul>
+
+  <h3 class="section-title">Watch-outs</h3>
+  <ul id="resWatch"></ul>
+
+  <h3 class="section-title">Superhero mindset</h3>
+  <p id="resHero"></p>
+
+  <h3 class="section-title">Your life patterns</h3>
+  <ul id="resPatterns"></ul>
+
+  <h3 class="section-title">Next 7-day focus</h3>
+  <ul id="resPlan"></ul>
+
+  <button class="btn secondary" onclick="restart()">Retake</button>
+
+  <!-- MICRO CHALLENGES -->
+  <div class="micro">
+    <h3>Turn Insight into Action ⚡</h3>
+    <p>Pick ONE challenge. 5 minutes is enough.</p>
+    <ul>
+      <li>Pick an app you use daily → identify 1 security risk + 1 fix</li>
+      <li>Observe one civic issue today → suggest one improvement</li>
+      <li>Pick a problem → explain how AI could help (logic only)</li>
+    </ul>
+    <p><b>Optional:</b> Join our Cybersecurity workshop  
+    → <b>seedling.community@gmail.com</b></p>
+  </div>
+</div>
+
+</div>
+
 <script>
-  // ---------------------------
-  // Seedling v1.3 (single file)
-  // ---------------------------
+const QUESTIONS = [
+ {q:"I like taking responsibility when things are unclear.", d:"Executive", r:false, tip:"Hanuman mindset: step up when others wait."},
+ {q:"I check facts before believing something.", d:"Analyst", r:false, tip:"Iron Man mindset: facts before action."},
+ {q:"I often start things without thinking.", d:"Executive", r:true, tip:"Pause → plan → act."},
+ {q:"I care about how my words affect others.", d:"Builder", r:false, tip:"Wonder Woman mindset: kind + strong."},
+ {q:"I avoid talking to new people.", d:"Connector", r:true, tip:"Spider-Man mindset: connection builds growth."},
+ {q:"I enjoy trying new approaches.", d:"Explorer", r:false, tip:"Explorer mindset: experiment wisely."},
+ {q:"I prefer easy answers over deep thinking.", d:"Analyst", r:true, tip:"Depth builds mastery."},
+ {q:"I stay silent to avoid conflict.", d:"Builder", r:true, tip:"Courage is calm honesty."},
+ {q:"I speak up when it matters.", d:"Connector", r:false, tip:"Your voice matters."},
+ {q:"I start many things but don’t finish.", d:"Explorer", r:true, tip:"Finish one thing today."}
+];
 
-  // Questions: 10 items
-  // dims: SE, AT, SI, EC, CE
-  // reverse: true means reverse scoring on 1..4 scale
-  // tip: simple, short
+const REPORT = {
+ Executive:{
+  title:"Executive (Action + Ownership)",
+  why:"You naturally take charge and push work to completion.",
+  strengths:["Strong ownership","Execution focused","Handles pressure"],
+  watch:["May rush others","May over-control"],
+  hero:"Hanuman — strength used in service.",
+  patterns:["Likes structure","Dislikes ambiguity"],
+  plan:["Finish one task fully","Delegate one thing"]
+ },
+ Analyst:{
+  title:"Analyst (Logic + Depth)",
+  why:"You rely on reasoning and understanding.",
+  strengths:["Deep thinking","Risk awareness"],
+  watch:["Overthinking","Decision delay"],
+  hero:"Iron Man — build, test, improve.",
+  patterns:["Checks facts","Learns deeply"],
+  plan:["Time-box decisions","Act after one fact"]
+ },
+ Connector:{
+  title:"Connector (People + Voice)",
+  why:"You grow through communication and influence.",
+  strengths:["Relationship builder","Clear communicator"],
+  watch:["Distraction","Avoiding tough talks"],
+  hero:"Spider-Man — responsibility with connection.",
+  patterns:["Learns socially","Influences groups"],
+  plan:["Start one useful conversation","Say no once"]
+ },
+ Builder:{
+  title:"Builder (Trust + Care)",
+  why:"You value fairness and teamwork.",
+  strengths:["Empathy","Reliability"],
+  watch:["Avoids conflict","Over-helping"],
+  hero:"Wonder Woman — kind and strong.",
+  patterns:["Supports others","Values harmony"],
+  plan:["Speak one honest thing","Set one boundary"]
+ },
+ Explorer:{
+  title:"Explorer (Curiosity + Experiment)",
+  why:"You learn by trying and exploring.",
+  strengths:["Adaptable","Creative"],
+  watch:["Low follow-through","Restlessness"],
+  hero:"Superman — aim high, stay grounded.",
+  patterns:["Seeks novelty","Learns by doing"],
+  plan:["Finish one thing","Limit experiments"]
+ }
+};
 
-  const QUESTIONS = [
-    { id:"Q1",  dim:"SE", reverse:false, text:"I like taking responsibility when things are unclear.", tip:"Leader mindset: take ownership when others wait."},
-    { id:"Q2",  dim:"AT", reverse:false, text:"I enjoy understanding how things work.", tip:"Curious mindset: ask “why” before “how”."},
-    { id:"Q3",  dim:"SE", reverse:true,  text:"I often start without thinking and fix later.", tip:"Smart execution means pause → plan → act."},          // reverse
-    { id:"Q4",  dim:"EC", reverse:false, text:"I care about how my actions affect others.", tip:"Strong people protect trust and respect."},
-    { id:"Q5",  dim:"SI", reverse:true,  text:"I avoid talking to new people even when it helps me.", tip:"Growth happens outside comfort."},         // reverse
-    { id:"Q6",  dim:"CE", reverse:false, text:"I like trying new approaches.", tip:"Explorer mindset: experiment, learn, improve."},
-    { id:"Q7",  dim:"AT", reverse:true,  text:"I don’t like thinking deeply; I prefer easy answers.", tip:"Depth builds real skill."},               // reverse
-    { id:"Q8",  dim:"EC", reverse:true,  text:"I don’t care much about others’ feelings.", tip:"Empathy is a superpower in teams."},                // reverse
-    { id:"Q9",  dim:"SI", reverse:false, text:"I can speak up when it’s important.", tip:"Confidence is a habit. Start small."},
-    { id:"Q10", dim:"CE", reverse:true,  text:"I get bored quickly and stop when things get hard.", tip:"Consistency beats motivation."}             // reverse
-  ];
+let i=0, answers={};
 
-  // Dimension labels (for UI)
-  const DIM_LABEL = {
-    SE: "Structure & Execution",
-    AT: "Analytical Thinking",
-    SI: "Social Initiative",
-    EC: "Empathy & Cooperation",
-    CE: "Curiosity & Experimentation"
-  };
+function start(){
+ document.getElementById("home").classList.add("hide");
+ document.getElementById("quiz").classList.remove("hide");
+ render();
+}
+function render(){
+ const q=QUESTIONS[i];
+ document.getElementById("qCounter").innerText=`Question ${i+1}/10`;
+ document.getElementById("question").innerText=q.q;
+ document.getElementById("tip").innerText=q.tip;
+ document.getElementById("bar").style.width=`${i*10}%`;
+ ["a1","a2","a3","a4"].forEach(id=>document.getElementById(id).classList.remove("selected"));
+ if(answers[i]) document.getElementById("a"+answers[i]).classList.add("selected");
+}
+function select(v){
+ answers[i]=v;
+ render();
+}
+function next(){
+ if(!answers[i]) return alert("Select one option");
+ if(i<9){i++;render();} else finish();
+}
+function back(){ if(i>0){i--;render();} }
 
-  // Style mapping (same 5-type concept)
-  const STYLE_BY_DIM = {
-    SE: "Executive",
-    AT: "Analyst",
-    SI: "Connector",
-    EC: "Builder",
-    CE: "Explorer"
-  };
+function finish(){
+ document.getElementById("quiz").classList.add("hide");
+ document.getElementById("results").classList.remove("hide");
 
-  // Simple style descriptions
-  const STYLE_TEXT = {
-    Executive: {
-      title:"Executive (Action + Ownership)",
-      desc:"You like clarity, responsibility, and getting things done. People trust you with important work.",
-      bullets:["You take ownership when others wait","You prefer clear steps and structure","You can handle pressure and move forward"],
-      patterns:["You like plans and deadlines","You feel responsible for outcomes","You prefer clarity over confusion"]
-    },
-    Analyst: {
-      title:"Analyst (Depth + Logic)",
-      desc:"You learn by understanding. You like patterns, details, and improving decisions with logic.",
-      bullets:["You ask ‘why’ and ‘how’ naturally","You spot gaps others miss","You make better decisions with data/logic"],
-      patterns:["You think before you act","You enjoy learning deeply","You notice patterns in systems"]
-    },
-    Connector: {
-      title:"Connector (Voice + Influence)",
-      desc:"You grow through people. You speak up when it matters and build strong networks over time.",
-      bullets:["You can influence and communicate","You build relationships for growth","You learn faster through conversations"],
-      patterns:["You gain energy from interaction","You speak up when needed","You help teams move together"]
-    },
-    Builder: {
-      title:"Builder (Care + Reliability)",
-      desc:"You care about trust, teamwork, and doing the right thing. People feel safe working with you.",
-      bullets:["You build trust through consistency","You notice how decisions affect others","You keep teams stable and respectful"],
-      patterns:["You value harmony and trust","You support others quietly","You notice emotions in a room"]
-    },
-    Explorer: {
-      title:"Explorer (Curiosity + Experiment)",
-      desc:"You like new ideas and new approaches. You learn by trying and improving.",
-      bullets:["You enjoy experimenting","You adapt quickly to change","You learn by doing and reflecting"],
-      patterns:["You seek variety and growth","You like trying new methods","You learn best through action"]
-    }
-  };
+ let score={Executive:0,Analyst:0,Connector:0,Builder:0,Explorer:0};
+ QUESTIONS.forEach((q,idx)=>{
+   let v=answers[idx];
+   if(q.r) v=5-v;
+   score[q.d]+=v;
+ });
+ let type=Object.keys(score).sort((a,b)=>score[b]-score[a])[0];
+ let r=REPORT[type];
 
-  // Micro challenges
-  const CHALLENGES = {
-    social:{
-      title:"🛡️ Social App Safety",
-      intro:"Pick one app you use daily (Instagram/Snapchat/WhatsApp). No hacking. Just thinking.",
-      content:[
-        "Which app did you choose and why do people use it most?",
-        "What personal info users share without thinking?",
-        "One common mistake users make",
-        "One misuse that can happen",
-        "ONE risk you will focus on (why?)",
-        "ONE simple rule/feature that reduces it",
-        "What did you learn about yourself?"
-      ],
-      template:
-`Seedling Micro Challenge – Social App Safety
-
-App chosen:
-Main risk:
-Why it matters:
-One improvement:
-What I learned:`
-    },
-    ai:{
-      title:"🤖 AI Thinking",
-      intro:"Pick a real problem and explain how AI could help (logic, not code).",
-      content:[
-        "What problem did you choose? Who is affected?",
-        "How could AI help (simple logic)?",
-        "What data would be needed?",
-        "One risk/limitation",
-        "One improvement idea",
-        "What did you learn about yourself?"
-      ],
-      template:
-`Seedling Micro Challenge – AI Thinking
-
-Problem chosen:
-How AI could help:
-Data needed:
-One risk:
-One improvement:
-What I learned:`
-    },
-    civic:{
-      title:"🏙️ Civic Sense",
-      intro:"Observe around you. Find one issue and suggest one practical improvement.",
-      content:[
-        "Where did you observe (street/college/home area)?",
-        "What is the issue?",
-        "Who is affected most?",
-        "One practical improvement",
-        "Why this improvement matters",
-        "What did you learn about yourself?"
-      ],
-      template:
-`Seedling Micro Challenge – Civic Sense
-
-Place:
-Issue:
-Affected:
-Improvement:
-Why it matters:
-What I learned:`
-    },
-    cyber:{
-      title:"🔐 Cyber Basics",
-      intro:"Pick a system (UPI/Gmail/College portal). Think like a security person. No tools.",
-      content:[
-        "Which system did you choose?",
-        "What sensitive data does it store?",
-        "One human mistake users make",
-        "One design/system mistake",
-        "ONE highest risk (why?)",
-        "ONE simple protection rule",
-        "What did you learn about yourself?"
-      ],
-      template:
-`Seedling Micro Challenge – Cyber Basics
-
-System:
-Main risk:
-Why it matters:
-Protection idea:
-What I learned:`
-    }
-  };
-
-  // ---------------------------
-  // State
-  // ---------------------------
-  let idx = 0;
-  let answers = {}; // {Q1:1..4}
-
-  function start(){
-    document.getElementById("homeCard").classList.add("hide");
-    document.getElementById("quizCard").classList.remove("hide");
-    document.getElementById("resultsCard").classList.add("hide");
-
-    // Always hide micro during quiz
-    document.getElementById("microChallenges").classList.add("hide");
-    document.getElementById("challengePanel").style.display = "none";
-
-    idx = 0;
-    answers = {};
-    localStorage.removeItem("seedling_answers_v13");
-    renderQuestion();
-  }
-
-  function renderQuestion(){
-    // hide micro challenges during questions
-    document.getElementById("microChallenges").classList.add("hide");
-
-    const q = QUESTIONS[idx];
-    document.getElementById("qCounter").innerText = `Question ${idx+1}/${QUESTIONS.length}`;
-    document.getElementById("qDim").innerText = DIM_LABEL[q.dim] || q.dim;
-    document.getElementById("qText").innerText = q.text;
-    document.getElementById("qTip").innerText = q.tip;
-
-    // progress
-    const pct = Math.round(((idx) / (QUESTIONS.length)) * 100);
-    document.getElementById("bar").style.width = `${pct}%`;
-
-    // next button label
-    document.getElementById("nextBtn").innerText = (idx === QUESTIONS.length - 1) ? "Finish" : "Next";
-  }
-
-  function selectAnswer(value){
-    const q = QUESTIONS[idx];
-    answers[q.id] = value;
-    localStorage.setItem("seedling_answers_v13", JSON.stringify(answers));
-  }
-
-  function next(){
-    // must answer before moving
-    const q = QUESTIONS[idx];
-    if(!answers[q.id]){
-      alert("Please select one option.");
-      return;
-    }
-
-    if(idx < QUESTIONS.length - 1){
-      idx++;
-      renderQuestion();
-    }else{
-      finish();
-    }
-  }
-
-  function back(){
-    if(idx > 0){
-      idx--;
-      renderQuestion();
-    }
-  }
-
-  // ---------- Scoring + Finish ----------
-  function finish(){
-    // Calculate scores safely
-    const score = {SE:0, AT:0, SI:0, EC:0, CE:0};
-
-    QUESTIONS.forEach(q => {
-      let value = Number(answers[q.id] || 0); // 1..4
-      if(q.reverse && value) value = 5 - value;
-      score[q.dim] += value;
-    });
-
-    // Rank dimensions
-    const dims = Object.keys(score)
-      .map(d => ({d, v: score[d]}))
-      .sort((a,b)=> b.v - a.v);
-
-    let primary = dims[0];
-    let secondary = dims[1];
-
-    // Tie-breaker using specific question per dimension (your existing approach)
-    const tieVal = primary.v;
-    const tied = dims.filter(x => x.v === tieVal);
-    if(tied.length > 1){
-      const tieQ = {SE:"Q3", AT:"Q7", SI:"Q9", EC:"Q5", CE:"Q10"};
-      tied.sort((a,b)=>{
-        const av = Number(answers[tieQ[a.d]] || 0);
-        const bv = Number(answers[tieQ[b.d]] || 0);
-        return bv - av;
-      });
-      primary = tied[0];
-      const remain = dims.filter(x=> x.d !== primary.d).sort((a,b)=> b.v - a.v);
-      secondary = remain[0];
-    }
-
-    const primaryStyle = STYLE_BY_DIM[primary.d];
-    const secondaryStyle = STYLE_BY_DIM[secondary.d];
-
-    // Store for rerender later if needed
-    localStorage.setItem("seedling_last_result_v12",
-      JSON.stringify({primaryStyle, secondaryStyle, score})
-    );
-
-    renderResults(primaryStyle, secondaryStyle, score);
-
-    // Show micro challenges ONLY AFTER results render
-    document.getElementById("microChallenges").classList.remove("hide");
-    document.getElementById("microChallenges").scrollIntoView({behavior:"smooth", block:"start"});
-  }
-
-  function renderResults(primaryStyle, secondaryStyle, score){
-    document.getElementById("quizCard").classList.add("hide");
-    document.getElementById("resultsCard").classList.remove("hide");
-
-    const style = STYLE_TEXT[primaryStyle] || STYLE_TEXT.Executive;
-
-    document.getElementById("resultTag").innerText = `Primary: ${primaryStyle} • Secondary: ${secondaryStyle}`;
-    document.getElementById("resultTitle").innerText = style.title;
-    document.getElementById("resultDesc").innerText = style.desc;
-
-    const bullets = document.getElementById("resultBullets");
-    bullets.innerHTML = "";
-    style.bullets.forEach(b=>{
-      const li = document.createElement("li");
-      li.innerText = b;
-      bullets.appendChild(li);
-    });
-
-    const patterns = document.getElementById("lifePatterns");
-    patterns.innerHTML = "";
-    style.patterns.forEach(p=>{
-      const li = document.createElement("li");
-      li.innerText = p;
-      patterns.appendChild(li);
-    });
-
-    // score snapshot line
-    const line = `SE:${score.SE} • AT:${score.AT} • SI:${score.SI} • EC:${score.EC} • CE:${score.CE}`;
-    document.getElementById("scoreLine").innerText = line;
-  }
-
-  function restart(){
-    document.getElementById("homeCard").classList.remove("hide");
-    document.getElementById("quizCard").classList.add("hide");
-    document.getElementById("resultsCard").classList.add("hide");
-    document.getElementById("microChallenges").classList.add("hide");
-    document.getElementById("challengePanel").style.display = "none";
-    idx = 0;
-    answers = {};
-  }
-
-  // ---------------------------
-  // Micro challenge panel actions
-  // ---------------------------
-  function openChallenge(key){
-    const c = CHALLENGES[key];
-    if(!c) return;
-
-    document.getElementById("cTitle").innerText = c.title;
-    document.getElementById("cIntro").innerText = c.intro;
-
-    const ul = document.getElementById("cContent");
-    ul.innerHTML = "";
-    c.content.forEach(x=>{
-      const li = document.createElement("li");
-      li.innerText = x;
-      ul.appendChild(li);
-    });
-
-    document.getElementById("cTemplate").innerText = c.template;
-    document.getElementById("challengePanel").style.display = "block";
-    document.getElementById("challengePanel").scrollIntoView({behavior:"smooth"});
-  }
-
-  function closeChallenge(){
-    document.getElementById("challengePanel").style.display = "none";
-  }
-
-  function copyChallenge(){
-    const txt = document.getElementById("cTemplate").innerText;
-    navigator.clipboard.writeText(txt).then(()=>{
-      alert("Copied!");
-    }).catch(()=>{
-      alert("Copy failed. You can manually select and copy.");
-    });
-  }
-
-  function submitChallenge(){
-    const subject = encodeURIComponent("Seedling Micro Challenge Submission");
-    const body = encodeURIComponent(document.getElementById("cTemplate").innerText);
-    window.location.href = `mailto:seedling.community@gmail.com?subject=${subject}&body=${body}`;
-  }
-
-  function notifyWorkshop(){
-    const subject = encodeURIComponent("Seedling Workshop — I'm interested");
-    const body = encodeURIComponent(
-`Hi Seedling Team,
-
-I completed the Seedling Assessment and I'm interested in joining the Cybersecurity workshop.
-
-Name:
-City:
-Student/Working:
-Preferred language (EN/HI/TE):
-
-Thanks!`
-    );
-    window.location.href = `mailto:seedling.community@gmail.com?subject=${subject}&body=${body}`;
-  }
-
+ document.getElementById("resTitle").innerText=r.title;
+ document.getElementById("resWhy").innerText=r.why;
+ fill("resStrengths",r.strengths);
+ fill("resWatch",r.watch);
+ document.getElementById("resHero").innerText=r.hero;
+ fill("resPatterns",r.patterns);
+ fill("resPlan",r.plan);
+}
+function fill(id,list){
+ document.getElementById(id).innerHTML=list.map(x=>`<li>${x}</li>`).join("");
+}
+function restart(){location.reload();}
 </script>
 </body>
 </html>
