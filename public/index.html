@@ -6,1319 +6,1602 @@
   <title>Seedling Assessment</title>
   <style>
     :root{
-      --bg:#f6f7fb;
-      --card:#ffffff;
-      --card2:#f1f4ff;
-      --border:#e6e8f2;
-      --text:#0f172a;
-      --muted:#5b6477;
-      --blue:#4f6cf7;
-      --blue2:#2e4fe6;
-      --good:#16a34a;
-      --warn:#f59e0b;
-      --bad:#ef4444;
-      --shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
-      --radius: 16px;
+      --bg:#0b1220;
+      --card:#121c31;
+      --card2:#0f172a;
+      --text:#e8eefc;
+      --muted:#b7c3e6;
+      --line:rgba(255,255,255,.10);
+      --accent:#6ee7ff;
+      --accent2:#a78bfa;
+      --btn:#1f2a44;
+      --btn2:#203253;
+      --ok:#34d399;
+      --warn:#fbbf24;
     }
     *{box-sizing:border-box}
     body{
       margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
-      background: var(--bg);
-      color: var(--text);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      background: radial-gradient(1200px 900px at 20% 0%, rgba(110,231,255,.14), transparent 60%),
+                  radial-gradient(1000px 800px at 90% 10%, rgba(167,139,250,.14), transparent 60%),
+                  var(--bg);
+      color:var(--text);
+      line-height:1.45;
     }
-    .wrap{max-width:980px;margin:0 auto;padding:26px 16px 80px;}
-    .topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px;}
-    .brand{display:flex;align-items:center;gap:10px;}
-    .logo{
-      width:40px;height:40px;border-radius:12px;
-      background: linear-gradient(135deg, #4f6cf7, #22c55e);
-      box-shadow: var(--shadow);
+    .wrap{max-width:920px;margin:0 auto;padding:20px 16px 80px}
+    .topbar{
+      display:flex;align-items:center;justify-content:space-between;gap:12px;
+      padding:12px 14px;border:1px solid var(--line);border-radius:16px;
+      background:rgba(18,28,49,.55);backdrop-filter: blur(10px);
+      position:sticky;top:10px;z-index:5;
     }
-    .titleBig{
-      font-size:40px;
-      margin:0;
-      line-height:1.08;
-      letter-spacing:-0.4px;
-    }
-    .subtitle{
-      margin:8px 0 0;
-      color: var(--muted);
-      font-size:17px;
-      max-width:720px;
-    }
-    .lang{display:flex;align-items:center;gap:10px;}
-    select{
-      padding:10px 12px;border:1px solid var(--border);
-      border-radius:12px;background:white;cursor:pointer;
+    .brand{display:flex;align-items:center;gap:10px}
+    .dot{width:10px;height:10px;border-radius:99px;background:linear-gradient(90deg,var(--accent),var(--accent2))}
+    .brand b{letter-spacing:.2px}
+    .lang{
+      background:rgba(255,255,255,.06);
+      border:1px solid var(--line);
+      color:var(--text);
+      padding:8px 10px;
+      border-radius:12px;
+      outline:none;
     }
     .card{
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding:18px;
-      box-shadow: var(--shadow);
-      margin-top:14px;
+      background:rgba(18,28,49,.55);
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.22);
     }
-    .card.soft{
-      background: var(--card2);
-      box-shadow:none;
+    .hero{margin-top:16px;padding:22px}
+    h1{margin:0 0 8px;font-size:34px;line-height:1.1}
+    h2{margin:0 0 6px;font-size:22px}
+    h3{margin:0 0 8px;font-size:18px}
+    p{margin:0 0 10px}
+    .sub{color:var(--muted);font-size:15px}
+    .muted{color:var(--muted)}
+    .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+    .btn{
+      border:1px solid var(--line);
+      background:linear-gradient(180deg, rgba(255,255,255,.09), rgba(255,255,255,.05));
+      color:var(--text);
+      padding:10px 12px;border-radius:14px;
+      cursor:pointer;
+      font-weight:600;
     }
-    .row{display:flex;gap:14px;flex-wrap:wrap}
-    .col{flex:1;min-width:260px}
+    .btn:hover{filter:brightness(1.08)}
+    .btn.secondary{background:rgba(255,255,255,.06)}
+    .btn.ghost{background:transparent}
     .pill{
       display:inline-flex;align-items:center;gap:8px;
-      padding:8px 12px;border-radius:999px;
-      border:1px solid var(--border);
-      background:white;color:var(--muted);
-      font-size:13px;
+      padding:6px 10px;border-radius:999px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.05);
+      color:var(--muted);font-size:13px
     }
-    .btn{
-      appearance:none;border:none;cursor:pointer;
-      background: var(--blue);
-      color:white;font-weight:800;
-      padding:12px 16px;border-radius:12px;
-      transition: transform .08s ease, background .2s ease;
-    }
-    .btn:hover{background: var(--blue2)}
-    .btn:active{transform: translateY(1px)}
-    .btn.secondary{
-      background:white;color:var(--text);
-      border:1px solid var(--border);
-      font-weight:800;
-    }
-    .btn.ghost{
-      background:transparent;border:1px dashed var(--border);
-      color:var(--muted);
-      font-weight:800;
-    }
-    .btn.small{padding:9px 12px;font-size:13px;border-radius:10px}
-    .btn:disabled{opacity:.55;cursor:not-allowed;transform:none}
-    .muted{color:var(--muted)}
-    .divider{height:1px;background:var(--border);margin:12px 0}
-
+    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    @media (max-width:720px){.grid2{grid-template-columns:1fr}}
+    .hr{height:1px;background:var(--line);margin:14px 0}
+    .qwrap{margin-top:16px}
     .progress{
-      height:10px;border-radius:999px;background:#e9ecf7;overflow:hidden;
-      border:1px solid var(--border);
+      height:10px;background:rgba(255,255,255,.07);
+      border:1px solid var(--line);
+      border-radius:999px;overflow:hidden;
     }
-    .bar{height:100%;width:0%;background:linear-gradient(90deg,#22c55e,#4f6cf7)}
-    .qHead{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap}
-    .qTitle{font-size:22px;margin:6px 0 6px;line-height:1.25}
-    .qTag{font-size:12px;color:var(--muted)}
-    .scale{
-      display:grid;
-      grid-template-columns:repeat(4, 1fr);
-      gap:10px;
-      margin-top:12px;
-    }
+    .bar{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2))}
+    .qtitle{font-size:18px;margin:0 0 10px}
+    .opts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    @media (max-width:640px){.opts{grid-template-columns:1fr}}
     .opt{
-      background:white;border:1px solid var(--border);
-      border-radius:14px;padding:12px;text-align:center;
-      cursor:pointer; user-select:none;
-      transition: border .12s ease, transform .08s ease, box-shadow .12s ease;
-      min-height:62px;
-      display:flex;flex-direction:column;justify-content:center;
+      padding:12px;border-radius:16px;
+      background:rgba(255,255,255,.06);
+      border:1px solid var(--line);
+      cursor:pointer;
+      transition:transform .05s ease;
     }
-    .opt strong{font-size:16px}
-    .opt span{font-size:12px;color:var(--muted);margin-top:3px}
-    .opt:hover{transform:translateY(-1px);box-shadow:0 8px 20px rgba(15,23,42,.06)}
-    .opt.selected{
-      border:2px solid #60a5fa;
-      box-shadow:0 10px 28px rgba(79,108,247,.15);
-      transform:translateY(-1px);
+    .opt:hover{transform:translateY(-1px)}
+    .opt small{display:block;color:var(--muted);margin-top:2px}
+    .opt.sel{
+      border-color: rgba(110,231,255,.55);
+      box-shadow: 0 0 0 2px rgba(110,231,255,.12) inset;
+      background:rgba(110,231,255,.08);
     }
-    .actions{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:14px;flex-wrap:wrap}
-    .tiny{font-size:12px;color:var(--muted)}
-    .tipBox{
-      margin-top:12px;
-      border-left:4px solid #60a5fa;
-      background:#f8fbff;
-      padding:12px 12px;
-      border-radius:12px;
-      color:#0f172a;
+    .tipbox{
+      border-left:3px solid rgba(110,231,255,.5);
+      padding:10px 12px;border-radius:12px;
+      background:rgba(110,231,255,.06);
+      color:var(--muted);font-size:14px
     }
-    .tipBox b{display:block;margin-bottom:4px}
+    .small{font-size:13px;color:var(--muted)}
     .hide{display:none}
-    .h2{font-size:26px;margin:0 0 6px}
-    .h3{font-size:18px;margin:0 0 6px}
-    .kpi{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}
-    .kpi .mini{
-      background:white;border:1px solid var(--border);
-      border-radius:14px;padding:12px;
+    ul{margin:8px 0 0 18px;color:var(--muted)}
+    li{margin:6px 0}
+    .kpi{
+      margin-top:12px;
+      background:rgba(255,255,255,.05);
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:14px;
     }
-    .mini .n{font-size:18px;font-weight:900}
-    .mini .l{font-size:12px;color:var(--muted);margin-top:2px}
-
-    @media (max-width:640px){
-      .titleBig{font-size:32px}
-      .scale{grid-template-columns:repeat(2,1fr)}
-      .kpi{grid-template-columns:1fr}
+    .tag{
+      display:inline-flex;align-items:center;
+      padding:4px 8px;border-radius:999px;
+      background:rgba(52,211,153,.10);
+      border:1px solid rgba(52,211,153,.25);
+      color:rgba(167,255,214,.95);
+      font-size:12px;font-weight:700
+    }
+    .tag.warn{
+      background:rgba(251,191,36,.10);
+      border:1px solid rgba(251,191,36,.25);
+      color:rgba(255,230,180,.95)
+    }
+    .copybox{
+      white-space:pre-wrap;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
+      font-size:12px;
+      background:rgba(0,0,0,.25);
+      border:1px solid var(--line);
+      padding:12px;border-radius:14px;
+      color:rgba(232,238,252,.92);
+      max-height:240px;overflow:auto;
     }
   </style>
 </head>
 
 <body>
-  <div class="wrap">
-    <div class="topbar">
-      <div class="brand">
-        <div class="logo"></div>
-        <div>
-          <h1 class="titleBig" id="uiTitle">Seedling Assessment</h1>
-          <p class="subtitle" id="uiSub">A short self-reflection to understand how you naturally think, work, and grow.</p>
-        </div>
+<div class="wrap">
+
+  <div class="topbar">
+    <div class="brand">
+      <span class="dot"></span>
+      <b id="brandText">Seedling</b>
+      <span class="pill" id="versionText">v1.2</span>
+    </div>
+
+    <div class="row">
+      <select class="lang" id="langSel" onchange="setLanguage(this.value)">
+        <option value="en">English</option>
+        <option value="hi">हिन्दी</option>
+        <option value="te">తెలుగు</option>
+      </select>
+      <button class="btn ghost" onclick="resetAll()" id="resetBtn">Reset</button>
+    </div>
+  </div>
+
+  <!-- HOME -->
+  <div class="card hero" id="home">
+    <h1 id="homeTitle">Seedling Reflection</h1>
+    <p class="sub" id="homeSub">
+      A short self-reflection to understand how you naturally think, work, and grow.
+    </p>
+
+    <div class="hr"></div>
+
+    <div class="grid2">
+      <div class="kpi">
+        <h3 id="homeWhatTitle">What you’ll get</h3>
+        <ul id="homeWhatList">
+          <li>A clear working-style summary (simple and useful)</li>
+          <li>Hidden strengths + watch-outs</li>
+          <li>A 90-day focus plan for students and freshers</li>
+          <li>Optional micro challenges to turn insight into action</li>
+        </ul>
       </div>
 
-      <div class="lang">
-        <span class="pill" id="uiLangLabel">Language</span>
-        <select id="langSelect">
-          <option value="en">English</option>
-          <option value="hi">हिंदी</option>
-          <option value="te">తెలుగు</option>
-        </select>
+      <div class="kpi">
+        <h3 id="homeHowTitle">How it works</h3>
+        <ul id="homeHowList">
+          <li>10 questions (takes ~2–4 minutes)</li>
+          <li>No “neutral” option — choose what fits most</li>
+          <li>You can pause and continue anytime</li>
+          <li>Your answers stay on this device only</li>
+        </ul>
       </div>
     </div>
 
-    <!-- HOME -->
-    <section id="screenHome" class="card">
-      <div class="row">
-        <div class="col">
-          <div class="pill" id="uiPill1">10 questions • 3 minutes • no login</div>
-          <h2 class="h2" id="uiHomeH">What is this?</h2>
-          <p class="muted" id="uiHomeP">
-            This mini assessment helps you find your dominant working style and small habits you can improve.
-            It is not an exam. There are no right or wrong answers.
-          </p>
+    <div class="hr"></div>
 
-          <div class="card soft" style="margin-top:12px;">
-            <div class="h3" id="uiYouGetH">What you’ll get</div>
-            <ul class="muted" id="uiYouGetList" style="margin:8px 0 0 18px;">
-              <li>A clean working-style result (easy to understand)</li>
-              <li>Strengths + watch-outs</li>
-              <li>“Life patterns” summary</li>
-              <li>Optional micro-challenges (2–3 minutes)</li>
-              <li>Tips you saw in questions (also shown again in results)</li>
-            </ul>
-          </div>
-
-          <div class="actions" style="margin-top:14px;">
-            <button class="btn" id="btnStart">Start</button>
-            <button class="btn secondary" id="btnReset">Reset</button>
-            <span class="tiny" id="uiNote">Tip: Answer fast. Your first instinct is usually correct.</span>
-          </div>
-        </div>
-
-        <div class="col">
-          <div class="card soft">
-            <div class="h3" id="uiPrivacyH">Privacy</div>
-            <p class="muted" id="uiPrivacyP" style="margin:6px 0 0;">
-              Your answers stay on this device (browser storage). Nothing is uploaded.
-            </p>
-            <div class="divider"></div>
-
-            <div class="h3" id="uiWorkshopH">Optional: Cybersecurity Workshop</div>
-            <p class="muted" id="uiWorkshopP" style="margin:6px 0 10px;">
-              Want a short, practical session with industry experts? You can message us after you see your result.
-            </p>
-            <button class="btn small" id="btnWorkshop">I’m interested</button>
-            <span class="tiny" id="uiWorkshopTiny" style="display:block;margin-top:8px;">
-              Email: seedling.community@gmail.com
-            </span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- QUIZ -->
-    <section id="screenQuiz" class="card hide">
-      <div class="qHead">
-        <div style="min-width:240px;flex:1;">
-          <div class="qTag" id="progressText">Progress will appear once you start.</div>
-          <div class="progress" style="margin-top:8px;">
-            <div class="bar" id="bar"></div>
-          </div>
-        </div>
-        <div class="pill" id="uiOptionsLabel">Options: No → Not really → Mostly yes → Yes</div>
-      </div>
-
-      <div class="divider"></div>
-
-      <div id="qBox"></div>
-
-      <div class="actions">
-        <button class="btn secondary" id="btnBack">Back</button>
-        <div style="display:flex;gap:10px;align-items:center;">
-          <button class="btn ghost" id="btnSave">Save</button>
-          <button class="btn" id="btnNext">Next</button>
-        </div>
-      </div>
-      <div class="tiny" id="uiSavedNote" style="margin-top:8px;">Saved answers stay in this browser.</div>
-    </section>
-
-    <!-- RESULT -->
-    <section id="screenResult" class="card hide">
-      <h2 class="h2" id="resTitle">Your Result</h2>
-      <p class="muted" id="resIntro"></p>
-
-      <div class="row" style="margin-top:12px;">
-        <div class="col">
-          <div class="card soft" id="resCardMain"></div>
-        </div>
-        <div class="col">
-          <div class="card soft" id="resCardInsights"></div>
-        </div>
-      </div>
-
-      <div class="card soft" id="resLifePatterns" style="margin-top:14px;"></div>
-
-      <div class="card soft" id="resTips" style="margin-top:14px;"></div>
-
-      <div class="divider"></div>
-
-      <!-- Micro Challenges -->
-      <div id="microChallenges" style="display:none;">
-        <h2 class="h2" id="mcTitle">Turn Insight into Action ⚡</h2>
-        <p class="muted" id="mcSub">Pick ONE micro challenge now. Finish it in 2–3 minutes. Share if you want feedback.</p>
-
-        <div class="card soft" style="margin-top:12px;">
-          <div class="h3" id="mc1Title">⚡ 3-Min Risk Spotter (Cyber)</div>
-          <p class="muted" id="mc1Body" style="margin:6px 0 10px;">
-            <b>Task:</b> Pick any app you use daily (WhatsApp / Instagram / Gmail). Write 3 risks and 1 simple fix for each.
-          </p>
-          <button class="btn small" id="mc1Copy">Copy this challenge</button>
-        </div>
-
-        <div class="card soft" style="margin-top:12px;">
-          <div class="h3" id="mc2Title">🧠 2-Min Focus Reset (Wellbeing)</div>
-          <p class="muted" id="mc2Body" style="margin:6px 0 10px;">
-            <b>Task:</b> Do 10 deep breaths. Then write 1 thing you will finish in the next 15 minutes.
-          </p>
-          <button class="btn small" id="mc2Copy">Copy this challenge</button>
-        </div>
-
-        <div class="card soft" style="margin-top:12px;">
-          <div class="h3" id="mc3Title">🏙️ 3-Min Civic Sense Boost</div>
-          <p class="muted" id="mc3Body" style="margin:6px 0 10px;">
-            <b>Task:</b> Think of one small public habit you can improve today (traffic, queue, litter, noise).
-            Write the habit + a simple rule you will follow for 1 day.
-          </p>
-          <button class="btn small" id="mc3Copy">Copy this challenge</button>
-        </div>
-
-        <div class="divider"></div>
-
-        <div class="card soft">
-          <div class="h3" id="mcCTA">Optional: Join the Cybersecurity Workshop</div>
-          <p class="muted" id="mcCTABody" style="margin:6px 0 10px;">
-            If you want a short, practical session with industry experts, message us with your result summary.
-          </p>
-          <button class="btn small" id="btnWorkshop2">I’m interested</button>
-          <span class="tiny" style="display:block;margin-top:8px;">Email: seedling.community@gmail.com</span>
-        </div>
-      </div>
-
-      <div class="actions" style="margin-top:14px;">
-        <button class="btn secondary" id="btnRetake">Retake</button>
-        <button class="btn" id="btnCopyResult">Copy Result</button>
-      </div>
-
-      <p class="tiny" id="resTiny" style="margin-top:10px;"></p>
-    </section>
+    <div class="row">
+      <button class="btn" id="startBtn" onclick="startAssessment()">Start</button>
+      <button class="btn secondary" id="continueBtn" onclick="continueAssessment()">Continue</button>
+      <span class="small" id="privacyLine">Note: This is not a test. There are no right or wrong answers.</span>
+    </div>
   </div>
+
+  <!-- QUIZ -->
+  <div class="card qwrap hide" id="quiz">
+    <div class="row" style="justify-content:space-between">
+      <div>
+        <div class="small" id="stepLine">Question</div>
+        <div class="progress" style="margin-top:8px">
+          <div class="bar" id="bar"></div>
+        </div>
+      </div>
+      <div class="row">
+        <label class="small" style="display:flex;align-items:center;gap:8px">
+          <input type="checkbox" id="showTips" onchange="renderQuestion()" />
+          <span id="tipsToggle">Show a small tip</span>
+        </label>
+      </div>
+    </div>
+
+    <div class="hr"></div>
+
+    <h2 class="qtitle" id="qText">...</h2>
+
+    <div class="opts" id="opts"></div>
+
+    <div class="tipbox hide" id="tipBox"></div>
+
+    <div class="hr"></div>
+
+    <div class="row">
+      <button class="btn secondary" onclick="prevQ()" id="prevBtn">Back</button>
+      <button class="btn" onclick="nextQ()" id="nextBtn">Next</button>
+      <button class="btn ghost" onclick="finishNow()" id="finishBtn">Finish</button>
+      <span class="small" id="saveLine">Saved automatically</span>
+    </div>
+  </div>
+
+  <!-- RESULTS -->
+  <div class="card hide" id="results">
+    <h2 id="resTitle">Your Result</h2>
+    <p class="sub" id="resSub">Based on your answers, here’s a clear working-style summary.</p>
+
+    <div class="hr"></div>
+
+    <div class="kpi">
+      <div class="row" style="justify-content:space-between">
+        <div>
+          <h3 id="styleName">...</h3>
+          <p class="sub" id="styleOneLiner">...</p>
+        </div>
+        <span class="tag" id="styleTag">STYLE</span>
+      </div>
+      <div class="hr"></div>
+      <div class="grid2">
+        <div>
+          <h3 id="strengthTitle">Your strengths</h3>
+          <ul id="strengthList"></ul>
+        </div>
+        <div>
+          <h3 id="watchTitle">Watch-outs</h3>
+          <ul id="watchList"></ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="kpi">
+      <h3 id="planTitle">Your 90-day focus plan</h3>
+      <ul id="planList"></ul>
+      <div class="small" id="planNote"></div>
+    </div>
+
+    <div class="kpi">
+      <h3 id="patternsTitle">Your life patterns (based on your answers)</h3>
+      <ul id="patternsList"></ul>
+    </div>
+
+    <div class="kpi">
+      <h3 id="tipsTitle">Helpful tips (recap)</h3>
+      <ul id="tipsRecapList"></ul>
+      <div class="small" id="tipsRecapNote"></div>
+    </div>
+
+    <div class="kpi">
+      <h3 id="actionTitle">Turn insight into action (Quick Micro Challenge)</h3>
+      <p class="sub" id="actionSub">Choose one small real-world challenge. No coding. No pressure. Just thinking.</p>
+      <div class="grid2" style="margin-top:10px">
+        <div class="card" style="background:rgba(255,255,255,.04)">
+          <h3 id="c1t">🛡️ Social App Safety</h3>
+          <p class="small" id="c1s">Think about risks in apps you use daily</p>
+          <button class="btn secondary" onclick="openChallenge('social')" id="c1b">Try this challenge</button>
+        </div>
+        <div class="card" style="background:rgba(255,255,255,.04)">
+          <h3 id="c2t">🤖 AI Thinking</h3>
+          <p class="small" id="c2s">Use AI ideas to solve a real problem</p>
+          <button class="btn secondary" onclick="openChallenge('ai')" id="c2b">Try this challenge</button>
+        </div>
+        <div class="card" style="background:rgba(255,255,255,.04)">
+          <h3 id="c3t">🏫 Improve a System</h3>
+          <p class="small" id="c3s">Fix one small problem around you</p>
+          <button class="btn secondary" onclick="openChallenge('civic')" id="c3b">Try this challenge</button>
+        </div>
+        <div class="card" style="background:rgba(255,255,255,.04)">
+          <h3 id="c4t">🔐 Cyber Basics</h3>
+          <p class="small" id="c4s">Think like a security person (no tools)</p>
+          <button class="btn secondary" onclick="openChallenge('cyber')" id="c4b">Try this challenge</button>
+        </div>
+      </div>
+
+      <div class="small" style="margin-top:10px" id="actionFoot">
+        ✔ Takes 30–60 mins • ✔ One-page output • ✔ Useful for interviews & clarity
+      </div>
+
+      <div class="card hide" id="challengePanel" style="margin-top:12px;background:rgba(255,255,255,.04)">
+        <h3 id="challengeTitle"></h3>
+        <p class="sub" id="challengeIntro"></p>
+        <div class="hr"></div>
+        <div id="challengeContent"></div>
+        <div class="hr"></div>
+        <h3 id="submitTitle">Submission (one page)</h3>
+        <div class="copybox" id="challengeTemplate"></div>
+        <div class="row" style="margin-top:12px">
+          <button class="btn" onclick="submitChallenge()" id="submitEmailBtn">Submit via Email</button>
+          <button class="btn secondary" onclick="copyChallenge()" id="copyBtn">Copy submission</button>
+          <button class="btn ghost" onclick="closeChallenge()" id="closeBtn">Close</button>
+        </div>
+        <div class="small" style="margin-top:8px" id="challengeFoot">
+          Bullet points are enough • No hacking • Think + explain clearly
+        </div>
+      </div>
+    </div>
+
+    <div class="kpi">
+      <h3 id="workshopTitle">Want to go deeper?</h3>
+      <p class="sub" id="workshopSub">
+        Join a live Cybersecurity Thinking Session with industry practitioners (optional).
+      </p>
+      <ul id="workshopList">
+        <li>How professionals think about security (no hacking)</li>
+        <li>Real examples + Q&A</li>
+        <li>Beginner friendly</li>
+      </ul>
+      <div class="row" style="margin-top:10px">
+        <button class="btn secondary" onclick="notifyWorkshop()" id="workshopBtn">Notify me about the next session</button>
+        <span class="small" id="workshopNote">Optional • No pressure • You can join anytime</span>
+      </div>
+    </div>
+
+    <div class="hr"></div>
+
+    <div class="row">
+      <button class="btn secondary" onclick="restart()" id="retakeBtn">Retake</button>
+      <button class="btn" onclick="copyResult()" id="copyResBtn">Copy result</button>
+    </div>
+
+    <div class="small" style="margin-top:10px" id="resFooter">
+      Your answers are stored only in your browser (local). No uploads.
+    </div>
+  </div>
+
+</div>
 
 <script>
 /* =========================
-   Seedling v1.3 FINAL (single file)
-   - 10 questions (includes negatives)
-   - EN/HI/TE language switch (home + quiz + results)
-   - Tips (superhero mindset) shown after answer + repeated in results
-   - Results are more detailed + impactful (still simple English)
-   - Micro challenges (HTML only) + optional workshop CTA
-   - No backend, no external deps
+   STORAGE KEYS
 ========================= */
+const KEY_ANS = "seedling_answers_v12";
+const KEY_IDX = "seedling_qindex_v12";
+const KEY_LANG = "seedling_lang_v12";
 
-const EMAIL_TO = "seedling.community@gmail.com";
-const STORAGE_KEY = "seedling_answers_v13";
-const RESULT_KEY  = "seedling_last_result_v13";
-
-let currentLang = "en";
-let idx = 0;
-let answers = {}; // {Q1:1..4}
-
-/* ---------- Language strings ---------- */
+/* =========================
+   LANGUAGE CONTENT
+========================= */
 const UI = {
-  en: {
-    langLabel:"Language",
-    title:"Seedling Assessment",
-    sub:"A short self-reflection to understand how you naturally think, work, and grow.",
-    pill1:"10 questions • 3 minutes • no login",
-    homeH:"What is this?",
-    homeP:"This mini assessment helps you find your dominant working style and small habits you can improve. It is not an exam. There are no right or wrong answers.",
-    youGetH:"What you’ll get",
-    youGetList:[
-      "A clean working-style result (easy to understand)",
-      "Strengths + watch-outs",
-      "“Life patterns” summary",
-      "Optional micro-challenges (2–3 minutes)",
-      "Tips you saw in questions (also shown again in results)"
+  en:{
+    seedling:"Seedling",
+    reset:"Reset",
+    homeTitle:"Seedling Reflection",
+    homeSub:"A short self-reflection to understand how you naturally think, work, and grow.",
+    homeWhatTitle:"What you’ll get",
+    homeWhatList:[
+      "A clear working-style summary (simple and useful)",
+      "Hidden strengths + watch-outs",
+      "A 90-day focus plan for students and freshers",
+      "Optional micro challenges to turn insight into action"
+    ],
+    homeHowTitle:"How it works",
+    homeHowList:[
+      "10 questions (takes ~2–4 minutes)",
+      "No “neutral” option — choose what fits most",
+      "You can pause and continue anytime",
+      "Your answers stay on this device only"
     ],
     start:"Start",
-    reset:"Reset",
-    note:"Tip: Answer fast. Your first instinct is usually correct.",
-    privacyH:"Privacy",
-    privacyP:"Your answers stay on this device (browser storage). Nothing is uploaded.",
-    workshopH:"Optional: Cybersecurity Workshop",
-    workshopP:"Want a short, practical session with industry experts? You can message us after you see your result.",
-    interested:"I’m interested",
-    optionsLabel:"Options: No → Not really → Mostly yes → Yes",
+    continue:"Continue",
+    privacy:"Note: This is not a test. There are no right or wrong answers.",
+    stepLine:(i,n)=>`Question ${i+1} of ${n}`,
     back:"Back",
     next:"Next",
-    finishBtn:"Finish",
-    save:"Save",
-    saved:"Saved answers stay in this browser.",
-    progressPrefix:"Question",
-    progressOf:"of",
-    progressReady:"Progress will appear once you start.",
-    pickAnOption:"Pick an option to continue.",
-    resultTitle:"Your Result",
-    retake:"Retake",
-    copyResult:"Copy Result",
-    copied:"Copied!",
-    tiny:"This is guidance, not a label. Use it to improve your next actions.",
-    mcTitle:"Turn Insight into Action ⚡",
-    mcSub:"Pick ONE micro challenge now. Finish it in 2–3 minutes. Share if you want feedback.",
-    mcCTA:"Optional: Join the Cybersecurity Workshop",
-    mcCTABody:"If you want a short, practical session with industry experts, message us with your result summary.",
-    tipsAgainTitle:"Your superhero mindset tips (from your answers)"
-  },
-  hi: {
-    langLabel:"भाषा",
-    title:"सीडलिंग असेसमेंट",
-    sub:"एक छोटा सेल्फ-रिफ्लेक्शन: आप कैसे सोचते, काम करते और बढ़ते हैं।",
-    pill1:"10 सवाल • 3 मिनट • लॉगिन नहीं",
-    homeH:"यह क्या है?",
-    homeP:"यह छोटा असेसमेंट आपकी working style और कुछ habits समझने में मदद करता है। यह परीक्षा नहीं है। सही-गलत नहीं है।",
-    youGetH:"आपको क्या मिलेगा",
-    youGetList:[
-      "एक साफ़ और आसान working-style result",
-      "Strengths + watch-outs",
-      "“Life patterns” summary",
-      "Optional micro-challenges (2–3 minutes)",
-      "Questions के tips (results में भी दिखेंगे)"
+    finish:"Finish",
+    saved:"Saved automatically",
+    showTip:"Show a small tip",
+    resTitle:"Your Result",
+    resSub:"Based on your answers, here’s a clear working-style summary.",
+    strengths:"Your strengths",
+    watchouts:"Watch-outs",
+    planTitle:"Your 90-day focus plan",
+    planNote:"Keep it simple: one focus, small actions, real proof.",
+    patternsTitle:"Your life patterns (based on your answers)",
+    tipsTitle:"Helpful tips (recap)",
+    tipsRecapNote:"Tips are guidance, not rules. Use what helps you.",
+    actionTitle:"Turn insight into action (Quick Micro Challenge)",
+    actionSub:"Choose one small real-world challenge. No coding. No pressure. Just thinking.",
+    actionFoot:"✔ Takes 30–60 mins • ✔ One-page output • ✔ Useful for interviews & clarity",
+    submitTitle:"Submission (one page)",
+    submitEmail:"Submit via Email",
+    copySubmission:"Copy submission",
+    close:"Close",
+    challengeFoot:"Bullet points are enough • No hacking • Think + explain clearly",
+    workshopTitle:"Want to go deeper?",
+    workshopSub:"Join a live Cybersecurity Thinking Session with industry practitioners (optional).",
+    workshopList:[
+      "How professionals think about security (no hacking)",
+      "Real examples + Q&A",
+      "Beginner friendly"
     ],
-    start:"शुरू करें",
+    workshopBtn:"Notify me about the next session",
+    workshopNote:"Optional • No pressure • You can join anytime",
+    retake:"Retake",
+    copyRes:"Copy result",
+    resFooter:"Your answers are stored only in your browser (local). No uploads.",
+    cardTitles:{
+      c1t:"🛡️ Social App Safety",
+      c1s:"Think about risks in apps you use daily",
+      c1b:"Try this challenge",
+      c2t:"🤖 AI Thinking",
+      c2s:"Use AI ideas to solve a real problem",
+      c2b:"Try this challenge",
+      c3t:"🏫 Improve a System",
+      c3s:"Fix one small problem around you",
+      c3b:"Try this challenge",
+      c4t:"🔐 Cyber Basics",
+      c4s:"Think like a security person (no tools)",
+      c4b:"Try this challenge",
+    }
+  },
+
+  hi:{
+    seedling:"Seedling",
     reset:"रीसेट",
-    note:"टिप: जल्दी जवाब दें। पहला जवाब अक्सर सही होता है।",
-    privacyH:"प्राइवेसी",
-    privacyP:"आपके जवाब इसी डिवाइस पर रहते हैं। कुछ भी अपलोड नहीं होता।",
-    workshopH:"Optional: Cybersecurity Workshop",
-    workshopP:"Industry experts के साथ short practical session चाहिए? Result के बाद हमें message करें।",
-    interested:"मैं interested हूँ",
-    optionsLabel:"Options: No → Not really → Mostly yes → Yes",
-    back:"Back",
-    next:"Next",
-    finishBtn:"Finish",
-    save:"Save",
-    saved:"Answers इस browser में save रहते हैं।",
-    progressPrefix:"Question",
-    progressOf:"of",
-    progressReady:"Start करने के बाद progress दिखेगा।",
-    pickAnOption:"आगे जाने के लिए एक option चुनें।",
-    resultTitle:"आपका Result",
-    retake:"Retake",
-    copyResult:"Copy Result",
-    copied:"Copied!",
-    tiny:"यह guidance है, label नहीं। इसे next actions सुधारने के लिए use करें।",
-    mcTitle:"अब Action लें ⚡",
-    mcSub:"एक micro challenge चुनें। 2–3 मिनट में पूरा करें। चाहें तो share करें।",
-    mcCTA:"Optional: Cybersecurity Workshop",
-    mcCTABody:"Industry experts के साथ short practical session चाहिए? अपने result summary के साथ message करें।",
-    tipsAgainTitle:"आपके superhero mindset tips (answers के based)"
-  },
-  te: {
-    langLabel:"భాష",
-    title:"సీడ్లింగ్ అసెస్‌మెంట్",
-    sub:"మీరు ఎలా ఆలోచిస్తారు, ఎలా పని చేస్తారు, ఎలా ఎదుగుతారు — చిన్న self-reflection.",
-    pill1:"10 ప్రశ్నలు • 3 నిమిషాలు • లాగిన్ లేదు",
-    homeH:"ఇది ఏమిటి?",
-    homeP:"ఈ చిన్న అసెస్‌మెంట్ మీ working style మరియు మెరుగుపరచాల్సిన habits తెలుసుకోవడానికి సహాయం చేస్తుంది. ఇది పరీక్ష కాదు. Right/Wrong లేదు.",
-    youGetH:"మీకు ఏమి లభిస్తుంది",
-    youGetList:[
-      "సింపుల్ working-style result",
+    homeTitle:"Seedling Reflection",
+    homeSub:"एक छोटा सा self-reflection ताकि आप समझ सकें कि आप कैसे सोचते, काम करते और बढ़ते हैं।",
+    homeWhatTitle:"आपको क्या मिलेगा",
+    homeWhatList:[
+      "आपका working-style summary (simple और useful)",
       "Strengths + watch-outs",
-      "“Life patterns” summary",
-      "Optional micro-challenges (2–3 minutes)",
-      "Questions లోని tips (results లో మళ్లీ చూపిస్తాం)"
+      "Students/Freshers के लिए 90-day focus plan",
+      "Optional micro challenges ताकि आप action ले सकें"
+    ],
+    homeHowTitle:"कैसे काम करता है",
+    homeHowList:[
+      "10 questions (लगभग 2–4 मिनट)",
+      "Neutral option नहीं — जो सबसे सही लगे वह चुनें",
+      "आप कभी भी pause करके continue कर सकते हैं",
+      "आपके answers इसी device पर रहेंगे"
     ],
     start:"Start",
-    reset:"Reset",
-    note:"టిప్: త్వరగా సమాధానం ఇవ్వండి. మొదటి ఆలోచన చాలాసార్లు సరైనది.",
-    privacyH:"ప్రైవసీ",
-    privacyP:"మీ answers ఈ డివైస్‌లోనే ఉంటాయి. ఏదీ upload కాదు.",
-    workshopH:"Optional: Cybersecurity Workshop",
-    workshopP:"Industry experts తో short practical session కావాలా? Result తర్వాత మాకు message చేయండి.",
-    interested:"I’m interested",
-    optionsLabel:"Options: No → Not really → Mostly yes → Yes",
+    continue:"Continue",
+    privacy:"Note: यह टेस्ट नहीं है। सही-गलत answers नहीं होते।",
+    stepLine:(i,n)=>`Question ${i+1} / ${n}`,
     back:"Back",
     next:"Next",
-    finishBtn:"Finish",
-    save:"Save",
-    saved:"Answers ఈ browser లో save అవుతాయి.",
-    progressPrefix:"Question",
-    progressOf:"of",
-    progressReady:"Start చేసిన తర్వాత progress కనిపిస్తుంది.",
-    pickAnOption:"కొనసాగడానికి ఒక option ఎంచుకోండి.",
-    resultTitle:"మీ Result",
+    finish:"Finish",
+    saved:"Auto saved",
+    showTip:"छोटी tip दिखाएँ",
+    resTitle:"आपका Result",
+    resSub:"आपके answers के आधार पर आपका working-style summary।",
+    strengths:"आपकी strengths",
+    watchouts:"Watch-outs",
+    planTitle:"आपका 90-day focus plan",
+    planNote:"Simple रखें: एक focus, छोटे actions, और proof बनाइए।",
+    patternsTitle:"आपके life patterns (आपके answers के आधार पर)",
+    tipsTitle:"Helpful tips (recap)",
+    tipsRecapNote:"Tips guidance हैं, rules नहीं। जो मदद करे वही लें।",
+    actionTitle:"Insight से Action (Quick Micro Challenge)",
+    actionSub:"एक छोटा real-world challenge चुनें। No coding. No pressure.",
+    actionFoot:"✔ 30–60 mins • ✔ One-page output • ✔ Interviews/clarity में मदद",
+    submitTitle:"Submission (one page)",
+    submitEmail:"Email से submit करें",
+    copySubmission:"Copy करें",
+    close:"Close",
+    challengeFoot:"Bullet points काफी हैं • No hacking • साफ़ लिखें",
+    workshopTitle:"और गहराई में जाना है?",
+    workshopSub:"Industry experts के साथ live Cybersecurity Thinking Session (optional).",
+    workshopList:[
+      "Security teams कैसे सोचती हैं (no hacking)",
+      "Real examples + Q&A",
+      "Beginners के लिए"
+    ],
+    workshopBtn:"Next session की info भेजें",
+    workshopNote:"Optional • No pressure",
     retake:"Retake",
-    copyResult:"Copy Result",
-    copied:"Copied!",
-    tiny:"ఇది label కాదు — guidance మాత్రమే. మీ next actions మెరుగుపరచడానికి ఉపయోగించండి.",
-    mcTitle:"ఇప్పుడు Action తీసుకోండి ⚡",
-    mcSub:"ఒక micro challenge ఎంచుకోండి. 2–3 నిమిషాల్లో పూర్తి చేయండి. కావాలంటే share చేయండి.",
-    mcCTA:"Optional: Cybersecurity Workshop",
-    mcCTABody:"Industry experts తో short practical session కావాలా? మీ result summary తో message చేయండి.",
-    tipsAgainTitle:"మీ superhero mindset tips (మీ answers ఆధారంగా)"
-  }
-};
+    copyRes:"Result copy करें",
+    resFooter:"आपके answers सिर्फ browser में save होते हैं। Upload नहीं होता।",
+    cardTitles:{
+      c1t:"🛡️ Social App Safety",
+      c1s:"Daily apps में risks सोचें",
+      c1b:"Challenge शुरू करें",
+      c2t:"🤖 AI Thinking",
+      c2s:"AI ideas से problem solve करें",
+      c2b:"Challenge शुरू करें",
+      c3t:"🏫 Improve a System",
+      c3s:"अपने आसपास एक system improve करें",
+      c3b:"Challenge शुरू करें",
+      c4t:"🔐 Cyber Basics",
+      c4s:"Security person की तरह सोचें",
+      c4b:"Challenge शुरू करें",
+    }
+  },
 
-/* ---------- Dimensions & Styles ---------- */
-const STYLE_BY_DIM = {
-  SE: { // Structure & Execution
-    key:"Executive",
-    label:{en:"Executive", hi:"Executive", te:"Executive"},
-    oneLine:{
-      en:"You like clarity, ownership, and finishing work.",
-      hi:"आप clarity, ownership और finishing पसंद करते हैं।",
-      te:"మీకు clarity, ownership, finishing ఇష్టం."
-    },
-    strengths:{
-      en:["Clear priorities","Gets things done","Strong ownership"],
-      hi:["Clear priorities","Work finish करते हैं","Strong ownership"],
-      te:["Clear priorities","Work finish చేస్తారు","Strong ownership"]
-    },
-    watchouts:{
-      en:["May sound too direct","Can rush people","May over-control"],
-      hi:["कभी-कभी बहुत direct लग सकते हैं","लोगों को जल्दी करवा सकते हैं","Over-control हो सकता है"],
-      te:["కొన్నిసార్లు ఎక్కువ direct గా ఉండవచ్చు","Others ని తొందర పెట్టవచ్చు","Over-control అవ్వచ్చు"]
-    },
-    forStudent:{
-      en:["Choose tasks with ownership (project lead, club lead, hackathon captain).","Show delivery: deadlines + outcomes.","Keep a simple to-do list daily."],
-      hi:["Ownership वाले tasks चुनें (project lead, club lead).","Delivery दिखाएं: deadline + outcome.","Daily simple to-do list रखें।"],
-      te:["Ownership ఉన్న tasks ఎంచుకోండి (project lead, club lead).","Delivery చూపండి: deadline + outcome.","Daily simple to-do list పెట్టుకోండి."]
-    },
-    hero:{
-      en:{name:"Hanuman mindset", quote:"Strength + service. Do the work, protect the team."},
-      hi:{name:"हनुमान mindset", quote:"Strength + service. काम पूरा करो, टीम को संभालो।"},
-      te:{name:"హనుమాన్ mindset", quote:"Strength + service. పని పూర్తి చేయి, టీమ్ ని కాపాడు."}
-    }
-  },
-  AT: { // Analytical Thinking
-    key:"Analyst",
-    label:{en:"Analyst", hi:"Analyst", te:"Analyst"},
-    oneLine:{
-      en:"You like logic, facts, and clean reasoning.",
-      hi:"आप logic, facts और clear thinking पसंद करते हैं।",
-      te:"మీకు logic, facts, clear thinking ఇష్టం."
-    },
-    strengths:{
-      en:["Thinks deeply","Good problem solver","Not easily fooled"],
-      hi:["Deep thinking","Problem solving अच्छा","Easily fooled नहीं होते"],
-      te:["Deep thinking","Problem solving strong","Easy గా మోసం కాడు"]
-    },
-    watchouts:{
-      en:["Can overthink","May delay decisions","Can sound critical"],
-      hi:["Overthink हो सकता है","Decisions delay हो सकते हैं","Critical लग सकता है"],
-      te:["Overthink అవ్వచ్చు","Decision delay అవ్వచ్చు","Critical గా అనిపించవచ్చు"]
-    },
-    forStudent:{
-      en:["Pick problem-solving tracks (DSA, ML basics, security basics).","Write short notes: 'What I tried' + 'What I learned'.","Timebox decisions (10 minutes)."],
-      hi:["Problem-solving tracks चुनें (DSA, ML basics, security basics).","Short notes लिखें: 'What I tried' + 'What I learned'.","Decision timebox करें (10 minutes)."],
-      te:["Problem-solving tracks ఎంచుకోండి (DSA, ML basics, security basics).","Short notes: 'What I tried' + 'What I learned'.","Decision timebox చేయండి (10 minutes)."]
-    },
-    hero:{
-      en:{name:"Iron Man mindset", quote:"Build, test, improve. Facts first."},
-      hi:{name:"Iron Man mindset", quote:"Build, test, improve. Facts first."},
-      te:{name:"Iron Man mindset", quote:"Build, test, improve. Facts first."}
-    }
-  },
-  SI: { // Social Initiative
-    key:"Connector",
-    label:{en:"Connector", hi:"Connector", te:"Connector"},
-    oneLine:{
-      en:"You take initiative with people and teamwork.",
-      hi:"आप people और teamwork में पहल लेते हैं।",
-      te:"మీరు people, teamwork లో initiative తీసుకుంటారు."
-    },
-    strengths:{
-      en:["Builds connections","Good communicator","Brings energy"],
-      hi:["Connections बनाते हैं","Communication अच्छा","Energy लाते हैं"],
-      te:["Connections build చేస్తారు","Communication బాగుంది","Energy తీసుకొస్తారు"]
-    },
-    watchouts:{
-      en:["Can get distracted","May avoid hard talks","May say yes too much"],
-      hi:["Distract हो सकते हैं","Hard talks avoid हो सकते हैं","Too many yes"],
-      te:["Distract అవ్వచ్చు","Hard talks avoid అవ్వచ్చు","Too many yes"]
-    },
-    forStudent:{
-      en:["Great for teams (clubs, events, group projects).","Build a small network (5 people) and learn from them.","Practice one hard conversation politely."],
-      hi:["Teams के लिए best (clubs, events, group projects).","छोटा network बनाएं (5 people).","एक hard conversation politely practice करें।"],
-      te:["Teams కి best (clubs, events, group projects).","Small network (5 people) build చేయండి.","ఒక hard conversation politely practice చేయండి."]
-    },
-    hero:{
-      en:{name:"Spider-Man mindset", quote:"With connection comes responsibility."},
-      hi:{name:"Spider-Man mindset", quote:"With connection comes responsibility."},
-      te:{name:"Spider-Man mindset", quote:"With connection comes responsibility."}
-    }
-  },
-  EC: { // Empathy & Cooperation
-    key:"Builder",
-    label:{en:"Builder", hi:"Builder", te:"Builder"},
-    oneLine:{
-      en:"You care about people, fairness, and cooperation.",
-      hi:"आप people, fairness और cooperation को महत्व देते हैं।",
-      te:"మీరు people, fairness, cooperation కి value ఇస్తారు."
-    },
-    strengths:{
-      en:["Supportive","Team friendly","Good listener"],
-      hi:["Supportive","Team friendly","Good listener"],
-      te:["Supportive","Team friendly","Good listener"]
-    },
-    watchouts:{
-      en:["May avoid conflict","Can carry others’ work","Hard to say no"],
-      hi:["Conflict avoid हो सकता है","Others का work उठा सकते हैं","No कहना मुश्किल"],
-      te:["Conflict avoid అవ్వచ్చు","Others work మోసుకోవచ్చు","No చెప్పడం కష్టం"]
-    },
-    forStudent:{
-      en:["Good for mentoring, peer learning, volunteering.","Set boundaries: help, but don’t carry everything.","Use 'kind + clear' communication."],
-      hi:["Mentoring, peer learning, volunteering के लिए अच्छा।","Boundaries set करें: help करें, carry नहीं।","'Kind + clear' communication रखें।"],
-      te:["Mentoring, peer learning, volunteering కి మంచి.","Boundaries పెట్టుకోండి: help చేయండి, carry చేయొద్దు.","'Kind + clear' communication వాడండి."]
-    },
-    hero:{
-      en:{name:"Wonder Woman mindset", quote:"Be kind — and be strong."},
-      hi:{name:"Wonder Woman mindset", quote:"Be kind — and be strong."},
-      te:{name:"Wonder Woman mindset", quote:"Be kind — and be strong."}
-    }
-  },
-  CE: { // Curiosity & Experimentation
-    key:"Explorer",
-    label:{en:"Explorer", hi:"Explorer", te:"Explorer"},
-    oneLine:{
-      en:"You learn by trying, exploring, and experimenting.",
-      hi:"आप try करके, explore करके सीखते हैं।",
-      te:"మీరు try చేసి, explore చేసి నేర్చుకుంటారు."
-    },
-    strengths:{
-      en:["Creative","Learns fast","Open to new ideas"],
-      hi:["Creative","Fast learning","New ideas open"],
-      te:["Creative","Fast learning","New ideas open"]
-    },
-    watchouts:{
-      en:["Can start but not finish","May jump too fast","Needs structure"],
-      hi:["Start करके finish नहीं","Too fast jump","Structure चाहिए"],
-      te:["Start చేసి finish కాదు","Too fast jump","Structure అవసరం"]
-    },
-    forStudent:{
-      en:["Try small projects (1-day, 3-day).","Finish one mini-project before starting another.","Keep a simple portfolio page."],
-      hi:["Small projects try करें (1-day, 3-day).","एक mini-project finish करके next शुरू करें।","Simple portfolio page रखें।"],
-      te:["Small projects try చేయండి (1-day, 3-day).","ఒక mini-project finish చేసి తర్వాత next చేయండి.","Simple portfolio page పెట్టుకోండి."]
-    },
-    hero:{
-      en:{name:"Superman mindset", quote:"Aim high — but stay grounded."},
-      hi:{name:"Superman mindset", quote:"Aim high — but stay grounded."},
-      te:{name:"Superman mindset", quote:"Aim high — but stay grounded."}
+  te:{
+    seedling:"Seedling",
+    reset:"రిసెట్",
+    homeTitle:"Seedling Reflection",
+    homeSub:"మీరు సహజంగా ఎలా ఆలోచిస్తారు, ఎలా పని చేస్తారు, ఎలా ఎదుగుతారు అన్నది తెలుసుకోడానికి చిన్న self-reflection.",
+    homeWhatTitle:"మీకు ఏమి వస్తుంది",
+    homeWhatList:[
+      "మీ working-style summary (సింపుల్‌గా, ఉపయోగకరంగా)",
+      "Strengths + watch-outs",
+      "Students/Freshers కోసం 90-day focus plan",
+      "Action తీసుకోవడానికి optional micro challenges"
+    ],
+    homeHowTitle:"ఇది ఎలా పని చేస్తుంది",
+    homeHowList:[
+      "10 questions (సుమారు 2–4 నిమిషాలు)",
+      "Neutral option లేదు — మీకు ఎక్కువగా సరిపోయేది ఎంచుకోండి",
+      "Pause చేసి తర్వాత continue చేయచ్చు",
+      "Answers మీ device లోనే ఉంటాయి"
+    ],
+    start:"Start",
+    continue:"Continue",
+    privacy:"Note: ఇది టెస్ట్ కాదు. Right/Wrong answers లేవు.",
+    stepLine:(i,n)=>`Question ${i+1} / ${n}`,
+    back:"Back",
+    next:"Next",
+    finish:"Finish",
+    saved:"Auto saved",
+    showTip:"చిన్న tip చూపించు",
+    resTitle:"మీ Result",
+    resSub:"మీ answers ఆధారంగా మీ working-style summary.",
+    strengths:"మీ strengths",
+    watchouts:"Watch-outs",
+    planTitle:"మీ 90-day focus plan",
+    planNote:"సింపుల్‌గా ఉంచండి: ఒక focus, చిన్న actions, నిజమైన proof.",
+    patternsTitle:"మీ life patterns (మీ answers ఆధారంగా)",
+    tipsTitle:"Helpful tips (recap)",
+    tipsRecapNote:"Tips guidance మాత్రమే. మీకు ఉపయోగపడేది తీసుకోండి.",
+    actionTitle:"Insight నుంచి Action (Quick Micro Challenge)",
+    actionSub:"ఒక చిన్న real-world challenge ఎంచుకోండి. No coding. No pressure.",
+    actionFoot:"✔ 30–60 mins • ✔ One-page output • ✔ Interviews/clarity కి సహాయం",
+    submitTitle:"Submission (one page)",
+    submitEmail:"Email ద్వారా submit",
+    copySubmission:"Copy చేయండి",
+    close:"Close",
+    challengeFoot:"Bullet points చాలు • No hacking • స్పష్టంగా రాయండి",
+    workshopTitle:"ఇంకా లోతుగా వెళ్దామా?",
+    workshopSub:"Industry practitioners తో live Cybersecurity Thinking Session (optional).",
+    workshopList:[
+      "Security teams ఎలా ఆలోచిస్తాయి (no hacking)",
+      "Real examples + Q&A",
+      "Beginners కి friendly"
+    ],
+    workshopBtn:"Next session info పంపండి",
+    workshopNote:"Optional • No pressure",
+    retake:"Retake",
+    copyRes:"Result copy",
+    resFooter:"మీ answers browser లోనే save అవుతాయి. Upload కాదు.",
+    cardTitles:{
+      c1t:"🛡️ Social App Safety",
+      c1s:"Daily apps లో risks ఆలోచించండి",
+      c1b:"Challenge start",
+      c2t:"🤖 AI Thinking",
+      c2s:"AI ideas తో problem solve",
+      c2b:"Challenge start",
+      c3t:"🏫 Improve a System",
+      c3s:"మీ చుట్టూ ఒక system improve",
+      c3b:"Challenge start",
+      c4t:"🔐 Cyber Basics",
+      c4s:"Security person లాగా ఆలోచించండి",
+      c4b:"Challenge start",
     }
   }
 };
 
-/* ---------- 10 Questions (simple, includes negatives) ---------- */
-/* Scale: 1 No, 2 Not really, 3 Mostly yes, 4 Yes
-   reverse:true means agreeing indicates lower trait -> reverse in scoring
-*/
+/* =========================
+   QUESTIONS (10)
+   5 dimensions, 2 each
+   Scale: 0..3 (No / Not really / Mostly / Yes)
+   reverse:true => score reversed (3-value)
+========================= */
 const QUESTIONS = [
-  {id:"Q1", dim:"SE", reverse:true,
-    text:{
-      en:"I sometimes wait for others to take responsibility instead of stepping in myself.",
-      hi:"मैं कभी-कभी खुद आगे आने के बजाय दूसरों का इंतज़ार करता/करती हूँ।",
-      te:"నేను కొన్నిసార్లు నేనే ముందుకు రావడం బదులు ఇతరుల్ని ఎదురు చూస్తాను."
-    },
-    tip:{
-      en:"Hanuman mindset: Take one small responsibility today — finish it fully.",
-      hi:"हनुमान mindset: आज एक छोटी responsibility लो — पूरी करके दिखाओ।",
-      te:"హనుమాన్ mindset: ఈ రోజు ఒక చిన్న బాధ్యత తీసుకోండి — పూర్తిగా finish చేయండి."
-    }
-  },
-  {id:"Q2", dim:"AT", reverse:false,
-    text:{
-      en:"Before I believe something, I try to check facts.",
-      hi:"किसी बात पर विश्वास करने से पहले मैं facts check करता/करती हूँ।",
-      te:"ఏదైనా నమ్మే ముందు నేను facts check చేస్తాను."
-    },
-    tip:{
-      en:"Iron Man mindset: Ask “What evidence do I have?”",
-      hi:"Iron Man mindset: पूछो “मेरे पास evidence क्या है?”",
-      te:"Iron Man mindset: “నాకున్న evidence ఏమిటి?” అని అడుగు."
-    }
-  },
-  {id:"Q3", dim:"SE", reverse:false,
-    text:{
-      en:"I finish important work even when I don’t feel like it.",
-      hi:"मन न हो तब भी मैं important काम पूरा करता/करती हूँ।",
-      te:"మూడ్ లేకపోయినా నేను important పని పూర్తి చేస్తాను."
-    },
-    tip:{
-      en:"Discipline mindset: Do the next 10 minutes — no excuses.",
-      hi:"Discipline mindset: अगले 10 मिनट बस कर दो — excuses नहीं।",
-      te:"Discipline mindset: వచ్చే 10 నిమిషాలు పని చేయి — excuses వద్దు."
-    }
-  },
-  {id:"Q4", dim:"CE", reverse:false,
-    text:{
-      en:"I like trying new ways to solve a problem.",
-      hi:"मैं problem solve करने के नए तरीके try करता/करती हूँ।",
-      te:"నేను problem solve చేయడానికి కొత్త ways try చేస్తాను."
-    },
-    tip:{
-      en:"Explorer mindset: Try 2 options, pick 1, move on.",
-      hi:"Explorer mindset: 2 options try करो, 1 pick करो, आगे बढ़ो।",
-      te:"Explorer mindset: 2 options try చేయి, 1 pick చేసి ముందుకు పో."
-    }
-  },
-  {id:"Q5", dim:"EC", reverse:false,
-    text:{
-      en:"I think about how my words affect other people.",
-      hi:"मैं सोचता/सोचती हूँ कि मेरे words दूसरों पर कैसे असर करते हैं।",
-      te:"నా మాటలు ఇతరులపై ఎలా ప్రభావం చూపుతాయో నేను ఆలోచిస్తాను."
-    },
-    tip:{
-      en:"Wonder Woman mindset: Be kind and clear at the same time.",
-      hi:"Wonder Woman mindset: Kind भी बनो और clear भी।",
-      te:"Wonder Woman mindset: Kind గా ఉండి కూడా clear గా చెప్పు."
-    }
-  },
-  {id:"Q6", dim:"SI", reverse:false,
-    text:{
-      en:"In a group, I usually start the conversation or take initiative.",
-      hi:"Group में मैं अक्सर बात शुरू करता/करती हूँ या initiative लेता/लेती हूँ।",
-      te:"Group లో నేను సాధారణంగా మాట మొదలు పెడతాను లేదా initiative తీసుకుంటాను."
-    },
-    tip:{
-      en:"Spider-Man mindset: Start small — ask one good question.",
-      hi:"Spider-Man mindset: छोटा start — एक अच्छा सवाल पूछो।",
-      te:"Spider-Man mindset: చిన్న start — ఒక మంచి ప్రశ్న అడుగు."
-    }
-  },
-  {id:"Q7", dim:"AT", reverse:true,
-    text:{
-      en:"I decide quickly even if I don’t have enough information.",
-      hi:"कम information में भी मैं जल्दी decision ले लेता/लेती हूँ।",
-      te:"సరైన సమాచారం లేకపోయినా నేను త్వరగా నిర్ణయం తీసుకుంటాను."
-    },
-    tip:{
-      en:"Analyst mindset: Pause 30 seconds — check 1 fact.",
-      hi:"Analyst mindset: 30 seconds रुको — 1 fact check करो।",
-      te:"Analyst mindset: 30 seconds ఆగి — 1 fact check చేయి."
-    }
-  },
-  {id:"Q8", dim:"EC", reverse:true,
-    text:{
-      en:"To avoid conflict, I keep quiet even when something is wrong.",
-      hi:"Conflict से बचने के लिए, गलत होने पर भी मैं चुप रह जाता/जाती हूँ।",
-      te:"Conflict avoid చేయడానికి, తప్పు ఉన్నా నేను మౌనంగా ఉంటాను."
-    },
-    tip:{
-      en:"Courage mindset: Say it softly — but say it.",
-      hi:"Courage mindset: धीरे बोलो — लेकिन बोलो।",
-      te:"Courage mindset: మెల్లగా చెప్పు — కానీ చెప్పు."
-    }
-  },
-  {id:"Q9", dim:"SI", reverse:true,
-    text:{
-      en:"I often get distracted by notifications while working.",
-      hi:"काम करते समय notifications से मैं अक्सर distract हो जाता/जाती हूँ।",
-      te:"పని చేస్తున్నప్పుడు notifications వల్ల నేను distract అవుతాను."
-    },
-    tip:{
-      en:"Focus mindset: Put phone away for 15 minutes.",
-      hi:"Focus mindset: 15 मिनट phone दूर रखो।",
-      te:"Focus mindset: 15 నిమిషాలు phone దూరంగా పెట్టు."
-    }
-  },
-  {id:"Q10", dim:"CE", reverse:true,
-    text:{
-      en:"I start many things, but I don’t finish them.",
-      hi:"मैं बहुत चीज़ें शुरू करता/करती हूँ, लेकिन finish नहीं करता/करती।",
-      te:"నేను చాలా పనులు start చేస్తాను కానీ finish చేయను."
-    },
-    tip:{
-      en:"Finisher mindset: One task. One finish. Today.",
-      hi:"Finisher mindset: एक काम. पूरा. आज।",
-      te:"Finisher mindset: ఒక పని. పూర్తిగా. ఈ రోజు."
-    }
-  }
+  // Structure & Execution (SE)
+  {id:"q1", dim:"SE", reverse:false,
+   text:{
+     en:"I like to plan my work and finish tasks on time.",
+     hi:"मुझे काम की planning करना और time पर खत्म करना पसंद है।",
+     te:"నేను పని plan చేసి సమయానికి పూర్తి చేయడం ఇష్టం."
+   },
+   tip:{
+     en:"Small plan beats big stress: write 3 steps, start step 1.",
+     hi:"छोटी planning > बड़ा stress: 3 steps लिखें, step 1 से शुरू करें।",
+     te:"చిన్న plan > పెద్ద stress: 3 steps రాసి, step 1 మొదలు పెట్టండి."
+   }},
+  {id:"q2", dim:"SE", reverse:true,
+   text:{
+     en:"I often delay important tasks until the last minute.",
+     hi:"मैं अक्सर ज़रूरी काम आख़िरी minute तक टाल देता/देती हूँ।",
+     te:"నేను ముఖ్యమైన పనిని చివరి నిమిషం వరకు ఆలస్యం చేస్తాను."
+   },
+   tip:{
+     en:"If you delay, make it tiny: do 5 minutes now.",
+     hi:"अगर टालते हैं, तो छोटा करें: अभी 5 मिनट करें।",
+     te:"ఆలస్యం అయితే, చిన్నగా చేయండి: ఇప్పుడే 5 నిమిషాలు."
+   }},
+
+  // Analytical Thinking (AT)
+  {id:"q3", dim:"AT", reverse:false,
+   text:{
+     en:"Before I decide, I like to understand the reason and details.",
+     hi:"फैसला करने से पहले मैं कारण और details समझना चाहता/चाहती हूँ।",
+     te:"నిర్ణయం తీసుకునే ముందు కారణం, వివరాలు తెలుసుకోవాలి అనుకుంటాను."
+   },
+   tip:{
+     en:"Ask: What’s the real problem? What’s the simplest proof?",
+     hi:"पूछें: असली problem क्या है? सबसे आसान proof क्या है?",
+     te:"అడగండి: నిజమైన problem ఏది? సింపుల్ proof ఏది?"
+   }},
+  {id:"q4", dim:"AT", reverse:true,
+   text:{
+     en:"I accept things easily without asking questions.",
+     hi:"मैं बिना सवाल पूछे चीज़ें आसानी से मान लेता/लेती हूँ।",
+     te:"నేను ప్రశ్నలు అడగకుండా సులభంగా నమ్మేస్తాను."
+   },
+   tip:{
+     en:"One good question can save a lot of time later.",
+     hi:"एक अच्छा सवाल बाद में बहुत time बचाता है।",
+     te:"ఒక మంచి ప్రశ్న తర్వాత చాలా సమయం ఆదా చేస్తుంది."
+   }},
+
+  // Social Initiative (SI)
+  {id:"q5", dim:"SI", reverse:false,
+   text:{
+     en:"I can start conversations and connect with new people easily.",
+     hi:"मैं आसानी से बातचीत शुरू करके नए लोगों से connect कर सकता/सकती हूँ।",
+     te:"నేను కొత్త వ్యక్తులతో సులభంగా మాట్లాడటం, connect అవడం చేయగలను."
+   },
+   tip:{
+     en:"Confidence hack: say hello + one simple question.",
+     hi:"Confidence: hello कहें + एक simple question पूछें।",
+     te:"Confidence: హాయ్ చెప్పి + ఒక సింపుల్ ప్రశ్న అడగండి."
+   }},
+  {id:"q6", dim:"SI", reverse:true,
+   text:{
+     en:"In groups, I stay quiet even when I have a good point.",
+     hi:"Group में मेरे पास अच्छा point होने पर भी मैं चुप रहता/रहती हूँ।",
+     te:"Group లో మంచి point ఉన్నా నేను నిశ్శబ్దంగా ఉంటాను."
+   },
+   tip:{
+     en:"Try: speak one sentence. That’s enough to start.",
+     hi:"Try: एक sentence बोलें. शुरुआत हो जाएगी।",
+     te:"Try: ఒక వాక్యం చెప్పండి. అదే స్టార్ట్."
+   }},
+
+  // Empathy & Cooperation (EC)
+  {id:"q7", dim:"EC", reverse:false,
+   text:{
+     en:"I try to understand how others feel before I react.",
+     hi:"मैं react करने से पहले दूसरों की feelings समझने की कोशिश करता/करती हूँ।",
+     te:"నేను స్పందించే ముందు ఇతరులు ఎలా feel అవుతున్నారు అనేది అర్థం చేసుకుంటాను."
+   },
+   tip:{
+     en:"A calm response is a superpower in teams.",
+     hi:"Team में calm response एक superpower है।",
+     te:"Team లో calm response ఒక superpower."
+   }},
+  {id:"q8", dim:"EC", reverse:true,
+   text:{
+     en:"I get annoyed quickly when people work slowly.",
+     hi:"जब लोग धीरे काम करते हैं तो मुझे जल्दी चिढ़ होती है।",
+     te:"ఇతరులు నెమ్మదిగా పని చేస్తే నాకు త్వరగా చిరాకు వస్తుంది."
+   },
+   tip:{
+     en:"Try: ask what’s blocking them before judging.",
+     hi:"Try: judge करने से पहले पूछें, blocking क्या है?",
+     te:"Try: జడ్జ్ చేసేముందు, ఏం బ్లాక్ అవుతోంది అడగండి."
+   }},
+
+  // Curiosity & Experimentation (CE)
+  {id:"q9", dim:"CE", reverse:false,
+   text:{
+     en:"I like trying new tools or ideas, even if I may fail.",
+     hi:"मैं नए tools/ideas try करना पसंद करता/करती हूँ, भले fail हो जाए।",
+     te:"నేను కొత్త tools/ideas try చేస్తాను, fail అయినా సరే."
+   },
+   tip:{
+     en:"Small experiments build big confidence.",
+     hi:"छोटे experiments बड़ी confidence बनाते हैं।",
+     te:"చిన్న experiments పెద్ద confidence ఇస్తాయి."
+   }},
+  {id:"q10", dim:"CE", reverse:true,
+   text:{
+     en:"I avoid new things because I fear making mistakes.",
+     hi:"मैं गलती के डर से नई चीज़ें avoid करता/करती हूँ।",
+     te:"తప్పు అవుతుందనే భయంతో నేను కొత్త విషయాలు avoid చేస్తాను."
+   },
+   tip:{
+     en:"Mistakes are data. Learn → adjust → move.",
+     hi:"Mistakes data हैं: सीखें → सुधारें → आगे बढ़ें।",
+     te:"Mistakes data: నేర్చుకోండి → సరిదిద్దండి → ముందుకు."
+   }},
 ];
 
-/* ---------- Answer labels (keep simple) ---------- */
-const OPTS = {
-  en: [{v:1,t:"No"},{v:2,t:"Not really"},{v:3,t:"Mostly yes"},{v:4,t:"Yes"}],
-  hi: [{v:1,t:"No"},{v:2,t:"Not really"},{v:3,t:"Mostly yes"},{v:4,t:"Yes"}],
-  te: [{v:1,t:"No"},{v:2,t:"Not really"},{v:3,t:"Mostly yes"},{v:4,t:"Yes"}],
+const SCALE = [
+  {v:0, en:"No", hi:"नहीं", te:"కాదు"},
+  {v:1, en:"Not really", hi:"ज़्यादा नहीं", te:"అంతగా కాదు"},
+  {v:2, en:"Mostly", hi:"अधिकतर", te:"ఎక్కువగా"},
+  {v:3, en:"Yes", hi:"हाँ", te:"అవును"},
+];
+
+/* =========================
+   STYLES (5)
+========================= */
+const STYLE_INFO = {
+  Executive:{
+    tag:"EXECUTIVE",
+    one:{
+      en:"You like ownership, speed, and getting things done.",
+      hi:"आप ownership लेते हैं, fast move करते हैं और काम पूरा करते हैं।",
+      te:"మీకు ownership, speed, పనిని పూర్తి చేయడం ఇష్టం."
+    },
+    strengths:{
+      en:["You take responsibility quickly","You drive tasks to completion","You keep teams moving"],
+      hi:["आप जल्दी responsibility लेते हैं","काम पूरा करवाते हैं","Team को आगे बढ़ाते हैं"],
+      te:["మీరు త్వరగా బాధ్యత తీసుకుంటారు","పనిని పూర్తి చేయిస్తారు","Team ని ముందుకు నడిపిస్తారు"]
+    },
+    watch:{
+      en:["May rush and miss details","Can feel impatient with slow progress","May do too much yourself"],
+      hi:["जल्दी में details miss हो सकते हैं","Slow progress से impatience हो सकती है","सब कुछ खुद करने का risk"],
+      te:["త్వరలో details miss కావచ్చు","Slow progress తో impatience","అన్ని మీరే చేయాలనిపించడం"]
+    },
+    plan:{
+      en:["Pick 1 goal (internship / skill) and finish it","Make a weekly plan: 3 priorities only","Build proof: one project write-up or mini portfolio","Practice calm communication in teams"],
+      hi:["1 goal चुनें और पूरा करें","Weekly plan: सिर्फ 3 priorities","Proof बनाएं: project write-up / mini portfolio","Team में calm communication practice करें"],
+      te:["1 goal ఎంచుకుని పూర్తి చేయండి","Weekly plan: 3 priorities మాత్రమే","Proof: project write-up / mini portfolio","Team లో calm communication practice చేయండి"]
+    },
+    patterns:{
+      en:["You prefer action over long discussion","You learn best by doing","You feel good when you ‘finish’ things"],
+      hi:["आप discussion से ज़्यादा action पसंद करते हैं","आप doing से best सीखते हैं","काम finish होने पर अच्छा लगता है"],
+      te:["మీరు discussion కంటే action ఇష్టపడతారు","చేసి నేర్చుకోవడం మీకు బెటర్","పని ‘finish’ అయితే సంతోషం"]
+    }
+  },
+
+  Builder:{
+    tag:"BUILDER",
+    one:{
+      en:"You like making things practical and usable.",
+      hi:"आप चीज़ों को practical और usable बनाना पसंद करते हैं।",
+      te:"మీకు practical గా, usable గా తయారు చేయడం ఇష్టం."
+    },
+    strengths:{
+      en:["You simplify complex things","You care about real usefulness","You improve systems step by step"],
+      hi:["आप complex चीज़ें simple करते हैं","आप usefulness पर ध्यान देते हैं","आप systems धीरे-धीरे सुधारते हैं"],
+      te:["మీరు complex విషయాలు సింపుల్ చేస్తారు","ఉపయోగపడేలా చూస్తారు","సిస్టమ్స్ ని step-by-step మెరుగుపరుస్తారు"]
+    },
+    watch:{
+      en:["May avoid big risks","May delay if perfect is not clear","Can be too focused on small details"],
+      hi:["Big risk avoid हो सकता है","Perfect clear न हो तो delay","Small details में फँस सकते हैं"],
+      te:["Big risk avoid చేయచ్చు","Perfect స్పష్టంగా లేకపోతే delay","చిన్న details లో ఎక్కువగా ఉండిపోవచ్చు"]
+    },
+    plan:{
+      en:["Choose one skill and build a small ‘usable’ output","Do tiny improvements daily (15 minutes)","Share your work publicly once a month","Learn to ship v1, then improve"],
+      hi:["एक skill चुनें और छोटा usable output बनाएं","Daily tiny improvement (15 mins)","महीने में 1 बार share करें","पहले v1 ship करें, फिर improve"],
+      te:["ఒక skill ఎంచుకుని usable output చేయండి","Daily 15 mins చిన్న improvement","నెలకు 1 సారి share చేయండి","ముందు v1 ship చేసి, తర్వాత improve"]
+    },
+    patterns:{
+      en:["You prefer steady progress","You like clear steps","You feel confident when things are practical"],
+      hi:["आप steady progress पसंद करते हैं","आपको clear steps पसंद हैं","Practical चीज़ों से confidence आता है"],
+      te:["మీకు steady progress ఇష్టం","clear steps ఇష్టం","practical గా ఉంటే confidence వస్తుంది"]
+    }
+  },
+
+  Analyst:{
+    tag:"ANALYST",
+    one:{
+      en:"You like clarity, logic, and understanding ‘why’.",
+      hi:"आप clarity, logic और ‘why’ समझना पसंद करते हैं।",
+      te:"మీకు clarity, logic, ‘why’ అర్థం చేసుకోవడం ఇష్టం."
+    },
+    strengths:{
+      en:["You think deeply before deciding","You spot gaps and risks","You explain ideas clearly"],
+      hi:["आप सोच-समझकर फैसला लेते हैं","आप gaps/risks पकड़ते हैं","आप ideas clearly समझाते हैं"],
+      te:["మీరు ఆలోచించి నిర్ణయం తీసుకుంటారు","gaps/risks గుర్తిస్తారు","ideas స్పష్టంగా చెప్తారు"]
+    },
+    watch:{
+      en:["May overthink and delay action","Can get stuck in ‘more info’ mode","May sound too critical"],
+      hi:["Overthink करके action late हो सकता है","‘More info’ में फँस सकते हैं","कभी-कभी critical लग सकता है"],
+      te:["Overthink వల్ల action ఆలస్యం","‘More info’ లో ఇరుక్కోవచ్చు","కొన్ని సార్లు critical గా అనిపించచ్చు"]
+    },
+    plan:{
+      en:["Pick one domain and learn fundamentals well","Do 1 small project and write a clean explanation","Practice speed: decide with 70% info","Improve communication: simple words"],
+      hi:["एक domain चुनें और fundamentals मजबूत करें","1 छोटा project + clean explanation","Speed practice: 70% info पर decide","Simple words में बोलें"],
+      te:["ఒక domain ఎంచుకుని fundamentals బలంగా చేయండి","1 చిన్న project + clean explanation","70% info తో decide చేయడం practice","simple words వాడండి"]
+    },
+    patterns:{
+      en:["You value correctness","You like learning in depth","You feel safe with facts"],
+      hi:["आप correctness पसंद करते हैं","आप in-depth सीखना चाहते हैं","Facts से safety महसूस होती है"],
+      te:["మీకు correctness ఇష్టం","in-depth నేర్చుకోవడం ఇష్టం","facts ఉంటే safe గా అనిపిస్తుంది"]
+    }
+  },
+
+  Connector:{
+    tag:"CONNECTOR",
+    one:{
+      en:"You enjoy people, teamwork, and bringing energy.",
+      hi:"आप लोगों, teamwork और positive energy को पसंद करते हैं।",
+      te:"మీకు people, teamwork, energy ఇష్టం."
+    },
+    strengths:{
+      en:["You build relationships easily","You motivate teams","You understand people well"],
+      hi:["आप relationships बनाते हैं","आप teams को motivate करते हैं","आप लोगों को समझते हैं"],
+      te:["మీరు relationships build చేస్తారు","teams ని motivate చేస్తారు","people ని బాగా అర్థం చేసుకుంటారు"]
+    },
+    watch:{
+      en:["May avoid tough feedback","Can get distracted by social activities","May say yes too often"],
+      hi:["Tough feedback avoid हो सकता है","Social चीज़ों से distract","बहुत ज़्यादा yes कहना"],
+      te:["Tough feedback avoid కావచ్చు","Social విషయాలతో distract","చాలా సార్లు yes అనడం"]
+    },
+    plan:{
+      en:["Use your network: find 1 mentor + 2 peers","Build one portfolio piece and share it","Practice boundaries: say no politely","Learn one strong skill to support your people strength"],
+      hi:["Network use करें: 1 mentor + 2 peers","1 portfolio piece बनाकर share करें","Boundaries: politely no कहना","People strength के साथ 1 skill मजबूत करें"],
+      te:["Network వాడండి: 1 mentor + 2 peers","1 portfolio piece చేసి share చేయండి","Boundaries: politely no చెప్పండి","people strength తో పాటు 1 skill బలంగా"]
+    },
+    patterns:{
+      en:["You learn best with others","You enjoy collaboration","You feel good when people feel included"],
+      hi:["आप दूसरों के साथ best सीखते हैं","आप collaboration पसंद करते हैं","People included हों तो अच्छा लगता है"],
+      te:["మీరు others తో కలిసి best నేర్చుకుంటారు","collaboration ఇష్టం","people included అయితే బాగా అనిపిస్తుంది"]
+    }
+  },
+
+  Explorer:{
+    tag:"EXPLORER",
+    one:{
+      en:"You enjoy curiosity, trying things, and learning fast.",
+      hi:"आप curiosity, नए चीज़ें try करना और fast सीखना पसंद करते हैं।",
+      te:"మీకు curiosity, కొత్తవి try చేయడం, వేగంగా నేర్చుకోవడం ఇష్టం."
+    },
+    strengths:{
+      en:["You adapt quickly","You discover new ideas","You enjoy experimentation"],
+      hi:["आप जल्दी adapt करते हैं","आप नए ideas ढूँढते हैं","आप experiments पसंद करते हैं"],
+      te:["మీరు త్వరగా adapt అవుతారు","కొత్త ideas కనుగొంటారు","experiments ఇష్టం"]
+    },
+    watch:{
+      en:["May jump too quickly between interests","Can leave things unfinished","May resist routines"],
+      hi:["Interests जल्दी change","चीज़ें अधूरी छोड़ सकते हैं","Routine पसंद नहीं हो सकता"],
+      te:["Interests త్వరగా మారవచ్చు","పనులు పూర్తి కాకుండా ఉండవచ్చు","routine ఇష్టం కాకపోవచ్చు"]
+    },
+    plan:{
+      en:["Pick 1 focus for 4 weeks (no switching)","Use tiny experiments, but finish 1 output","Track learning: 5 lines daily","Build a ‘showcase’ page of what you tried"],
+      hi:["4 हफ्ते 1 focus (switch नहीं)","Small experiments करें, लेकिन 1 output पूरा करें","Learning track: रोज़ 5 lines","जो try किया उसका showcase बनाएं"],
+      te:["4 వారాలు 1 focus (switch వద్దు)","చిన్న experiments కానీ 1 output పూర్తి","daily 5 lines learning track","మీ showcase పేజ్ తయారు చేయండి"]
+    },
+    patterns:{
+      en:["You feel alive when learning new things","You enjoy variety","You get bored by repetition"],
+      hi:["नई चीज़ें सीखकर energy आती है","आप variety पसंद करते हैं","Repetition से boredom"],
+      te:["కొత్తవి నేర్చుకుంటే energy","variety ఇష్టం","repetition తో boredom"]
+    }
+  }
 };
 
-/* ---------- Helpers ---------- */
-function $(id){ return document.getElementById(id); }
+/* =========================
+   MICRO CHALLENGES (HTML-only)
+========================= */
+const CHALLENGES = {
+  social:{
+    title:{
+      en:"🛡️ Social App Safety — Quick Micro Challenge",
+      hi:"🛡️ Social App Safety — Quick Micro Challenge",
+      te:"🛡️ Social App Safety — Quick Micro Challenge"
+    },
+    intro:{
+      en:"Pick one app you use daily (Instagram/Snapchat/WhatsApp/etc.). No hacking. Only thinking + explaining.",
+      hi:"एक daily app चुनें (Instagram/Snapchat/WhatsApp/etc.). No hacking. सिर्फ thinking + explaining.",
+      te:"మీరు daily use చేసే app ఎంచుకోండి (Instagram/Snapchat/WhatsApp/etc.). No hacking. కేవలం thinking + explaining."
+    },
+    content:{
+      en:[
+        "1) Which app did you choose? Why do people use it most?",
+        "2) What personal info users share without thinking?",
+        "3) One common mistake users make",
+        "4) One misuse that can happen because of it",
+        "5) Pick ONE risk and explain why it matters most",
+        "6) Suggest ONE simple rule/feature to reduce this risk",
+        "7) What did you learn about yourself?"
+      ],
+      hi:[
+        "1) कौन सा app चुना? लोग इसे क्यों use करते हैं?",
+        "2) कौन-सी personal info लोग बिना सोचे share करते हैं?",
+        "3) Users की एक common mistake",
+        "4) इसी वजह से एक misuse क्या हो सकता है?",
+        "5) ONE risk चुनें और क्यों important है लिखें",
+        "6) ONE simple rule/feature बताएं",
+        "7) आपने अपने बारे में क्या सीखा?"
+      ],
+      te:[
+        "1) ఏ app ఎంచుకున్నారు? ఎందుకు ఎక్కువగా use చేస్తారు?",
+        "2) ఏ personal info ని people ఆలోచించకుండా share చేస్తారు?",
+        "3) Users చేసే ఒక common mistake",
+        "4) దాని వల్ల ఒక misuse ఏమవచ్చు?",
+        "5) ONE risk ఎంచుకుని ఎందుకు important చెప్పండి",
+        "6) ONE simple rule/feature సూచించండి",
+        "7) మీ గురించి మీరు ఏమి నేర్చుకున్నారు?"
+      ]
+    },
+    template:{
+      en:`Seedling Micro Challenge – Social App Safety
 
-function loadState(){
-  try{ answers = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}") || {}; }
-  catch(e){ answers = {}; }
-}
-function saveState(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(answers)); }
-function resetAll(){
-  localStorage.removeItem(STORAGE_KEY);
-  localStorage.removeItem(RESULT_KEY);
-  answers = {};
-  idx = 0;
-  showHome();
-}
+App chosen:
+One risk I focused on:
+Why it matters:
+One simple improvement idea:
+What I learned about myself:`,
+      hi:`Seedling Micro Challenge – Social App Safety
 
-function setLang(l){
-  currentLang = l;
-  const t = UI[currentLang];
+App chosen:
+Main risk:
+Why it matters:
+One improvement idea:
+What I learned about myself:`,
+      te:`Seedling Micro Challenge – Social App Safety
 
-  $("uiLangLabel").innerText = t.langLabel;
-  $("uiTitle").innerText = t.title;
-  $("uiSub").innerText = t.sub;
-
-  $("uiPill1").innerText = t.pill1;
-  $("uiHomeH").innerText = t.homeH;
-  $("uiHomeP").innerText = t.homeP;
-  $("uiYouGetH").innerText = t.youGetH;
-  $("uiYouGetList").innerHTML = t.youGetList.map(x=> `<li>${escapeHtml(x)}</li>`).join("");
-
-  $("btnStart").innerText = t.start;
-  $("btnReset").innerText = t.reset;
-  $("uiNote").innerText = t.note;
-
-  $("uiPrivacyH").innerText = t.privacyH;
-  $("uiPrivacyP").innerText = t.privacyP;
-
-  $("uiWorkshopH").innerText = t.workshopH;
-  $("uiWorkshopP").innerText = t.workshopP;
-  $("btnWorkshop").innerText = t.interested;
-
-  $("uiOptionsLabel").innerText = t.optionsLabel;
-  $("btnBack").innerText = t.back;
-  $("btnSave").innerText = t.save;
-  $("uiSavedNote").innerText = t.saved;
-
-  $("resTitle").innerText = t.resultTitle;
-  $("btnRetake").innerText = t.retake;
-  $("btnCopyResult").innerText = t.copyResult;
-  $("resTiny").innerText = t.tiny;
-
-  $("mcTitle").innerText = t.mcTitle;
-  $("mcSub").innerText = t.mcSub;
-  $("mcCTA").innerText = t.mcCTA;
-  $("mcCTABody").innerText = t.mcCTABody;
-  $("btnWorkshop2").innerText = t.interested;
-
-  // Update quiz button label + state
-  refreshNextButtonState();
-
-  // Rerender active screen
-  if(!$("screenQuiz").classList.contains("hide")) renderQuestion();
-  const last = localStorage.getItem(RESULT_KEY);
-  if(last && !$("screenResult").classList.contains("hide")){
-    try{
-      const parsed = JSON.parse(last);
-      renderResults(parsed.primary, parsed.secondary, parsed.score);
-    }catch(e){}
-  }
-}
-
-function showHome(){
-  $("screenHome").classList.remove("hide");
-  $("screenQuiz").classList.add("hide");
-  $("screenResult").classList.add("hide");
-  $("microChallenges").style.display = "none";
-  $("progressText").innerText = UI[currentLang].progressReady;
-  $("bar").style.width = "0%";
-}
-function showQuiz(){
-  $("screenHome").classList.add("hide");
-  $("screenQuiz").classList.remove("hide");
-  $("screenResult").classList.add("hide");
-  $("microChallenges").style.display = "none";
-  renderQuestion();
-}
-function showResult(){
-  $("screenHome").classList.add("hide");
-  $("screenQuiz").classList.add("hide");
-  $("screenResult").classList.remove("hide");
-}
-
-function dimLabel(dim){
-  // Keep simple for now
-  const map = {SE:"Structure & finishing", AT:"Thinking & logic", SI:"Social initiative", EC:"Empathy & teamwork", CE:"Curiosity & experimenting"};
-  return map[dim] || dim;
-}
-function tipLabel(){
-  // Same label across languages (simple)
-  return (currentLang==="hi" || currentLang==="te") ? "Superhero mindset tip" : "Superhero mindset tip";
-}
-
-/* ---------- Render Question ---------- */
-function renderQuestion(){
-  const t = UI[currentLang];
-  const q = QUESTIONS[idx];
-
-  $("progressText").innerText = `${t.progressPrefix} ${idx+1} ${t.progressOf} ${QUESTIONS.length}`;
-  $("bar").style.width = `${Math.round(((idx+1)/QUESTIONS.length)*100)}%`;
-
-  const selected = answers[q.id] || 0;
-  const opts = OPTS[currentLang];
-
-  $("qBox").innerHTML = `
-    <div class="qTag">${t.progressPrefix} ${idx+1} ${t.progressOf} ${QUESTIONS.length} • ${escapeHtml(dimLabel(q.dim))}</div>
-    <div class="qTitle">${escapeHtml(q.text[currentLang] || q.text.en)}</div>
-
-    <div class="scale" role="list">
-      ${opts.map(o => `
-        <div class="opt ${selected===o.v ? "selected":""}" role="listitem" tabindex="0" data-v="${o.v}">
-          <strong>${o.v}</strong>
-          <span>${escapeHtml(o.t)}</span>
-        </div>
-      `).join("")}
-    </div>
-
-    <div class="tipBox ${selected ? "" : "hide"}" id="tipBox">
-      <b>${escapeHtml(tipLabel())}</b>
-      <span id="tipText">${escapeHtml(q.tip[currentLang] || q.tip.en)}</span>
-    </div>
-
-    <div class="tiny" style="margin-top:10px;">
-      ${selected ? "" : escapeHtml(t.pickAnOption)}
-    </div>
-  `;
-
-  // click/select handlers
-  $("qBox").querySelectorAll(".opt").forEach(el=>{
-    const choose = ()=>{
-      const v = Number(el.getAttribute("data-v"));
-      answers[q.id] = v;
-      saveState();
-      renderQuestion(); // highlight + show tip
-    };
-    el.addEventListener("click", choose);
-    el.addEventListener("keydown", (e)=>{ if(e.key==="Enter" || e.key===" "){ e.preventDefault(); choose(); }});
-  });
-
-  $("btnBack").disabled = (idx === 0);
-  refreshNextButtonState();
-}
-
-function refreshNextButtonState(){
-  const t = UI[currentLang];
-  const isLast = (idx === QUESTIONS.length - 1);
-  $("btnNext").innerText = isLast ? t.finishBtn : t.next;
-
-  const q = QUESTIONS[idx];
-  const selected = answers[q?.id] || 0;
-  $("btnNext").disabled = !selected;
-}
-
-/* ---------- Scoring + Finish ---------- */
-function finish(){
-  const score = {SE:0, AT:0, SI:0, EC:0, CE:0};
-
-  QUESTIONS.forEach(q=>{
-    let value = answers[q.id] || 0; // 1..4
-    if(!value) return;
-    if(q.reverse) value = 5 - value;
-    score[q.dim] += value;
-  });
-
-  const dims = Object.keys(score).map(d=>({d, v:score[d]})).sort((a,b)=> b.v - a.v);
-  let primary = dims[0];
-  let secondary = dims[1];
-
-  // tie-breaker (simple)
-  const tieVal = primary.v;
-  const tied = dims.filter(x => x.v === tieVal);
-  if(tied.length > 1){
-    const tieQ = {SE:"Q3", AT:"Q2", SI:"Q6", EC:"Q5", CE:"Q4"};
-    tied.sort((a,b)=>{
-      const av = answers[tieQ[a.d]] || 0;
-      const bv = answers[tieQ[b.d]] || 0;
-      return bv - av;
-    });
-    primary = tied[0];
-    const remain = dims.filter(x=> x.d !== primary.d).sort((a,b)=> b.v - a.v);
-    secondary = remain[0];
-  }
-
-  const primaryStyle = STYLE_BY_DIM[primary.d];
-  const secondaryStyle = STYLE_BY_DIM[secondary.d];
-
-  localStorage.setItem(RESULT_KEY, JSON.stringify({
-    primary: primaryStyle.key,
-    secondary: secondaryStyle.key,
-    score
-  }));
-
-  renderResults(primaryStyle.key, secondaryStyle.key, score);
-  showResult();
-
-  // show micro challenges after results
-  $("microChallenges").style.display = "block";
-}
-
-/* ---------- Render Results ---------- */
-function renderResults(primaryKey, secondaryKey, score){
-  const t = UI[currentLang];
-  const primaryStyle = Object.values(STYLE_BY_DIM).find(s=> s.key===primaryKey) || STYLE_BY_DIM.SE;
-  const secondaryStyle = Object.values(STYLE_BY_DIM).find(s=> s.key===secondaryKey) || STYLE_BY_DIM.AT;
-
-  $("resTitle").innerText = t.resultTitle;
-  $("resIntro").innerText =
-    (currentLang==="hi")
-      ? "यह आपके answers पर based एक simple snapshot है। इसे next actions के लिए use करें।"
-      : (currentLang==="te")
-        ? "మీ answers ఆధారంగా ఇది ఒక simple snapshot. Next actions కోసం use చేయండి."
-        : "This is a simple snapshot based on your answers. Use it for your next actions.";
-
-  // Main card (more impact)
-  $("resCardMain").innerHTML = `
-    <div class="pill">${escapeHtml(labelOf(primaryStyle))}</div>
-    <div style="margin-top:10px;">
-      <div class="h3">${escapeHtml(oneLineOf(primaryStyle))}</div>
-      <p class="muted" style="margin:8px 0 0;">${heroOf(primaryStyle)}</p>
-    </div>
-
-    <div class="divider"></div>
-
-    <div class="h3">${currentLang==="hi"?"Strengths":"Strengths"}</div>
-    <ul class="muted" style="margin:8px 0 0 18px;">
-      ${strengthsOf(primaryStyle).map(x=> `<li>${escapeHtml(x)}</li>`).join("")}
-    </ul>
-
-    <div class="divider"></div>
-
-    <div class="h3">${currentLang==="hi"?"Watch-outs":"Watch-outs"}</div>
-    <ul class="muted" style="margin:8px 0 0 18px;">
-      ${watchoutsOf(primaryStyle).map(x=> `<li>${escapeHtml(x)}</li>`).join("")}
-    </ul>
-
-    <div class="divider"></div>
-
-    <div class="h3">${studentTitle()}</div>
-    <ul class="muted" style="margin:8px 0 0 18px;">
-      ${(primaryStyle.forStudent?.[currentLang] || primaryStyle.forStudent?.en || []).map(x=> `<li>${escapeHtml(x)}</li>`).join("")}
-    </ul>
-  `;
-
-  // Insights card (scores + next actions)
-  $("resCardInsights").innerHTML = `
-    <div class="pill">${escapeHtml(secondaryTitle())}: ${escapeHtml(labelOf(secondaryStyle))}</div>
-
-    <div class="kpi">
-      <div class="mini"><div class="n">${score.SE || 0}</div><div class="l">Structure</div></div>
-      <div class="mini"><div class="n">${score.AT || 0}</div><div class="l">Thinking</div></div>
-      <div class="mini"><div class="n">${score.SI || 0}</div><div class="l">Social</div></div>
-      <div class="mini"><div class="n">${score.EC || 0}</div><div class="l">Empathy</div></div>
-      <div class="mini"><div class="n">${score.CE || 0}</div><div class="l">Curiosity</div></div>
-    </div>
-
-    <div class="divider"></div>
-
-    <div class="h3">${escapeHtml(nextStepTitle())}</div>
-    <p class="muted" style="margin:6px 0 0;">
-      ${escapeHtml(nextStepLine(primaryStyle.key))}
-    </p>
-
-    <div class="divider"></div>
-
-    <div class="h3">${escapeHtml(quickWinTitle())}</div>
-    <ul class="muted" style="margin:8px 0 0 18px;">
-      ${quickWins(primaryStyle.key).map(x=> `<li>${escapeHtml(x)}</li>`).join("")}
-    </ul>
-  `;
-
-  // Life patterns + language
-  $("resLifePatterns").innerHTML = `
-    <div class="h3">${escapeHtml(lifePatternsTitle())}</div>
-    <p class="muted" style="margin:6px 0 0;">
-      ${lifePatternsText(score)}
-    </p>
-
-    <div class="divider"></div>
-
-    <div class="h3">${escapeHtml(langLineTitle())}</div>
-    <p class="muted" style="margin:6px 0 0;">
-      ${escapeHtml(langLineText())}
-    </p>
-  `;
-
-  // Tips again (based on answers)
-  const tips = collectedTips();
-  $("resTips").innerHTML = `
-    <div class="h3">${escapeHtml(t.tipsAgainTitle)}</div>
-    ${tips.length
-      ? `<ul class="muted" style="margin:8px 0 0 18px;">${tips.map(x=> `<li>${escapeHtml(x)}</li>`).join("")}</ul>`
-      : `<p class="muted" style="margin:6px 0 0;">${escapeHtml(noTipsText())}</p>`
+App chosen:
+Main risk:
+Why it matters:
+One improvement idea:
+What I learned about myself:`
     }
-  `;
+  },
 
-  // Copy summary
-  const summary = buildCopySummary(primaryStyle.key, secondaryStyle.key, score, tips);
-  $("btnCopyResult").onclick = ()=> copyText(summary);
+  ai:{
+    title:{
+      en:"🤖 AI Thinking — Quick Micro Challenge",
+      hi:"🤖 AI Thinking — Quick Micro Challenge",
+      te:"🤖 AI Thinking — Quick Micro Challenge"
+    },
+    intro:{
+      en:"Pick one everyday problem and explain how AI could help (logic, not coding).",
+      hi:"एक everyday problem चुनें और बताएं AI कैसे help करेगा (logic, no coding).",
+      te:"ఒక everyday problem ఎంచుకుని AI ఎలా help చేస్తుందో చెప్పండి (logic, no coding)."
+    },
+    content:{
+      en:[
+        "1) What problem did you choose? Who is affected?",
+        "2) How could AI help (logic, not tools)?",
+        "3) What data would be needed?",
+        "4) One risk/limitation of AI in this case",
+        "5) ONE simple improvement idea",
+        "6) What did you enjoy thinking about?"
+      ],
+      hi:[
+        "1) कौन-सा problem चुना? किस पर असर होता है?",
+        "2) AI कैसे help करेगा (logic)?",
+        "3) कौन-सा data चाहिए?",
+        "4) एक risk/limitation क्या है?",
+        "5) ONE simple improvement idea",
+        "6) क्या सोचकर मज़ा आया?"
+      ],
+      te:[
+        "1) ఏ problem ఎంచుకున్నారు? ఎవరు affect అవుతారు?",
+        "2) AI ఎలా help చేస్తుంది (logic)?",
+        "3) ఏ data అవసరం?",
+        "4) ఒక risk/limitation ఏమిటి?",
+        "5) ONE simple improvement idea",
+        "6) ఏది ఆలోచించడం మీకు నచ్చింది?"
+      ]
+    },
+    template:{
+      en:`Seedling Micro Challenge – AI Thinking
 
-  // Workshop CTA
-  $("btnWorkshop2").onclick = ()=> emailInterest(summary);
-}
+Problem chosen:
+How AI could help:
+Data needed:
+One risk/limitation:
+One improvement idea:
+What I learned about myself:`,
+      hi:`Seedling Micro Challenge – AI Thinking
 
-/* ---------- Copy / Email ---------- */
-function copyText(text){
-  navigator.clipboard.writeText(text).then(()=> alert(UI[currentLang].copied))
-    .catch(()=> prompt("Copy this:", text));
-}
-function emailInterest(summary){
-  const subject = "Seedling Workshop Interest";
-  const body = `Hi Seedling Team,\n\nI’m interested in the Cybersecurity Workshop.\n\nMy assessment summary:\n${summary}\n\nThanks!`;
-  window.location.href = `mailto:${EMAIL_TO}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-}
+Problem:
+AI help (logic):
+Data:
+One risk:
+One improvement:
+What I learned about myself:`,
+      te:`Seedling Micro Challenge – AI Thinking
 
-/* ---------- Text builders ---------- */
-function labelOf(styleObj){ return styleObj.label[currentLang] || styleObj.label.en; }
-function oneLineOf(styleObj){ return styleObj.oneLine[currentLang] || styleObj.oneLine.en; }
-function strengthsOf(styleObj){ return styleObj.strengths[currentLang] || styleObj.strengths.en; }
-function watchoutsOf(styleObj){ return styleObj.watchouts[currentLang] || styleObj.watchouts.en; }
-
-function heroOf(styleObj){
-  const h = styleObj.hero[currentLang] || styleObj.hero.en;
-  return `<b>${escapeHtml(h.name)}:</b> ${escapeHtml(h.quote)}`;
-}
-
-function nextStepLine(primaryKey){
-  const en = {
-    Executive:"Pick 1 task today. Write the next 3 steps. Finish it.",
-    Analyst:"Pick 1 decision. Check 1 fact. Then decide and move.",
-    Connector:"Start 1 useful conversation. Ask 1 clear question.",
-    Builder:"Say 1 honest thing kindly. Help the team without over-carrying.",
-    Explorer:"Try 1 new method. But finish 1 thing before starting another.",
-  };
-  const hi = {
-    Executive:"आज 1 काम चुनो। Next 3 steps लिखो। पूरा करो।",
-    Analyst:"1 decision चुनो। 1 fact check करो। फिर decide करो।",
-    Connector:"1 useful बातचीत शुरू करो। 1 clear सवाल पूछो।",
-    Builder:"Kindly 1 honest बात बोलो। Over-carry मत करो।",
-    Explorer:"1 नया तरीका try करो। लेकिन 1 चीज़ finish करो।",
-  };
-  const te = {
-    Executive:"ఈ రోజు 1 పని ఎంచుకో. Next 3 steps రాయ్. Finish చేయ్.",
-    Analyst:"1 decision ఎంచుకో. 1 fact check చేయ్. తర్వాత decide చేయ్.",
-    Connector:"1 useful conversation మొదలు పెట్టు. 1 clear question అడుగు.",
-    Builder:"Kind గా 1 honest మాట చెప్పు. Over-carry చేయకు.",
-    Explorer:"1 కొత్త method try చేయ్. కానీ 1 పని finish చేయ్.",
-  };
-  return (currentLang==="hi"?hi:currentLang==="te"?te:en)[primaryKey] || en[primaryKey];
-}
-
-function quickWins(primaryKey){
-  const en = {
-    Executive:["Write 3 priorities for today.","Finish 1 pending task.","Send 1 clear update to someone."],
-    Analyst:["Pick 1 topic and learn 15 mins.","Write 3 bullet notes.","Decide one small thing fast."],
-    Connector:["Message 1 person for guidance.","Ask 1 clear question.","Block 15 mins no-phone."],
-    Builder:["Help 1 person — but set a limit.","Say 'no' once politely.","Write 1 boundary rule."],
-    Explorer:["Start 1 mini-project (30 mins).","Finish a tiny feature.","Share what you built."],
-  };
-  const hi = {
-    Executive:["आज 3 priorities लिखो।","1 pending task पूरा करो।","1 clear update भेजो।"],
-    Analyst:["1 topic 15 mins सीखो।","3 bullet notes लिखो।","एक छोटा decision fast लो।"],
-    Connector:["1 person को message करो।","1 clear सवाल पूछो।","15 mins no-phone।"],
-    Builder:["1 व्यक्ति को help — limit के साथ।","एक बार politely 'no' बोलो।","1 boundary rule लिखो।"],
-    Explorer:["1 mini-project start (30 mins).","एक tiny चीज़ finish।","जो बनाया share करो।"],
-  };
-  const te = {
-    Executive:["ఈ రోజు 3 priorities రాయండి.","1 pending task finish చేయండి.","1 clear update పంపండి."],
-    Analyst:["1 topic 15 mins నేర్చుకోండి.","3 bullet notes రాయండి.","ఒక చిన్న decision fast తీసుకోండి."],
-    Connector:["1 person కి message చేయండి.","1 clear question అడగండి.","15 mins no-phone."],
-    Builder:["1 person కి help — limit తో.","ఒకసారి politely 'no' చెప్పండి.","1 boundary rule రాయండి."],
-    Explorer:["1 mini-project start (30 mins).","ఒక tiny thing finish.","మీ build చేసినది share చేయండి."],
-  };
-  return (currentLang==="hi"?hi:currentLang==="te"?te:en)[primaryKey] || en[primaryKey] || [];
-}
-
-function lifePatternsTitle(){
-  if(currentLang==="hi") return "Your life patterns (based on your answers)";
-  if(currentLang==="te") return "మీ life patterns (మీ answers ఆధారంగా)";
-  return "Your life patterns (based on your answers)";
-}
-function langLineTitle(){
-  if(currentLang==="hi") return "Language";
-  if(currentLang==="te") return "భాష";
-  return "Language";
-}
-function langLineText(){
-  if(currentLang==="hi") return "आप English / Hindi / Telugu में questions और results देख सकते हैं।";
-  if(currentLang==="te") return "మీరు English / Hindi / Telugu లో questions మరియు results చూడవచ్చు.";
-  return "You can view questions and results in English / Hindi / Telugu.";
-}
-
-function lifePatternsText(score){
-  const s  = score.SE || 0;
-  const a  = score.AT || 0;
-  const so = score.SI || 0;
-  const e  = score.EC || 0;
-  const c  = score.CE || 0;
-
-  const linesEN = [
-    (s>=9 ? "You naturally like order and finishing." : "You may need a simple routine to finish work."),
-    (a>=7 ? "You prefer facts over assumptions." : "Try pausing before believing something."),
-    (so>=7 ? "You take initiative with people." : "Try starting small conversations."),
-    (e>=7 ? "You care about fairness and people." : "Practice expressing concerns kindly."),
-    (c>=7 ? "You like exploring new ideas." : "Try one new method each week.")
-  ];
-  const linesHI = [
-    (s>=9 ? "आपको order और finishing पसंद है।" : "Finishing के लिए simple routine बनाइए।"),
-    (a>=7 ? "आप facts को importance देते हैं।" : "Believe करने से पहले pause करें।"),
-    (so>=7 ? "आप people में initiative लेते हैं।" : "छोटी conversation शुरू करें।"),
-    (e>=7 ? "आप fairness और लोगों की care करते हैं।" : "Kindly concerns बोलने की practice करें।"),
-    (c>=7 ? "आप new ideas explore करते हैं।" : "हर हफ्ते एक नया तरीका try करें।")
-  ];
-  const linesTE = [
-    (s>=9 ? "మీకు order మరియు finishing ఇష్టం." : "Finishing కోసం simple routine పెట్టుకోండి."),
-    (a>=7 ? "మీరు facts ని value ఇస్తారు." : "నమ్మే ముందు pause చేయండి."),
-    (so>=7 ? "మీరు people లో initiative తీసుకుంటారు." : "చిన్న conversations మొదలు పెట్టండి."),
-    (e>=7 ? "మీరు fairness & people care చేస్తారు." : "Kind గా concerns చెప్పడం practice చేయండి."),
-    (c>=7 ? "మీరు new ideas explore చేస్తారు." : "ప్రతి వారం ఒక కొత్త method try చేయండి.")
-  ];
-
-  const arr = currentLang==="hi"?linesHI:currentLang==="te"?linesTE:linesEN;
-  return arr.map(x=> "• " + escapeHtml(x)).join("<br/>");
-}
-
-function collectedTips(){
-  // only tips for answered questions, in current language
-  const tips = [];
-  QUESTIONS.forEach(q=>{
-    const v = answers[q.id] || 0;
-    if(v){
-      const tip = (q.tip[currentLang] || q.tip.en || "").trim();
-      if(tip) tips.push(tip);
+Problem:
+AI help (logic):
+Data:
+One risk:
+One improvement:
+What I learned about myself:`
     }
-  });
-  // de-dup
-  return Array.from(new Set(tips));
-}
+  },
 
-function noTipsText(){
-  if(currentLang==="hi") return "Tips देखने के लिए assessment complete करें।";
-  if(currentLang==="te") return "Tips చూడడానికి assessment complete చేయండి.";
-  return "Complete the assessment to see your tips here.";
-}
+  civic:{
+    title:{
+      en:"🏫 Improve a System — Quick Micro Challenge",
+      hi:"🏫 Improve a System — Quick Micro Challenge",
+      te:"🏫 Improve a System — Quick Micro Challenge"
+    },
+    intro:{
+      en:"Pick one system around you (college/hostel/traffic/etc.) and suggest one practical improvement.",
+      hi:"अपने आसपास एक system चुनें (college/hostel/traffic/etc.) और one practical improvement बताएं।",
+      te:"మీ చుట్టూ ఒక system ఎంచుకోండి (college/hostel/traffic/etc.) మరియు one practical improvement సూచించండి."
+    },
+    content:{
+      en:[
+        "1) What system did you choose?",
+        "2) What works well today?",
+        "3) What doesn’t work?",
+        "4) Who is affected most?",
+        "5) ONE biggest problem",
+        "6) ONE practical improvement",
+        "7) Why this improvement matters"
+      ],
+      hi:[
+        "1) कौन-सा system चुना?",
+        "2) क्या अच्छा काम कर रहा है?",
+        "3) क्या नहीं काम कर रहा?",
+        "4) सबसे ज़्यादा किस पर असर?",
+        "5) ONE biggest problem",
+        "6) ONE practical improvement",
+        "7) यह improvement क्यों important है?"
+      ],
+      te:[
+        "1) ఏ system ఎంచుకున్నారు?",
+        "2) ఏది బాగా పనిచేస్తోంది?",
+        "3) ఏది పనిచేయడం లేదు?",
+        "4) ఎవరు ఎక్కువగా affect అవుతున్నారు?",
+        "5) ONE biggest problem",
+        "6) ONE practical improvement",
+        "7) ఇది ఎందుకు important?"
+      ]
+    },
+    template:{
+      en:`Seedling Micro Challenge – Improve a System
 
-function studentTitle(){
-  if(currentLang==="hi") return "If you are a student / fresher, this helps you by";
-  if(currentLang==="te") return "మీరు student / fresher అయితే, ఇది మీకు ఎలా ఉపయోగపడుతుంది";
-  return "If you are a student / fresher, this helps you by";
-}
+System chosen:
+Biggest problem:
+Who is affected:
+One improvement idea:
+Why it matters:
+What I learned about myself:`,
+      hi:`Seedling Micro Challenge – Improve a System
 
-function secondaryTitle(){
-  if(currentLang==="hi") return "Secondary style";
-  if(currentLang==="te") return "Secondary style";
-  return "Secondary style";
-}
+System:
+Problem:
+Affected:
+Improvement:
+Why it matters:
+What I learned about myself:`,
+      te:`Seedling Micro Challenge – Improve a System
 
-function nextStepTitle(){
-  if(currentLang==="hi") return "Next step (simple)";
-  if(currentLang==="te") return "Next step (simple)";
-  return "Next step (simple)";
-}
+System:
+Problem:
+Affected:
+Improvement:
+Why it matters:
+What I learned about myself:`
+    }
+  },
 
-function quickWinTitle(){
-  if(currentLang==="hi") return "Quick wins (today)";
-  if(currentLang==="te") return "Quick wins (today)";
-  return "Quick wins (today)";
-}
+  cyber:{
+    title:{
+      en:"🔐 Cyber Basics — Quick Micro Challenge",
+      hi:"🔐 Cyber Basics — Quick Micro Challenge",
+      te:"🔐 Cyber Basics — Quick Micro Challenge"
+    },
+    intro:{
+      en:"Pick one system (UPI/Gmail/college portal). Think like a security person. No tools needed.",
+      hi:"एक system चुनें (UPI/Gmail/college portal). Security person की तरह सोचें. No tools.",
+      te:"ఒక system ఎంచుకోండి (UPI/Gmail/college portal). Security person లాగా ఆలోచించండి. No tools."
+    },
+    content:{
+      en:[
+        "1) What system did you choose?",
+        "2) What sensitive data does it store?",
+        "3) One human mistake users make",
+        "4) One system/design mistake",
+        "5) ONE highest risk (why?)",
+        "6) ONE simple protection rule",
+        "7) What surprised you?"
+      ],
+      hi:[
+        "1) कौन-सा system चुना?",
+        "2) कौन-सा sensitive data होता है?",
+        "3) Users की एक human mistake",
+        "4) System/design की एक mistake",
+        "5) ONE highest risk (क्यों?)",
+        "6) ONE simple protection rule",
+        "7) क्या surprising लगा?"
+      ],
+      te:[
+        "1) ఏ system ఎంచుకున్నారు?",
+        "2) ఏ sensitive data ఉంటుంది?",
+        "3) Users చేసే ఒక human mistake",
+        "4) System/design లో ఒక mistake",
+        "5) ONE highest risk (why?)",
+        "6) ONE simple protection rule",
+        "7) మీకు ఏది surprising అనిపించింది?"
+      ]
+    },
+    template:{
+      en:`Seedling Micro Challenge – Cyber Basics
 
-function buildCopySummary(primaryKey, secondaryKey, score, tips){
-  const tipLines = (tips || []).slice(0,6).map(t=> `- ${t}`).join("\n");
-  return [
-    `Primary: ${primaryKey}`,
-    `Secondary: ${secondaryKey}`,
-    `Scores: SE=${score.SE||0}, AT=${score.AT||0}, SI=${score.SI||0}, EC=${score.EC||0}, CE=${score.CE||0}`,
-    `Next step: ${nextStepLine(primaryKey)}`,
-    `Tips:`,
-    (tipLines || "- (complete assessment to see tips)"),
-    `Workshop email: ${EMAIL_TO}`
-  ].join("\n");
-}
+System chosen:
+Main risk:
+Why it matters:
+One protection idea:
+What I learned about myself:`,
+      hi:`Seedling Micro Challenge – Cyber Basics
 
-/* ---------- Navigation ---------- */
-function goNext(){
-  const q = QUESTIONS[idx];
-  const selected = answers[q.id] || 0;
-  if(!selected){
-    alert(UI[currentLang].pickAnOption);
-    return;
+System:
+Main risk:
+Why it matters:
+Protection idea:
+What I learned about myself:`,
+      te:`Seedling Micro Challenge – Cyber Basics
+
+System:
+Main risk:
+Why it matters:
+Protection idea:
+What I learned about myself:`
+    }
   }
-  if(idx < QUESTIONS.length - 1){
-    idx++;
-    renderQuestion();
-  }else{
-    finish();
-  }
-}
+};
 
-/* ---------- Events ---------- */
-$("btnStart").addEventListener("click", ()=>{
-  loadState();
-  idx = 0;
-  showQuiz();
-});
-$("btnReset").addEventListener("click", resetAll);
+/* =========================
+   STATE
+========================= */
+let currentLang = "en";
+let answers = {};        // { qid: 0..3 }
+let qIndex = 0;
 
-$("btnBack").addEventListener("click", ()=>{
-  if(idx > 0){ idx--; renderQuestion(); }
-});
-$("btnNext").addEventListener("click", goNext);
-
-$("btnSave").addEventListener("click", ()=>{
-  saveState();
-  alert("Saved");
-});
-
-$("btnRetake").addEventListener("click", ()=>{
-  idx = 0;
-  showQuiz();
-});
-
-$("btnWorkshop").addEventListener("click", ()=>{
-  emailInterest("I want to join the workshop.");
-});
-$("langSelect").addEventListener("change", (e)=> setLang(e.target.value));
-
-/* Micro challenge copy buttons */
-$("mc1Copy").addEventListener("click", ()=> copyText("Cyber (3 min): Pick any app you use daily. Write 3 risks + 1 fix each."));
-$("mc2Copy").addEventListener("click", ()=> copyText("Wellbeing (2 min): Do 10 deep breaths. Write 1 thing you will finish in the next 15 minutes."));
-$("mc3Copy").addEventListener("click", ()=> copyText("Civic (3 min): Pick one public habit to improve today. Write the habit + one rule you will follow for 1 day."));
-
-/* ---------- Init ---------- */
+/* =========================
+   INIT
+========================= */
 (function init(){
-  loadState();
-  $("langSelect").value = "en";
-  setLang("en");
-  showHome();
+  // Language
+  const savedLang = localStorage.getItem(KEY_LANG);
+  if(savedLang && UI[savedLang]) currentLang = savedLang;
+  document.getElementById("langSel").value = currentLang;
+
+  // Answers
+  try{
+    answers = JSON.parse(localStorage.getItem(KEY_ANS)) || {};
+  }catch(e){answers={};}
+
+  // Index
+  const savedIdx = localStorage.getItem(KEY_IDX);
+  if(savedIdx!==null) qIndex = Math.max(0, Math.min(QUESTIONS.length-1, parseInt(savedIdx,10) || 0));
+
+  renderStaticText();
+
+  // Show/hide Continue based on progress
+  document.getElementById("continueBtn").style.display = Object.keys(answers).length ? "inline-flex" : "none";
 })();
 
-/* ---------- Safe HTML ---------- */
-function escapeHtml(s){
-  return String(s || "")
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
+/* =========================
+   UI RENDERERS
+========================= */
+function t(obj){ return obj[currentLang] || obj.en; }
+
+function renderStaticText(){
+  const L = UI[currentLang];
+
+  document.getElementById("brandText").innerText = L.seedling;
+  document.getElementById("resetBtn").innerText = L.reset;
+
+  document.getElementById("homeTitle").innerText = L.homeTitle;
+  document.getElementById("homeSub").innerText = L.homeSub;
+  document.getElementById("homeWhatTitle").innerText = L.homeWhatTitle;
+  document.getElementById("homeHowTitle").innerText = L.homeHowTitle;
+
+  setList("homeWhatList", L.homeWhatList);
+  setList("homeHowList", L.homeHowList);
+
+  document.getElementById("startBtn").innerText = L.start;
+  document.getElementById("continueBtn").innerText = L.continue;
+  document.getElementById("privacyLine").innerText = L.privacy;
+
+  document.getElementById("tipsToggle").innerText = L.showTip;
+
+  // Results static labels
+  document.getElementById("resTitle").innerText = L.resTitle;
+  document.getElementById("resSub").innerText = L.resSub;
+  document.getElementById("strengthTitle").innerText = L.strengths;
+  document.getElementById("watchTitle").innerText = L.watchouts;
+  document.getElementById("planTitle").innerText = L.planTitle;
+  document.getElementById("planNote").innerText = L.planNote;
+  document.getElementById("patternsTitle").innerText = L.patternsTitle;
+  document.getElementById("tipsTitle").innerText = L.tipsTitle;
+  document.getElementById("tipsRecapNote").innerText = L.tipsRecapNote;
+
+  document.getElementById("actionTitle").innerText = L.actionTitle;
+  document.getElementById("actionSub").innerText = L.actionSub;
+  document.getElementById("actionFoot").innerText = L.actionFoot;
+
+  document.getElementById("submitTitle").innerText = L.submitTitle;
+  document.getElementById("submitEmailBtn").innerText = L.submitEmail;
+  document.getElementById("copyBtn").innerText = L.copySubmission;
+  document.getElementById("ტერესოBtn"); // no-op
+  document.getElementById("closeBtn").innerText = L.close;
+  document.getElementById("challengeFoot").innerText = L.challengeFoot;
+
+  document.getElementById("workshopTitle").innerText = L.workshopTitle;
+  document.getElementById("workshopSub").innerText = L.workshopSub;
+  setList("workshopList", L.workshopList);
+  document.getElementById("workshopBtn").innerText = L.workshopBtn;
+  document.getElementById("workshopNote").innerText = L.workshopNote;
+
+  document.getElementById("retakeBtn").innerText = L.retake;
+  document.getElementById("copyResBtn").innerText = L.copyRes;
+  document.getElementById("resFooter").innerText = L.resFooter;
+
+  // Challenge card titles
+  const C = L.cardTitles;
+  document.getElementById("c1t").innerText = C.c1t;
+  document.getElementById("c1s").innerText = C.c1s;
+  document.getElementById("c1b").innerText = C.c1b;
+  document.getElementById("c2t").innerText = C.c2t;
+  document.getElementById("c2s").innerText = C.c2s;
+  document.getElementById("c2b").innerText = C.c2b;
+  document.getElementById("c3t").innerText = C.c3t;
+  document.getElementById("c3s").innerText = C.c3s;
+  document.getElementById("c3b").innerText = C.c3b;
+  document.getElementById("c4t").innerText = C.c4t;
+  document.getElementById("c4s").innerText = C.c4s;
+  document.getElementById("c4b").innerText = C.c4b;
+
+  // Quiz buttons
+  document.getElementById("prevBtn").innerText = L.back;
+  document.getElementById("nextBtn").innerText = L.next;
+  document.getElementById("finishBtn").innerText = L.finish;
+  document.getElementById("saveLine").innerText = L.saved;
+
+  // If quiz/results visible, re-render them in new language
+  if(!document.getElementById("quiz").classList.contains("hide")) renderQuestion();
+  if(!document.getElementById("results").classList.contains("hide")) renderResults();
 }
+
+function setList(id, arr){
+  const ul = document.getElementById(id);
+  ul.innerHTML = "";
+  arr.forEach(x=>{
+    const li = document.createElement("li");
+    li.innerText = x;
+    ul.appendChild(li);
+  });
+}
+
+/* =========================
+   LANGUAGE
+========================= */
+function setLanguage(lang){
+  if(!UI[lang]) return;
+  currentLang = lang;
+  localStorage.setItem(KEY_LANG, lang);
+  renderStaticText();
+}
+
+/* =========================
+   NAV
+========================= */
+function show(id){
+  ["home","quiz","results"].forEach(x=>document.getElementById(x).classList.add("hide"));
+  document.getElementById(id).classList.remove("hide");
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function startAssessment(){
+  qIndex = 0;
+  localStorage.setItem(KEY_IDX, String(qIndex));
+  show("quiz");
+  renderQuestion();
+}
+
+function continueAssessment(){
+  show("quiz");
+  renderQuestion();
+}
+
+function restart(){
+  // keep language
+  answers = {};
+  qIndex = 0;
+  localStorage.removeItem(KEY_ANS);
+  localStorage.removeItem(KEY_IDX);
+  document.getElementById("continueBtn").style.display = "none";
+  show("home");
+}
+
+/* =========================
+   QUIZ RENDER
+========================= */
+function renderQuestion(){
+  const L = UI[currentLang];
+  const q = QUESTIONS[qIndex];
+
+  document.getElementById("stepLine").innerText = L.stepLine(qIndex, QUESTIONS.length);
+  document.getElementById("qText").innerText = t(q.text);
+
+  const pct = ((qIndex)/(QUESTIONS.length-1))*100;
+  document.getElementById("bar").style.width = isFinite(pct)? `${pct}%` : "0%";
+
+  const opts = document.getElementById("opts");
+  opts.innerHTML = "";
+
+  const sel = answers[q.id];
+
+  SCALE.forEach(s=>{
+    const div = document.createElement("div");
+    div.className = "opt" + (sel===s.v ? " sel":"");
+    div.innerHTML = `<b>${s[currentLang] || s.en}</b><small>${hintForScale(s.v)}</small>`;
+    div.onclick = ()=>selectAnswer(q.id, s.v);
+    opts.appendChild(div);
+  });
+
+  // Tip (optional toggle)
+  const showTips = document.getElementById("showTips").checked;
+  const tipBox = document.getElementById("tipBox");
+  if(showTips){
+    tipBox.classList.remove("hide");
+    tipBox.innerText = "Tip: " + t(q.tip);
+  }else{
+    tipBox.classList.add("hide");
+  }
+
+  document.getElementById("prevBtn").disabled = (qIndex===0);
+  document.getElementById("nextBtn").style.display = (qIndex===QUESTIONS.length-1) ? "none" : "inline-flex";
+  document.getElementById("finishBtn").style.display = (qIndex===QUESTIONS.length-1) ? "inline-flex" : "none";
+}
+
+function hintForScale(v){
+  // micro hint in English only for simplicity (kept subtle)
+  if(currentLang==="en"){
+    return v===0?"Not me":v===1?"Sometimes":v===2?"Often": "Very me";
+  }
+  if(currentLang==="hi"){
+    return v===0?"मेरे जैसा नहीं":v===1?"कभी-कभी":v===2?"अक्सर":"बहुत ज़्यादा";
+  }
+  if(currentLang==="te"){
+    return v===0?"నా లాంటి కాదు":v===1?"కొన్ని సార్లు":v===2?"చాలా సార్లు":"చాలా ఎక్కువ";
+  }
+  return "";
+}
+
+function selectAnswer(qid, value){
+  answers[qid] = value;
+  localStorage.setItem(KEY_ANS, JSON.stringify(answers));
+  document.getElementById("continueBtn").style.display = "inline-flex";
+  renderQuestion();
+}
+
+function prevQ(){
+  qIndex = Math.max(0, qIndex-1);
+  localStorage.setItem(KEY_IDX, String(qIndex));
+  renderQuestion();
+}
+
+function nextQ(){
+  qIndex = Math.min(QUESTIONS.length-1, qIndex+1);
+  localStorage.setItem(KEY_IDX, String(qIndex));
+  renderQuestion();
+}
+
+function finishNow(){
+  localStorage.setItem(KEY_IDX, String(qIndex));
+  show("results");
+  renderResults();
+}
+
+/* =========================
+   SCORING + STYLE PICK
+========================= */
+function computeScores(){
+  const dims = {SE:0, AT:0, SI:0, EC:0, CE:0};
+  const counts = {SE:0, AT:0, SI:0, EC:0, CE:0};
+
+  QUESTIONS.forEach(q=>{
+    if(answers[q.id]===undefined) return;
+    let v = answers[q.id];
+    if(q.reverse) v = 3 - v;
+    dims[q.dim] += v;
+    counts[q.dim] += 1;
+  });
+
+  // normalize to 0..6 (2 questions each, max 6)
+  return {dims, counts};
+}
+
+function pickStyle(scores){
+  const {dims} = scores;
+
+  // Simple mapping:
+  // Executive: high SE + SI
+  // Builder: high SE + EC
+  // Analyst: high AT
+  // Connector: high SI + EC
+  // Explorer: high CE
+  const executive = dims.SE + dims.SI;
+  const builder   = dims.SE + dims.EC;
+  const analyst   = dims.AT + Math.floor(dims.SE/2);
+  const connector = dims.SI + dims.EC;
+  const explorer  = dims.CE + Math.floor(dims.AT/2);
+
+  const list = [
+    {name:"Executive", score: executive},
+    {name:"Builder", score: builder},
+    {name:"Analyst", score: analyst},
+    {name:"Connector", score: connector},
+    {name:"Explorer", score: explorer},
+  ];
+  list.sort((a,b)=>b.score-a.score);
+
+  // If tie, pick based on highest single dim
+  return list[0].name;
+}
+
+/* =========================
+   RESULTS RENDER
+========================= */
+function renderResults(){
+  const L = UI[currentLang];
+  const scores = computeScores();
+
+  // If incomplete, allow result but mention
+  const answeredCount = Object.keys(answers).length;
+  if(answeredCount < QUESTIONS.length){
+    document.getElementById("resSub").innerText =
+      (currentLang==="en")
+      ? `You answered ${answeredCount}/${QUESTIONS.length}. For best accuracy, complete all questions.`
+      : (currentLang==="hi")
+      ? `आपने ${answeredCount}/${QUESTIONS.length} questions किए हैं। बेहतर accuracy के लिए सभी complete करें।`
+      : `మీరు ${answeredCount}/${QUESTIONS.length} questions చేసారు. accuracy కోసం అన్ని complete చేయండి.`;
+  }else{
+    document.getElementById("resSub").innerText = L.resSub;
+  }
+
+  const style = pickStyle(scores);
+  const info = STYLE_INFO[style];
+
+  document.getElementById("styleName").innerText = style;
+  document.getElementById("styleOneLiner").innerText = t(info.one);
+  document.getElementById("styleTag").innerText = info.tag;
+
+  fillList("strengthList", info.strengths[currentLang] || info.strengths.en);
+  fillList("watchList", info.watch[currentLang] || info.watch.en);
+  fillList("planList", info.plan[currentLang] || info.plan.en);
+  fillList("patternsList", info.patterns[currentLang] || info.patterns.en);
+
+  // Tips recap from questions (all)
+  const tips = QUESTIONS.map(q=>t(q.tip));
+  fillList("tipsRecapList", tips);
+
+  // Close challenge panel if language changed
+  closeChallenge();
+}
+
+function fillList(id, items){
+  const ul = document.getElementById(id);
+  ul.innerHTML = "";
+  items.forEach(x=>{
+    const li = document.createElement("li");
+    li.innerText = x;
+    ul.appendChild(li);
+  });
+}
+
+/* =========================
+   CHALLENGES (INLINE)
+========================= */
+let activeChallengeKey = null;
+
+function openChallenge(key){
+  activeChallengeKey = key;
+  const c = CHALLENGES[key];
+  if(!c) return;
+
+  document.getElementById("challengeTitle").innerText = t(c.title);
+  document.getElementById("challengeIntro").innerText = t(c.intro);
+
+  const lines = c.content[currentLang] || c.content.en;
+  document.getElementById("challengeContent").innerHTML =
+    "<ul>" + lines.map(x=>`<li>${x}</li>`).join("") + "</ul>";
+
+  document.getElementById("challengeTemplate").innerText =
+    (c.template[currentLang] || c.template.en);
+
+  document.getElementById("challengePanel").classList.remove("hide");
+  document.getElementById("challengePanel").scrollIntoView({behavior:"smooth"});
+}
+
+function closeChallenge(){
+  document.getElementById("challengePanel").classList.add("hide");
+  activeChallengeKey = null;
+}
+
+function copyChallenge(){
+  const txt = document.getElementById("challengeTemplate").innerText;
+  navigator.clipboard.writeText(txt);
+  alert(currentLang==="en" ? "Copied. Paste into a doc and submit by email." :
+        currentLang==="hi" ? "Copied. Doc में paste करें और email से submit करें." :
+                             "Copied. Doc లో paste చేసి email ద్వారా submit చేయండి.");
+}
+
+function submitChallenge(){
+  const txt = document.getElementById("challengeTemplate").innerText;
+  const subject = encodeURIComponent("Seedling Micro Challenge Submission");
+  const body = encodeURIComponent(txt);
+  window.location.href = `mailto:seedling.community@gmail.com?subject=${subject}&body=${body}`;
+}
+
+/* =========================
+   WORKSHOP
+========================= */
+function notifyWorkshop(){
+  const subject = encodeURIComponent("Interested in Cybersecurity Thinking Session");
+  const body = encodeURIComponent(
+    (currentLang==="en")
+    ? "Hi Seedling team,\n\nI completed the Seedling assessment and would like to be notified about the next Cybersecurity Thinking Session.\n\nName:\nBackground (Student/Fresher/Working):\nCity:\n\nThanks."
+    : (currentLang==="hi")
+    ? "Hi Seedling team,\n\nमैंने Seedling assessment पूरा किया है और अगले Cybersecurity Thinking Session की जानकारी चाहता/चाहती हूँ।\n\nName:\nBackground (Student/Fresher/Working):\nCity:\n\nThanks."
+    : "Hi Seedling team,\n\nనేను Seedling assessment పూర్తి చేశాను. తదుపరి Cybersecurity Thinking Session సమాచారం కావాలి.\n\nName:\nBackground (Student/Fresher/Working):\nCity:\n\nThanks."
+  );
+  window.location.href = `mailto:seedling.community@gmail.com?subject=${subject}&body=${body}`;
+}
+
+/* =========================
+   COPY RESULT
+========================= */
+function copyResult(){
+  const scores = computeScores();
+  const style = pickStyle(scores);
+  const info = STYLE_INFO[style];
+
+  const txt =
+`Seedling Reflection Result
+
+Style: ${style}
+Summary: ${t(info.one)}
+
+Strengths:
+- ${(info.strengths[currentLang] || info.strengths.en).join("\n- ")}
+
+Watch-outs:
+- ${(info.watch[currentLang] || info.watch.en).join("\n- ")}
+
+90-day focus plan:
+- ${(info.plan[currentLang] || info.plan.en).join("\n- ")}
+
+Life patterns:
+- ${(info.patterns[currentLang] || info.patterns.en).join("\n- ")}
+
+(Generated by Seedling Assessment)`;
+
+  navigator.clipboard.writeText(txt);
+  alert(currentLang==="en" ? "Result copied." : currentLang==="hi" ? "Result copied." : "Result copied.");
+}
+
+/* =========================
+   RESET ALL
+========================= */
+function resetAll(){
+  if(!confirm(currentLang==="en" ? "Reset your answers on this device?" :
+              currentLang==="hi" ? "इस device पर answers reset करें?" :
+                                   "ఈ device లో answers reset చేయాలా?")) return;
+  answers = {};
+  qIndex = 0;
+  localStorage.removeItem(KEY_ANS);
+  localStorage.removeItem(KEY_IDX);
+  document.getElementById("continueBtn").style.display = "none";
+  show("home");
+}
+
 </script>
 </body>
 </html>
