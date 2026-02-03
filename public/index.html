@@ -31,29 +31,27 @@
     .topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px;}
     .brand{display:flex;align-items:center;gap:10px;}
     .logo{
-      width:38px;height:38px;border-radius:12px;
+      width:40px;height:40px;border-radius:12px;
       background: linear-gradient(135deg, #4f6cf7, #22c55e);
       box-shadow: var(--shadow);
     }
     .titleBig{
-      font-size:34px;
+      font-size:40px;
       margin:0;
-      line-height:1.12;
-      letter-spacing:-0.3px;
+      line-height:1.08;
+      letter-spacing:-0.4px;
     }
     .subtitle{
-      margin:6px 0 0;
+      margin:8px 0 0;
       color: var(--muted);
-      font-size:16px;
+      font-size:17px;
+      max-width:720px;
     }
-    .lang{
-      display:flex;align-items:center;gap:10px;
-    }
+    .lang{display:flex;align-items:center;gap:10px;}
     select{
       padding:10px 12px;border:1px solid var(--border);
       border-radius:12px;background:white;cursor:pointer;
     }
-
     .card{
       background: var(--card);
       border: 1px solid var(--border);
@@ -78,7 +76,7 @@
     .btn{
       appearance:none;border:none;cursor:pointer;
       background: var(--blue);
-      color:white;font-weight:700;
+      color:white;font-weight:800;
       padding:12px 16px;border-radius:12px;
       transition: transform .08s ease, background .2s ease;
     }
@@ -87,13 +85,15 @@
     .btn.secondary{
       background:white;color:var(--text);
       border:1px solid var(--border);
-      font-weight:700;
+      font-weight:800;
     }
     .btn.ghost{
       background:transparent;border:1px dashed var(--border);
       color:var(--muted);
+      font-weight:800;
     }
     .btn.small{padding:9px 12px;font-size:13px;border-radius:10px}
+    .btn:disabled{opacity:.55;cursor:not-allowed;transform:none}
     .muted{color:var(--muted)}
     .divider{height:1px;background:var(--border);margin:12px 0}
 
@@ -103,7 +103,7 @@
     }
     .bar{height:100%;width:0%;background:linear-gradient(90deg,#22c55e,#4f6cf7)}
     .qHead{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;flex-wrap:wrap}
-    .qTitle{font-size:20px;margin:6px 0 6px}
+    .qTitle{font-size:22px;margin:6px 0 6px;line-height:1.25}
     .qTag{font-size:12px;color:var(--muted)}
     .scale{
       display:grid;
@@ -116,13 +116,17 @@
       border-radius:14px;padding:12px;text-align:center;
       cursor:pointer; user-select:none;
       transition: border .12s ease, transform .08s ease, box-shadow .12s ease;
-      min-height:58px;
+      min-height:62px;
       display:flex;flex-direction:column;justify-content:center;
     }
     .opt strong{font-size:16px}
     .opt span{font-size:12px;color:var(--muted);margin-top:3px}
     .opt:hover{transform:translateY(-1px);box-shadow:0 8px 20px rgba(15,23,42,.06)}
-    .opt.selected{border:2px solid #60a5fa}
+    .opt.selected{
+      border:2px solid #60a5fa;
+      box-shadow:0 10px 28px rgba(79,108,247,.15);
+      transform:translateY(-1px);
+    }
     .actions{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:14px;flex-wrap:wrap}
     .tiny{font-size:12px;color:var(--muted)}
     .tipBox{
@@ -135,27 +139,24 @@
     }
     .tipBox b{display:block;margin-bottom:4px}
     .hide{display:none}
-    .h2{font-size:24px;margin:0 0 6px}
+    .h2{font-size:26px;margin:0 0 6px}
     .h3{font-size:18px;margin:0 0 6px}
     .kpi{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}
     .kpi .mini{
       background:white;border:1px solid var(--border);
       border-radius:14px;padding:12px;
     }
-    .mini .n{font-size:18px;font-weight:800}
+    .mini .n{font-size:18px;font-weight:900}
     .mini .l{font-size:12px;color:var(--muted);margin-top:2px}
 
-    .tagGood{color:var(--good);font-weight:800}
-    .tagWarn{color:var(--warn);font-weight:800}
-    .tagBad{color:var(--bad);font-weight:800}
-
     @media (max-width:640px){
-      .titleBig{font-size:28px}
+      .titleBig{font-size:32px}
       .scale{grid-template-columns:repeat(2,1fr)}
       .kpi{grid-template-columns:1fr}
     }
   </style>
 </head>
+
 <body>
   <div class="wrap">
     <div class="topbar">
@@ -195,6 +196,7 @@
               <li>Strengths + watch-outs</li>
               <li>“Life patterns” summary</li>
               <li>Optional micro-challenges (2–3 minutes)</li>
+              <li>Tips you saw in questions (also shown again in results)</li>
             </ul>
           </div>
 
@@ -229,7 +231,7 @@
     <!-- QUIZ -->
     <section id="screenQuiz" class="card hide">
       <div class="qHead">
-        <div>
+        <div style="min-width:240px;flex:1;">
           <div class="qTag" id="progressText">Progress will appear once you start.</div>
           <div class="progress" style="margin-top:8px;">
             <div class="bar" id="bar"></div>
@@ -267,6 +269,8 @@
       </div>
 
       <div class="card soft" id="resLifePatterns" style="margin-top:14px;"></div>
+
+      <div class="card soft" id="resTips" style="margin-top:14px;"></div>
 
       <div class="divider"></div>
 
@@ -308,6 +312,7 @@
             If you want a short, practical session with industry experts, message us with your result summary.
           </p>
           <button class="btn small" id="btnWorkshop2">I’m interested</button>
+          <span class="tiny" style="display:block;margin-top:8px;">Email: seedling.community@gmail.com</span>
         </div>
       </div>
 
@@ -322,17 +327,18 @@
 
 <script>
 /* =========================
-   Seedling v1.3 (single file)
-   - 10 questions
-   - EN/HI/TE language switch
-   - tips + superhero mindset
-   - results + micro challenges + optional workshop CTA
-   - no backend, no external deps
+   Seedling v1.3 FINAL (single file)
+   - 10 questions (includes negatives)
+   - EN/HI/TE language switch (home + quiz + results)
+   - Tips (superhero mindset) shown after answer + repeated in results
+   - Results are more detailed + impactful (still simple English)
+   - Micro challenges (HTML only) + optional workshop CTA
+   - No backend, no external deps
 ========================= */
 
 const EMAIL_TO = "seedling.community@gmail.com";
 const STORAGE_KEY = "seedling_answers_v13";
-const RESULT_KEY = "seedling_last_result_v13";
+const RESULT_KEY  = "seedling_last_result_v13";
 
 let currentLang = "en";
 let idx = 0;
@@ -352,7 +358,8 @@ const UI = {
       "A clean working-style result (easy to understand)",
       "Strengths + watch-outs",
       "“Life patterns” summary",
-      "Optional micro-challenges (2–3 minutes)"
+      "Optional micro-challenges (2–3 minutes)",
+      "Tips you saw in questions (also shown again in results)"
     ],
     start:"Start",
     reset:"Reset",
@@ -365,11 +372,13 @@ const UI = {
     optionsLabel:"Options: No → Not really → Mostly yes → Yes",
     back:"Back",
     next:"Next",
+    finishBtn:"Finish",
     save:"Save",
     saved:"Saved answers stay in this browser.",
     progressPrefix:"Question",
     progressOf:"of",
     progressReady:"Progress will appear once you start.",
+    pickAnOption:"Pick an option to continue.",
     resultTitle:"Your Result",
     retake:"Retake",
     copyResult:"Copy Result",
@@ -379,6 +388,7 @@ const UI = {
     mcSub:"Pick ONE micro challenge now. Finish it in 2–3 minutes. Share if you want feedback.",
     mcCTA:"Optional: Join the Cybersecurity Workshop",
     mcCTABody:"If you want a short, practical session with industry experts, message us with your result summary.",
+    tipsAgainTitle:"Your superhero mindset tips (from your answers)"
   },
   hi: {
     langLabel:"भाषा",
@@ -386,13 +396,14 @@ const UI = {
     sub:"एक छोटा सेल्फ-रिफ्लेक्शन: आप कैसे सोचते, काम करते और बढ़ते हैं।",
     pill1:"10 सवाल • 3 मिनट • लॉगिन नहीं",
     homeH:"यह क्या है?",
-    homeP:"यह छोटा असेसमेंट आपकी working style और कुछ आदतें समझने में मदद करता है। यह परीक्षा नहीं है। सही-गलत नहीं है।",
+    homeP:"यह छोटा असेसमेंट आपकी working style और कुछ habits समझने में मदद करता है। यह परीक्षा नहीं है। सही-गलत नहीं है।",
     youGetH:"आपको क्या मिलेगा",
     youGetList:[
       "एक साफ़ और आसान working-style result",
       "Strengths + watch-outs",
       "“Life patterns” summary",
-      "Optional micro-challenges (2–3 minutes)"
+      "Optional micro-challenges (2–3 minutes)",
+      "Questions के tips (results में भी दिखेंगे)"
     ],
     start:"शुरू करें",
     reset:"रीसेट",
@@ -405,11 +416,13 @@ const UI = {
     optionsLabel:"Options: No → Not really → Mostly yes → Yes",
     back:"Back",
     next:"Next",
+    finishBtn:"Finish",
     save:"Save",
     saved:"Answers इस browser में save रहते हैं।",
     progressPrefix:"Question",
     progressOf:"of",
     progressReady:"Start करने के बाद progress दिखेगा।",
+    pickAnOption:"आगे जाने के लिए एक option चुनें।",
     resultTitle:"आपका Result",
     retake:"Retake",
     copyResult:"Copy Result",
@@ -419,6 +432,7 @@ const UI = {
     mcSub:"एक micro challenge चुनें। 2–3 मिनट में पूरा करें। चाहें तो share करें।",
     mcCTA:"Optional: Cybersecurity Workshop",
     mcCTABody:"Industry experts के साथ short practical session चाहिए? अपने result summary के साथ message करें।",
+    tipsAgainTitle:"आपके superhero mindset tips (answers के based)"
   },
   te: {
     langLabel:"భాష",
@@ -432,7 +446,8 @@ const UI = {
       "సింపుల్ working-style result",
       "Strengths + watch-outs",
       "“Life patterns” summary",
-      "Optional micro-challenges (2–3 minutes)"
+      "Optional micro-challenges (2–3 minutes)",
+      "Questions లోని tips (results లో మళ్లీ చూపిస్తాం)"
     ],
     start:"Start",
     reset:"Reset",
@@ -445,11 +460,13 @@ const UI = {
     optionsLabel:"Options: No → Not really → Mostly yes → Yes",
     back:"Back",
     next:"Next",
+    finishBtn:"Finish",
     save:"Save",
     saved:"Answers ఈ browser లో save అవుతాయి.",
     progressPrefix:"Question",
     progressOf:"of",
     progressReady:"Start చేసిన తర్వాత progress కనిపిస్తుంది.",
+    pickAnOption:"కొనసాగడానికి ఒక option ఎంచుకోండి.",
     resultTitle:"మీ Result",
     retake:"Retake",
     copyResult:"Copy Result",
@@ -459,6 +476,7 @@ const UI = {
     mcSub:"ఒక micro challenge ఎంచుకోండి. 2–3 నిమిషాల్లో పూర్తి చేయండి. కావాలంటే share చేయండి.",
     mcCTA:"Optional: Cybersecurity Workshop",
     mcCTABody:"Industry experts తో short practical session కావాలా? మీ result summary తో message చేయండి.",
+    tipsAgainTitle:"మీ superhero mindset tips (మీ answers ఆధారంగా)"
   }
 };
 
@@ -482,10 +500,15 @@ const STYLE_BY_DIM = {
       hi:["कभी-कभी बहुत direct लग सकते हैं","लोगों को जल्दी करवा सकते हैं","Over-control हो सकता है"],
       te:["కొన్నిసార్లు ఎక్కువ direct గా ఉండవచ్చు","Others ని తొందర పెట్టవచ్చు","Over-control అవ్వచ్చు"]
     },
+    forStudent:{
+      en:["Choose tasks with ownership (project lead, club lead, hackathon captain).","Show delivery: deadlines + outcomes.","Keep a simple to-do list daily."],
+      hi:["Ownership वाले tasks चुनें (project lead, club lead).","Delivery दिखाएं: deadline + outcome.","Daily simple to-do list रखें।"],
+      te:["Ownership ఉన్న tasks ఎంచుకోండి (project lead, club lead).","Delivery చూపండి: deadline + outcome.","Daily simple to-do list పెట్టుకోండి."]
+    },
     hero:{
-      en:{name:"Hanuman mindset", quote:"“Strength + service. Do the work, protect the team.”"},
-      hi:{name:"हनुमान mindset", quote:"“Strength + service. काम पूरा करो, टीम को संभालो।”"},
-      te:{name:"హనుమాన్ mindset", quote:"“Strength + service. పని పూర్తి చేయి, టీమ్ ని కాపాడు.”"}
+      en:{name:"Hanuman mindset", quote:"Strength + service. Do the work, protect the team."},
+      hi:{name:"हनुमान mindset", quote:"Strength + service. काम पूरा करो, टीम को संभालो।"},
+      te:{name:"హనుమాన్ mindset", quote:"Strength + service. పని పూర్తి చేయి, టీమ్ ని కాపాడు."}
     }
   },
   AT: { // Analytical Thinking
@@ -506,10 +529,15 @@ const STYLE_BY_DIM = {
       hi:["Overthink हो सकता है","Decisions delay हो सकते हैं","Critical लग सकता है"],
       te:["Overthink అవ్వచ్చు","Decision delay అవ్వచ్చు","Critical గా అనిపించవచ్చు"]
     },
+    forStudent:{
+      en:["Pick problem-solving tracks (DSA, ML basics, security basics).","Write short notes: 'What I tried' + 'What I learned'.","Timebox decisions (10 minutes)."],
+      hi:["Problem-solving tracks चुनें (DSA, ML basics, security basics).","Short notes लिखें: 'What I tried' + 'What I learned'.","Decision timebox करें (10 minutes)."],
+      te:["Problem-solving tracks ఎంచుకోండి (DSA, ML basics, security basics).","Short notes: 'What I tried' + 'What I learned'.","Decision timebox చేయండి (10 minutes)."]
+    },
     hero:{
-      en:{name:"Iron Man mindset", quote:"“Build, test, improve. Facts first.”"},
-      hi:{name:"Iron Man mindset", quote:"“Build, test, improve. Facts first.”"},
-      te:{name:"Iron Man mindset", quote:"“Build, test, improve. Facts first.”"}
+      en:{name:"Iron Man mindset", quote:"Build, test, improve. Facts first."},
+      hi:{name:"Iron Man mindset", quote:"Build, test, improve. Facts first."},
+      te:{name:"Iron Man mindset", quote:"Build, test, improve. Facts first."}
     }
   },
   SI: { // Social Initiative
@@ -530,10 +558,15 @@ const STYLE_BY_DIM = {
       hi:["Distract हो सकते हैं","Hard talks avoid हो सकते हैं","Too many yes"],
       te:["Distract అవ్వచ్చు","Hard talks avoid అవ్వచ్చు","Too many yes"]
     },
+    forStudent:{
+      en:["Great for teams (clubs, events, group projects).","Build a small network (5 people) and learn from them.","Practice one hard conversation politely."],
+      hi:["Teams के लिए best (clubs, events, group projects).","छोटा network बनाएं (5 people).","एक hard conversation politely practice करें।"],
+      te:["Teams కి best (clubs, events, group projects).","Small network (5 people) build చేయండి.","ఒక hard conversation politely practice చేయండి."]
+    },
     hero:{
-      en:{name:"Spider-Man mindset", quote:"“With connection comes responsibility.”"},
-      hi:{name:"Spider-Man mindset", quote:"“With connection comes responsibility.”"},
-      te:{name:"Spider-Man mindset", quote:"“With connection comes responsibility.”"}
+      en:{name:"Spider-Man mindset", quote:"With connection comes responsibility."},
+      hi:{name:"Spider-Man mindset", quote:"With connection comes responsibility."},
+      te:{name:"Spider-Man mindset", quote:"With connection comes responsibility."}
     }
   },
   EC: { // Empathy & Cooperation
@@ -554,10 +587,15 @@ const STYLE_BY_DIM = {
       hi:["Conflict avoid हो सकता है","Others का work उठा सकते हैं","No कहना मुश्किल"],
       te:["Conflict avoid అవ్వచ్చు","Others work మోసుకోవచ్చు","No చెప్పడం కష్టం"]
     },
+    forStudent:{
+      en:["Good for mentoring, peer learning, volunteering.","Set boundaries: help, but don’t carry everything.","Use 'kind + clear' communication."],
+      hi:["Mentoring, peer learning, volunteering के लिए अच्छा।","Boundaries set करें: help करें, carry नहीं।","'Kind + clear' communication रखें।"],
+      te:["Mentoring, peer learning, volunteering కి మంచి.","Boundaries పెట్టుకోండి: help చేయండి, carry చేయొద్దు.","'Kind + clear' communication వాడండి."]
+    },
     hero:{
-      en:{name:"Wonder Woman mindset", quote:"“Be kind — and be strong.”"},
-      hi:{name:"Wonder Woman mindset", quote:"“Be kind — and be strong.”"},
-      te:{name:"Wonder Woman mindset", quote:"“Be kind — and be strong.”"}
+      en:{name:"Wonder Woman mindset", quote:"Be kind — and be strong."},
+      hi:{name:"Wonder Woman mindset", quote:"Be kind — and be strong."},
+      te:{name:"Wonder Woman mindset", quote:"Be kind — and be strong."}
     }
   },
   CE: { // Curiosity & Experimentation
@@ -578,17 +616,22 @@ const STYLE_BY_DIM = {
       hi:["Start करके finish नहीं","Too fast jump","Structure चाहिए"],
       te:["Start చేసి finish కాదు","Too fast jump","Structure అవసరం"]
     },
+    forStudent:{
+      en:["Try small projects (1-day, 3-day).","Finish one mini-project before starting another.","Keep a simple portfolio page."],
+      hi:["Small projects try करें (1-day, 3-day).","एक mini-project finish करके next शुरू करें।","Simple portfolio page रखें।"],
+      te:["Small projects try చేయండి (1-day, 3-day).","ఒక mini-project finish చేసి తర్వాత next చేయండి.","Simple portfolio page పెట్టుకోండి."]
+    },
     hero:{
-      en:{name:"Superman mindset", quote:"“Aim high — but stay grounded.”"},
-      hi:{name:"Superman mindset", quote:"“Aim high — but stay grounded.”"},
-      te:{name:"Superman mindset", quote:"“Aim high — but stay grounded.”"}
+      en:{name:"Superman mindset", quote:"Aim high — but stay grounded."},
+      hi:{name:"Superman mindset", quote:"Aim high — but stay grounded."},
+      te:{name:"Superman mindset", quote:"Aim high — but stay grounded."}
     }
   }
 };
 
 /* ---------- 10 Questions (simple, includes negatives) ---------- */
-/* value scale: 1 No, 2 Not really, 3 Mostly yes, 4 Yes
-   reverse:true means agreeing indicates lower trait (negative item) -> reverse in scoring
+/* Scale: 1 No, 2 Not really, 3 Mostly yes, 4 Yes
+   reverse:true means agreeing indicates lower trait -> reverse in scoring
 */
 const QUESTIONS = [
   {id:"Q1", dim:"SE", reverse:true,
@@ -622,9 +665,9 @@ const QUESTIONS = [
       te:"మూడ్ లేకపోయినా నేను important పని పూర్తి చేస్తాను."
     },
     tip:{
-      en:"Discipline hero: Do the next 10 minutes — no excuses.",
-      hi:"Discipline hero: अगले 10 मिनट बस कर दो — excuses नहीं।",
-      te:"Discipline hero: వచ్చే 10 నిమిషాలు పని చేయి — excuses వద్దు."
+      en:"Discipline mindset: Do the next 10 minutes — no excuses.",
+      hi:"Discipline mindset: अगले 10 मिनट बस कर दो — excuses नहीं।",
+      te:"Discipline mindset: వచ్చే 10 నిమిషాలు పని చేయి — excuses వద్దు."
     }
   },
   {id:"Q4", dim:"CE", reverse:false,
@@ -670,7 +713,7 @@ const QUESTIONS = [
       te:"సరైన సమాచారం లేకపోయినా నేను త్వరగా నిర్ణయం తీసుకుంటాను."
     },
     tip:{
-      en:"Analyst mindset: Slow down 30 seconds — check 1 fact.",
+      en:"Analyst mindset: Pause 30 seconds — check 1 fact.",
       hi:"Analyst mindset: 30 seconds रुको — 1 fact check करो।",
       te:"Analyst mindset: 30 seconds ఆగి — 1 fact check చేయి."
     }
@@ -694,9 +737,9 @@ const QUESTIONS = [
       te:"పని చేస్తున్నప్పుడు notifications వల్ల నేను distract అవుతాను."
     },
     tip:{
-      en:"Focus hero: Put phone away for 15 minutes.",
-      hi:"Focus hero: 15 मिनट phone दूर रखो।",
-      te:"Focus hero: 15 నిమిషాలు phone దూరంగా పెట్టు."
+      en:"Focus mindset: Put phone away for 15 minutes.",
+      hi:"Focus mindset: 15 मिनट phone दूर रखो।",
+      te:"Focus mindset: 15 నిమిషాలు phone దూరంగా పెట్టు."
     }
   },
   {id:"Q10", dim:"CE", reverse:true,
@@ -713,39 +756,21 @@ const QUESTIONS = [
   }
 ];
 
-/* ---------- Labels for answer options ---------- */
+/* ---------- Answer labels (keep simple) ---------- */
 const OPTS = {
-  en: [
-    {v:1, t:"No"},
-    {v:2, t:"Not really"},
-    {v:3, t:"Mostly yes"},
-    {v:4, t:"Yes"},
-  ],
-  hi: [
-    {v:1, t:"No"},
-    {v:2, t:"Not really"},
-    {v:3, t:"Mostly yes"},
-    {v:4, t:"Yes"},
-  ],
-  te: [
-    {v:1, t:"No"},
-    {v:2, t:"Not really"},
-    {v:3, t:"Mostly yes"},
-    {v:4, t:"Yes"},
-  ]
+  en: [{v:1,t:"No"},{v:2,t:"Not really"},{v:3,t:"Mostly yes"},{v:4,t:"Yes"}],
+  hi: [{v:1,t:"No"},{v:2,t:"Not really"},{v:3,t:"Mostly yes"},{v:4,t:"Yes"}],
+  te: [{v:1,t:"No"},{v:2,t:"Not really"},{v:3,t:"Mostly yes"},{v:4,t:"Yes"}],
 };
 
 /* ---------- Helpers ---------- */
 function $(id){ return document.getElementById(id); }
 
 function loadState(){
-  try{
-    answers = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}") || {};
-  }catch(e){ answers = {}; }
+  try{ answers = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}") || {}; }
+  catch(e){ answers = {}; }
 }
-function saveState(){
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(answers));
-}
+function saveState(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(answers)); }
 function resetAll(){
   localStorage.removeItem(STORAGE_KEY);
   localStorage.removeItem(RESULT_KEY);
@@ -761,13 +786,12 @@ function setLang(l){
   $("uiLangLabel").innerText = t.langLabel;
   $("uiTitle").innerText = t.title;
   $("uiSub").innerText = t.sub;
+
   $("uiPill1").innerText = t.pill1;
   $("uiHomeH").innerText = t.homeH;
   $("uiHomeP").innerText = t.homeP;
   $("uiYouGetH").innerText = t.youGetH;
-
-  const ul = $("uiYouGetList");
-  ul.innerHTML = t.youGetList.map(x=> `<li>${x}</li>`).join("");
+  $("uiYouGetList").innerHTML = t.youGetList.map(x=> `<li>${escapeHtml(x)}</li>`).join("");
 
   $("btnStart").innerText = t.start;
   $("btnReset").innerText = t.reset;
@@ -775,12 +799,13 @@ function setLang(l){
 
   $("uiPrivacyH").innerText = t.privacyH;
   $("uiPrivacyP").innerText = t.privacyP;
+
   $("uiWorkshopH").innerText = t.workshopH;
   $("uiWorkshopP").innerText = t.workshopP;
   $("btnWorkshop").innerText = t.interested;
+
   $("uiOptionsLabel").innerText = t.optionsLabel;
   $("btnBack").innerText = t.back;
-  $("btnNext").innerText = t.next;
   $("btnSave").innerText = t.save;
   $("uiSavedNote").innerText = t.saved;
 
@@ -795,8 +820,11 @@ function setLang(l){
   $("mcCTABody").innerText = t.mcCTABody;
   $("btnWorkshop2").innerText = t.interested;
 
-  // Rerender current screen content
-  if (!$("screenQuiz").classList.contains("hide")) renderQuestion();
+  // Update quiz button label + state
+  refreshNextButtonState();
+
+  // Rerender active screen
+  if(!$("screenQuiz").classList.contains("hide")) renderQuestion();
   const last = localStorage.getItem(RESULT_KEY);
   if(last && !$("screenResult").classList.contains("hide")){
     try{
@@ -827,88 +855,94 @@ function showResult(){
   $("screenResult").classList.remove("hide");
 }
 
+function dimLabel(dim){
+  // Keep simple for now
+  const map = {SE:"Structure & finishing", AT:"Thinking & logic", SI:"Social initiative", EC:"Empathy & teamwork", CE:"Curiosity & experimenting"};
+  return map[dim] || dim;
+}
+function tipLabel(){
+  // Same label across languages (simple)
+  return (currentLang==="hi" || currentLang==="te") ? "Superhero mindset tip" : "Superhero mindset tip";
+}
+
 /* ---------- Render Question ---------- */
 function renderQuestion(){
   const t = UI[currentLang];
   const q = QUESTIONS[idx];
 
-  const done = Object.keys(answers).filter(k=> answers[k]).length;
   $("progressText").innerText = `${t.progressPrefix} ${idx+1} ${t.progressOf} ${QUESTIONS.length}`;
-  $("bar").style.width = `${Math.round((idx)/QUESTIONS.length*100)}%`;
+  $("bar").style.width = `${Math.round(((idx+1)/QUESTIONS.length)*100)}%`;
 
   const selected = answers[q.id] || 0;
-
   const opts = OPTS[currentLang];
-  const qBox = $("qBox");
-  qBox.innerHTML = `
-    <div class="qTag">${t.progressPrefix} ${idx+1} ${t.progressOf} ${QUESTIONS.length} • ${dimLabel(q.dim)}</div>
+
+  $("qBox").innerHTML = `
+    <div class="qTag">${t.progressPrefix} ${idx+1} ${t.progressOf} ${QUESTIONS.length} • ${escapeHtml(dimLabel(q.dim))}</div>
     <div class="qTitle">${escapeHtml(q.text[currentLang] || q.text.en)}</div>
 
-    <div class="scale">
+    <div class="scale" role="list">
       ${opts.map(o => `
-        <div class="opt ${selected===o.v ? "selected":""}" data-v="${o.v}">
+        <div class="opt ${selected===o.v ? "selected":""}" role="listitem" tabindex="0" data-v="${o.v}">
           <strong>${o.v}</strong>
-          <span>${o.t}</span>
+          <span>${escapeHtml(o.t)}</span>
         </div>
       `).join("")}
     </div>
 
     <div class="tipBox ${selected ? "" : "hide"}" id="tipBox">
-      <b>${tipLabel()}</b>
+      <b>${escapeHtml(tipLabel())}</b>
       <span id="tipText">${escapeHtml(q.tip[currentLang] || q.tip.en)}</span>
+    </div>
+
+    <div class="tiny" style="margin-top:10px;">
+      ${selected ? "" : escapeHtml(t.pickAnOption)}
     </div>
   `;
 
-  qBox.querySelectorAll(".opt").forEach(el=>{
-    el.addEventListener("click", ()=>{
+  // click/select handlers
+  $("qBox").querySelectorAll(".opt").forEach(el=>{
+    const choose = ()=>{
       const v = Number(el.getAttribute("data-v"));
       answers[q.id] = v;
       saveState();
-      renderQuestion(); // re-render to highlight + show tip
-    });
+      renderQuestion(); // highlight + show tip
+    };
+    el.addEventListener("click", choose);
+    el.addEventListener("keydown", (e)=>{ if(e.key==="Enter" || e.key===" "){ e.preventDefault(); choose(); }});
   });
 
-  // Back button state
   $("btnBack").disabled = (idx === 0);
+  refreshNextButtonState();
 }
 
-/* ---------- Labels ---------- */
-function dimLabel(dim){
-  if(currentLang==="hi"){
-    return ({SE:"Structure & finishing", AT:"Thinking & logic", SI:"Social initiative", EC:"Empathy & teamwork", CE:"Curiosity & experimenting"})[dim];
-  }
-  if(currentLang==="te"){
-    return ({SE:"Structure & finishing", AT:"Thinking & logic", SI:"Social initiative", EC:"Empathy & teamwork", CE:"Curiosity & experimenting"})[dim];
-  }
-  return ({SE:"Structure & finishing", AT:"Thinking & logic", SI:"Social initiative", EC:"Empathy & teamwork", CE:"Curiosity & experimenting"})[dim];
-}
-function tipLabel(){
-  if(currentLang==="hi") return "Superhero mindset tip";
-  if(currentLang==="te") return "Superhero mindset tip";
-  return "Superhero mindset tip";
+function refreshNextButtonState(){
+  const t = UI[currentLang];
+  const isLast = (idx === QUESTIONS.length - 1);
+  $("btnNext").innerText = isLast ? t.finishBtn : t.next;
+
+  const q = QUESTIONS[idx];
+  const selected = answers[q?.id] || 0;
+  $("btnNext").disabled = !selected;
 }
 
 /* ---------- Scoring + Finish ---------- */
 function finish(){
-  // Ensure all answered? allow partial but warn
-  // Score map
   const score = {SE:0, AT:0, SI:0, EC:0, CE:0};
 
   QUESTIONS.forEach(q=>{
     let value = answers[q.id] || 0; // 1..4
-    if(!value) return; // skip unanswered
+    if(!value) return;
     if(q.reverse) value = 5 - value;
     score[q.dim] += value;
   });
 
-  // If very low answered, still show something
   const dims = Object.keys(score).map(d=>({d, v:score[d]})).sort((a,b)=> b.v - a.v);
   let primary = dims[0];
   let secondary = dims[1];
 
-  // tie-breaker using direct question per dim
+  // tie-breaker (simple)
   const tieVal = primary.v;
-  const tied = dims.filter(x=> x.v === tieVal);
+  const tied = dims.filter(x => x.v === tieVal);
   if(tied.length > 1){
     const tieQ = {SE:"Q3", AT:"Q2", SI:"Q6", EC:"Q5", CE:"Q4"};
     tied.sort((a,b)=>{
@@ -933,10 +967,8 @@ function finish(){
   renderResults(primaryStyle.key, secondaryStyle.key, score);
   showResult();
 
-  // show challenges AFTER results
-  setTimeout(()=>{
-    $("microChallenges").style.display = "block";
-  }, 0);
+  // show micro challenges after results
+  $("microChallenges").style.display = "block";
 }
 
 /* ---------- Render Results ---------- */
@@ -945,20 +977,19 @@ function renderResults(primaryKey, secondaryKey, score){
   const primaryStyle = Object.values(STYLE_BY_DIM).find(s=> s.key===primaryKey) || STYLE_BY_DIM.SE;
   const secondaryStyle = Object.values(STYLE_BY_DIM).find(s=> s.key===secondaryKey) || STYLE_BY_DIM.AT;
 
-  // Intro
   $("resTitle").innerText = t.resultTitle;
   $("resIntro").innerText =
-    currentLang==="hi"
+    (currentLang==="hi")
       ? "यह आपके answers पर based एक simple snapshot है। इसे next actions के लिए use करें।"
-      : currentLang==="te"
+      : (currentLang==="te")
         ? "మీ answers ఆధారంగా ఇది ఒక simple snapshot. Next actions కోసం use చేయండి."
         : "This is a simple snapshot based on your answers. Use it for your next actions.";
 
-  // Main card
+  // Main card (more impact)
   $("resCardMain").innerHTML = `
-    <div class="pill">${labelOf(primaryStyle)}</div>
+    <div class="pill">${escapeHtml(labelOf(primaryStyle))}</div>
     <div style="margin-top:10px;">
-      <div class="h3">${oneLineOf(primaryStyle)}</div>
+      <div class="h3">${escapeHtml(oneLineOf(primaryStyle))}</div>
       <p class="muted" style="margin:8px 0 0;">${heroOf(primaryStyle)}</p>
     </div>
 
@@ -975,60 +1006,69 @@ function renderResults(primaryKey, secondaryKey, score){
     <ul class="muted" style="margin:8px 0 0 18px;">
       ${watchoutsOf(primaryStyle).map(x=> `<li>${escapeHtml(x)}</li>`).join("")}
     </ul>
+
+    <div class="divider"></div>
+
+    <div class="h3">${studentTitle()}</div>
+    <ul class="muted" style="margin:8px 0 0 18px;">
+      ${(primaryStyle.forStudent?.[currentLang] || primaryStyle.forStudent?.en || []).map(x=> `<li>${escapeHtml(x)}</li>`).join("")}
+    </ul>
   `;
 
-  // Insights card
-  const top2 = [
-    {k: primaryStyle.key, d: findDimByKey(primaryStyle.key), v: score[findDimByKey(primaryStyle.key)] || 0},
-    {k: secondaryStyle.key, d: findDimByKey(secondaryStyle.key), v: score[findDimByKey(secondaryStyle.key)] || 0},
-  ];
-
+  // Insights card (scores + next actions)
   $("resCardInsights").innerHTML = `
-    <div class="pill">${currentLang==="hi"?"Secondary style":"Secondary style"}: ${labelOf(secondaryStyle)}</div>
+    <div class="pill">${escapeHtml(secondaryTitle())}: ${escapeHtml(labelOf(secondaryStyle))}</div>
 
     <div class="kpi">
-      <div class="mini">
-        <div class="n">${score.SE || 0}</div><div class="l">Structure</div>
-      </div>
-      <div class="mini">
-        <div class="n">${score.AT || 0}</div><div class="l">Thinking</div>
-      </div>
-      <div class="mini">
-        <div class="n">${score.SI || 0}</div><div class="l">Social</div>
-      </div>
-      <div class="mini">
-        <div class="n">${score.EC || 0}</div><div class="l">Empathy</div>
-      </div>
-      <div class="mini">
-        <div class="n">${score.CE || 0}</div><div class="l">Curiosity</div>
-      </div>
+      <div class="mini"><div class="n">${score.SE || 0}</div><div class="l">Structure</div></div>
+      <div class="mini"><div class="n">${score.AT || 0}</div><div class="l">Thinking</div></div>
+      <div class="mini"><div class="n">${score.SI || 0}</div><div class="l">Social</div></div>
+      <div class="mini"><div class="n">${score.EC || 0}</div><div class="l">Empathy</div></div>
+      <div class="mini"><div class="n">${score.CE || 0}</div><div class="l">Curiosity</div></div>
     </div>
 
     <div class="divider"></div>
 
-    <div class="h3">${currentLang==="hi"?"Next step":"Next step"}</div>
+    <div class="h3">${escapeHtml(nextStepTitle())}</div>
     <p class="muted" style="margin:6px 0 0;">
-      ${nextStepLine(primaryStyle.key)}
+      ${escapeHtml(nextStepLine(primaryStyle.key))}
     </p>
+
+    <div class="divider"></div>
+
+    <div class="h3">${escapeHtml(quickWinTitle())}</div>
+    <ul class="muted" style="margin:8px 0 0 18px;">
+      ${quickWins(primaryStyle.key).map(x=> `<li>${escapeHtml(x)}</li>`).join("")}
+    </ul>
   `;
 
-  // Life patterns
+  // Life patterns + language
   $("resLifePatterns").innerHTML = `
-    <div class="h3">${lifePatternsTitle()}</div>
+    <div class="h3">${escapeHtml(lifePatternsTitle())}</div>
     <p class="muted" style="margin:6px 0 0;">
       ${lifePatternsText(score)}
     </p>
 
     <div class="divider"></div>
 
-    <div class="h3">${langLineTitle()}</div>
+    <div class="h3">${escapeHtml(langLineTitle())}</div>
     <p class="muted" style="margin:6px 0 0;">
-      ${langLineText()}
+      ${escapeHtml(langLineText())}
     </p>
   `;
 
-  // Copy buttons content
-  const summary = buildCopySummary(primaryStyle.key, secondaryStyle.key, score);
+  // Tips again (based on answers)
+  const tips = collectedTips();
+  $("resTips").innerHTML = `
+    <div class="h3">${escapeHtml(t.tipsAgainTitle)}</div>
+    ${tips.length
+      ? `<ul class="muted" style="margin:8px 0 0 18px;">${tips.map(x=> `<li>${escapeHtml(x)}</li>`).join("")}</ul>`
+      : `<p class="muted" style="margin:6px 0 0;">${escapeHtml(noTipsText())}</p>`
+    }
+  `;
+
+  // Copy summary
+  const summary = buildCopySummary(primaryStyle.key, secondaryStyle.key, score, tips);
   $("btnCopyResult").onclick = ()=> copyText(summary);
 
   // Workshop CTA
@@ -1037,37 +1077,26 @@ function renderResults(primaryKey, secondaryKey, score){
 
 /* ---------- Copy / Email ---------- */
 function copyText(text){
-  navigator.clipboard.writeText(text).then(()=>{
-    alert(UI[currentLang].copied);
-  }).catch(()=>{
-    prompt("Copy this:", text);
-  });
+  navigator.clipboard.writeText(text).then(()=> alert(UI[currentLang].copied))
+    .catch(()=> prompt("Copy this:", text));
 }
 function emailInterest(summary){
-  const subject =
-    currentLang==="hi" ? "Seedling Workshop Interest" :
-    currentLang==="te" ? "Seedling Workshop Interest" :
-    "Seedling Workshop Interest";
-
-  const body =
-    `Hi Seedling Team,\n\nI’m interested in the Cybersecurity Workshop.\n\nMy assessment summary:\n${summary}\n\nThanks!`;
-
+  const subject = "Seedling Workshop Interest";
+  const body = `Hi Seedling Team,\n\nI’m interested in the Cybersecurity Workshop.\n\nMy assessment summary:\n${summary}\n\nThanks!`;
   window.location.href = `mailto:${EMAIL_TO}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 }
 
-/* ---------- Small text builders ---------- */
+/* ---------- Text builders ---------- */
 function labelOf(styleObj){ return styleObj.label[currentLang] || styleObj.label.en; }
 function oneLineOf(styleObj){ return styleObj.oneLine[currentLang] || styleObj.oneLine.en; }
 function strengthsOf(styleObj){ return styleObj.strengths[currentLang] || styleObj.strengths.en; }
 function watchoutsOf(styleObj){ return styleObj.watchouts[currentLang] || styleObj.watchouts.en; }
+
 function heroOf(styleObj){
   const h = styleObj.hero[currentLang] || styleObj.hero.en;
   return `<b>${escapeHtml(h.name)}:</b> ${escapeHtml(h.quote)}`;
 }
-function findDimByKey(key){
-  const map = {Executive:"SE", Analyst:"AT", Connector:"SI", Builder:"EC", Explorer:"CE"};
-  return map[key] || "SE";
-}
+
 function nextStepLine(primaryKey){
   const en = {
     Executive:"Pick 1 task today. Write the next 3 steps. Finish it.",
@@ -1093,6 +1122,31 @@ function nextStepLine(primaryKey){
   return (currentLang==="hi"?hi:currentLang==="te"?te:en)[primaryKey] || en[primaryKey];
 }
 
+function quickWins(primaryKey){
+  const en = {
+    Executive:["Write 3 priorities for today.","Finish 1 pending task.","Send 1 clear update to someone."],
+    Analyst:["Pick 1 topic and learn 15 mins.","Write 3 bullet notes.","Decide one small thing fast."],
+    Connector:["Message 1 person for guidance.","Ask 1 clear question.","Block 15 mins no-phone."],
+    Builder:["Help 1 person — but set a limit.","Say 'no' once politely.","Write 1 boundary rule."],
+    Explorer:["Start 1 mini-project (30 mins).","Finish a tiny feature.","Share what you built."],
+  };
+  const hi = {
+    Executive:["आज 3 priorities लिखो।","1 pending task पूरा करो।","1 clear update भेजो।"],
+    Analyst:["1 topic 15 mins सीखो।","3 bullet notes लिखो।","एक छोटा decision fast लो।"],
+    Connector:["1 person को message करो।","1 clear सवाल पूछो।","15 mins no-phone।"],
+    Builder:["1 व्यक्ति को help — limit के साथ।","एक बार politely 'no' बोलो।","1 boundary rule लिखो।"],
+    Explorer:["1 mini-project start (30 mins).","एक tiny चीज़ finish।","जो बनाया share करो।"],
+  };
+  const te = {
+    Executive:["ఈ రోజు 3 priorities రాయండి.","1 pending task finish చేయండి.","1 clear update పంపండి."],
+    Analyst:["1 topic 15 mins నేర్చుకోండి.","3 bullet notes రాయండి.","ఒక చిన్న decision fast తీసుకోండి."],
+    Connector:["1 person కి message చేయండి.","1 clear question అడగండి.","15 mins no-phone."],
+    Builder:["1 person కి help — limit తో.","ఒకసారి politely 'no' చెప్పండి.","1 boundary rule రాయండి."],
+    Explorer:["1 mini-project start (30 mins).","ఒక tiny thing finish.","మీ build చేసినది share చేయండి."],
+  };
+  return (currentLang==="hi"?hi:currentLang==="te"?te:en)[primaryKey] || en[primaryKey] || [];
+}
+
 function lifePatternsTitle(){
   if(currentLang==="hi") return "Your life patterns (based on your answers)";
   if(currentLang==="te") return "మీ life patterns (మీ answers ఆధారంగా)";
@@ -1104,56 +1158,113 @@ function langLineTitle(){
   return "Language";
 }
 function langLineText(){
-  if(currentLang==="hi") return "आप English / Hindi / Telugu में results देख सकते हैं।";
-  if(currentLang==="te") return "మీరు English / Hindi / Telugu లో results చూడవచ్చు.";
+  if(currentLang==="hi") return "आप English / Hindi / Telugu में questions और results देख सकते हैं।";
+  if(currentLang==="te") return "మీరు English / Hindi / Telugu లో questions మరియు results చూడవచ్చు.";
   return "You can view questions and results in English / Hindi / Telugu.";
 }
 
 function lifePatternsText(score){
-  // Simple pattern mapping (impactful but easy)
-  const s = score.SE || 0;
-  const a = score.AT || 0;
+  const s  = score.SE || 0;
+  const a  = score.AT || 0;
   const so = score.SI || 0;
-  const e = score.EC || 0;
-  const c = score.CE || 0;
+  const e  = score.EC || 0;
+  const c  = score.CE || 0;
 
-  const linesEN = [];
-  linesEN.push(s>=9 ? "You naturally like order and finishing." : "You may need a simple routine to finish work.");
-  linesEN.push(a>=7 ? "You prefer facts over assumptions." : "Try pausing before believing something.");
-  linesEN.push(so>=7 ? "You take initiative with people." : "Try starting small conversations.");
-  linesEN.push(e>=7 ? "You care about fairness and people." : "Practice expressing concerns kindly.");
-  linesEN.push(c>=7 ? "You like exploring new ideas." : "Try one new method each week.");
-
-  const linesHI = [];
-  linesHI.push(s>=9 ? "आपको order और finishing पसंद है।" : "Finishing के लिए simple routine बनाइए।");
-  linesHI.push(a>=7 ? "आप facts को importance देते हैं।" : "Believe करने से पहले pause करें।");
-  linesHI.push(so>=7 ? "आप people में initiative लेते हैं।" : "छोटी conversation शुरू करें।");
-  linesHI.push(e>=7 ? "आप fairness और लोगों की care करते हैं।" : "Kindly concerns बोलने की practice करें।");
-  linesHI.push(c>=7 ? "आप new ideas explore करते हैं।" : "हर हफ्ते एक नया तरीका try करें।");
-
-  const linesTE = [];
-  linesTE.push(s>=9 ? "మీకు order మరియు finishing ఇష్టం." : "Finishing కోసం simple routine పెట్టుకోండి.");
-  linesTE.push(a>=7 ? "మీరు facts ని value ఇస్తారు." : "నమ్మే ముందు pause చేయండి.");
-  linesTE.push(so>=7 ? "మీరు people లో initiative తీసుకుంటారు." : "చిన్న conversations మొదలు పెట్టండి.");
-  linesTE.push(e>=7 ? "మీరు fairness & people care చేస్తారు." : "Kind గా concerns చెప్పడం practice చేయండి.");
-  linesTE.push(c>=7 ? "మీరు new ideas explore చేస్తారు." : "ప్రతి వారం ఒక కొత్త method try చేయండి.");
+  const linesEN = [
+    (s>=9 ? "You naturally like order and finishing." : "You may need a simple routine to finish work."),
+    (a>=7 ? "You prefer facts over assumptions." : "Try pausing before believing something."),
+    (so>=7 ? "You take initiative with people." : "Try starting small conversations."),
+    (e>=7 ? "You care about fairness and people." : "Practice expressing concerns kindly."),
+    (c>=7 ? "You like exploring new ideas." : "Try one new method each week.")
+  ];
+  const linesHI = [
+    (s>=9 ? "आपको order और finishing पसंद है।" : "Finishing के लिए simple routine बनाइए।"),
+    (a>=7 ? "आप facts को importance देते हैं।" : "Believe करने से पहले pause करें।"),
+    (so>=7 ? "आप people में initiative लेते हैं।" : "छोटी conversation शुरू करें।"),
+    (e>=7 ? "आप fairness और लोगों की care करते हैं।" : "Kindly concerns बोलने की practice करें।"),
+    (c>=7 ? "आप new ideas explore करते हैं।" : "हर हफ्ते एक नया तरीका try करें।")
+  ];
+  const linesTE = [
+    (s>=9 ? "మీకు order మరియు finishing ఇష్టం." : "Finishing కోసం simple routine పెట్టుకోండి."),
+    (a>=7 ? "మీరు facts ని value ఇస్తారు." : "నమ్మే ముందు pause చేయండి."),
+    (so>=7 ? "మీరు people లో initiative తీసుకుంటారు." : "చిన్న conversations మొదలు పెట్టండి."),
+    (e>=7 ? "మీరు fairness & people care చేస్తారు." : "Kind గా concerns చెప్పడం practice చేయండి."),
+    (c>=7 ? "మీరు new ideas explore చేస్తారు." : "ప్రతి వారం ఒక కొత్త method try చేయండి.")
+  ];
 
   const arr = currentLang==="hi"?linesHI:currentLang==="te"?linesTE:linesEN;
-  return arr.map(x=> "• " + x).join("<br/>");
+  return arr.map(x=> "• " + escapeHtml(x)).join("<br/>");
 }
 
-function buildCopySummary(primaryKey, secondaryKey, score){
-  const s = `Primary: ${primaryKey}\nSecondary: ${secondaryKey}\nScores: SE=${score.SE||0}, AT=${score.AT||0}, SI=${score.SI||0}, EC=${score.EC||0}, CE=${score.CE||0}`;
-  const next = nextStepLine(primaryKey);
-  return `${s}\nNext step: ${next}\nEmail: ${EMAIL_TO}`;
+function collectedTips(){
+  // only tips for answered questions, in current language
+  const tips = [];
+  QUESTIONS.forEach(q=>{
+    const v = answers[q.id] || 0;
+    if(v){
+      const tip = (q.tip[currentLang] || q.tip.en || "").trim();
+      if(tip) tips.push(tip);
+    }
+  });
+  // de-dup
+  return Array.from(new Set(tips));
+}
+
+function noTipsText(){
+  if(currentLang==="hi") return "Tips देखने के लिए assessment complete करें।";
+  if(currentLang==="te") return "Tips చూడడానికి assessment complete చేయండి.";
+  return "Complete the assessment to see your tips here.";
+}
+
+function studentTitle(){
+  if(currentLang==="hi") return "If you are a student / fresher, this helps you by";
+  if(currentLang==="te") return "మీరు student / fresher అయితే, ఇది మీకు ఎలా ఉపయోగపడుతుంది";
+  return "If you are a student / fresher, this helps you by";
+}
+
+function secondaryTitle(){
+  if(currentLang==="hi") return "Secondary style";
+  if(currentLang==="te") return "Secondary style";
+  return "Secondary style";
+}
+
+function nextStepTitle(){
+  if(currentLang==="hi") return "Next step (simple)";
+  if(currentLang==="te") return "Next step (simple)";
+  return "Next step (simple)";
+}
+
+function quickWinTitle(){
+  if(currentLang==="hi") return "Quick wins (today)";
+  if(currentLang==="te") return "Quick wins (today)";
+  return "Quick wins (today)";
+}
+
+function buildCopySummary(primaryKey, secondaryKey, score, tips){
+  const tipLines = (tips || []).slice(0,6).map(t=> `- ${t}`).join("\n");
+  return [
+    `Primary: ${primaryKey}`,
+    `Secondary: ${secondaryKey}`,
+    `Scores: SE=${score.SE||0}, AT=${score.AT||0}, SI=${score.SI||0}, EC=${score.EC||0}, CE=${score.CE||0}`,
+    `Next step: ${nextStepLine(primaryKey)}`,
+    `Tips:`,
+    (tipLines || "- (complete assessment to see tips)"),
+    `Workshop email: ${EMAIL_TO}`
+  ].join("\n");
 }
 
 /* ---------- Navigation ---------- */
 function goNext(){
+  const q = QUESTIONS[idx];
+  const selected = answers[q.id] || 0;
+  if(!selected){
+    alert(UI[currentLang].pickAnOption);
+    return;
+  }
   if(idx < QUESTIONS.length - 1){
     idx++;
     renderQuestion();
-  } else {
+  }else{
     finish();
   }
 }
@@ -1184,10 +1295,7 @@ $("btnRetake").addEventListener("click", ()=>{
 $("btnWorkshop").addEventListener("click", ()=>{
   emailInterest("I want to join the workshop.");
 });
-
-$("langSelect").addEventListener("change", (e)=>{
-  setLang(e.target.value);
-});
+$("langSelect").addEventListener("change", (e)=> setLang(e.target.value));
 
 /* Micro challenge copy buttons */
 $("mc1Copy").addEventListener("click", ()=> copyText("Cyber (3 min): Pick any app you use daily. Write 3 risks + 1 fix each."));
