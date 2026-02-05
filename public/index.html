@@ -1,1607 +1,1759 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Seedling Assessment</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>🌱 Seedling - Self-Reflection Quiz</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
   <style>
-    :root{
-      --bg:#0b1220;
-      --card:#121c31;
-      --card2:#0f172a;
-      --text:#e8eefc;
-      --muted:#b7c3e6;
-      --line:rgba(255,255,255,.10);
-      --accent:#6ee7ff;
-      --accent2:#a78bfa;
-      --btn:#1f2a44;
-      --btn2:#203253;
-      --ok:#34d399;
-      --warn:#fbbf24;
+    :root {
+      --bg: #f9fafb;
+      --card: #ffffff;
+      --card2: #f3f4f6;
+      --border: #e5e7eb;
+      --text: #111827;
+      --muted: #4b5563;
+      --primary: #2563eb;
+      --accent: #16a34a;
+      --warn: #f59e0b;
     }
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
-      background: radial-gradient(1200px 900px at 20% 0%, rgba(110,231,255,.14), transparent 60%),
-                  radial-gradient(1000px 800px at 90% 10%, rgba(167,139,250,.14), transparent 60%),
-                  var(--bg);
-      color:var(--text);
-      line-height:1.45;
+
+    * {
+      box-sizing: border-box
     }
-    .wrap{max-width:920px;margin:0 auto;padding:20px 16px 80px}
-    .topbar{
-      display:flex;align-items:center;justify-content:space-between;gap:12px;
-      padding:12px 14px;border:1px solid var(--line);border-radius:16px;
-      background:rgba(18,28,49,.55);backdrop-filter: blur(10px);
-      position:sticky;top:10px;z-index:5;
+
+    body {
+      margin: 0;
+      background: linear-gradient(180deg, #f9fafb 0%, #f3f4f6 100%);
+      color: var(--text);
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      line-height: 1.45;
     }
-    .brand{display:flex;align-items:center;gap:10px}
-    .dot{width:10px;height:10px;border-radius:99px;background:linear-gradient(90deg,var(--accent),var(--accent2))}
-    .brand b{letter-spacing:.2px}
-    .lang{
-      background:rgba(255,255,255,.06);
-      border:1px solid var(--line);
-      color:var(--text);
-      padding:8px 10px;
-      border-radius:12px;
-      outline:none;
+
+    .wrap {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 22px
     }
-    .card{
-      background:rgba(18,28,49,.55);
-      border:1px solid var(--line);
-      border-radius:18px;
-      padding:16px;
-      box-shadow: 0 10px 30px rgba(0,0,0,.22);
+
+    h1,
+    h2,
+    h3 {
+      margin: 10px 0;
+      line-height: 1.25
     }
-    .hero{margin-top:16px;padding:22px}
-    h1{margin:0 0 8px;font-size:34px;line-height:1.1}
-    h2{margin:0 0 6px;font-size:22px}
-    h3{margin:0 0 8px;font-size:18px}
-    p{margin:0 0 10px}
-    .sub{color:var(--muted);font-size:15px}
-    .muted{color:var(--muted)}
-    .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
-    .btn{
-      border:1px solid var(--line);
-      background:linear-gradient(180deg, rgba(255,255,255,.09), rgba(255,255,255,.05));
-      color:var(--text);
-      padding:10px 12px;border-radius:14px;
-      cursor:pointer;
-      font-weight:600;
+
+    p {
+      margin: 10px 0;
+      color: var(--muted)
     }
-    .btn:hover{filter:brightness(1.08)}
-    .btn.secondary{background:rgba(255,255,255,.06)}
-    .btn.ghost{background:transparent}
-    .pill{
-      display:inline-flex;align-items:center;gap:8px;
-      padding:6px 10px;border-radius:999px;
-      border:1px solid var(--line);
-      background:rgba(255,255,255,.05);
-      color:var(--muted);font-size:13px
+
+    ul {
+      margin: 8px 0 0 18px;
+      color: var(--muted)
     }
-    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-    @media (max-width:720px){.grid2{grid-template-columns:1fr}}
-    .hr{height:1px;background:var(--line);margin:14px 0}
-    .qwrap{margin-top:16px}
-    .progress{
-      height:10px;background:rgba(255,255,255,.07);
-      border:1px solid var(--line);
-      border-radius:999px;overflow:hidden;
+
+    li {
+      margin: 6px 0
     }
-    .bar{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2))}
-    .qtitle{font-size:18px;margin:0 0 10px}
-    .opts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-    @media (max-width:640px){.opts{grid-template-columns:1fr}}
-    .opt{
-      padding:12px;border-radius:16px;
-      background:rgba(255,255,255,.06);
-      border:1px solid var(--line);
-      cursor:pointer;
-      transition:transform .05s ease;
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px
     }
-    .opt:hover{transform:translateY(-1px)}
-    .opt small{display:block;color:var(--muted);margin-top:2px}
-    .opt.sel{
-      border-color: rgba(110,231,255,.55);
-      box-shadow: 0 0 0 2px rgba(110,231,255,.12) inset;
-      background:rgba(110,231,255,.08);
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px
     }
-    .tipbox{
-      border-left:3px solid rgba(110,231,255,.5);
-      padding:10px 12px;border-radius:12px;
-      background:rgba(110,231,255,.06);
-      color:var(--muted);font-size:14px
+
+    .brandTitle {
+      font-size: 30px;
+      font-weight: 900;
+      letter-spacing: -0.4px;
+      line-height: 1.1;
     }
-    .small{font-size:13px;color:var(--muted)}
-    .hide{display:none}
-    ul{margin:8px 0 0 18px;color:var(--muted)}
-    li{margin:6px 0}
-    .kpi{
-      margin-top:12px;
-      background:rgba(255,255,255,.05);
-      border:1px solid var(--line);
-      border-radius:16px;
-      padding:14px;
+
+    .brandSubtitle {
+      font-size: 15px;
+      color: var(--muted);
+      max-width: 560px;
+      margin-top: 3px;
     }
-    .tag{
-      display:inline-flex;align-items:center;
-      padding:4px 8px;border-radius:999px;
-      background:rgba(52,211,153,.10);
-      border:1px solid rgba(52,211,153,.25);
-      color:rgba(167,255,214,.95);
-      font-size:12px;font-weight:700
+
+    @media (max-width:600px) {
+      .brandTitle {
+        font-size: 22px
+      }
+
+      .brandSubtitle {
+        font-size: 13px
+      }
     }
-    .tag.warn{
-      background:rgba(251,191,36,.10);
-      border:1px solid rgba(251,191,36,.25);
-      color:rgba(255,230,180,.95)
+
+    .pill {
+      font-size: 12px;
+      padding: 6px 10px;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      color: var(--muted);
+      background: var(--card)
     }
-    .copybox{
-      white-space:pre-wrap;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
-      font-size:12px;
-      background:rgba(0,0,0,.25);
-      border:1px solid var(--line);
-      padding:12px;border-radius:14px;
-      color:rgba(232,238,252,.92);
-      max-height:240px;overflow:auto;
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 18px;
+      margin-top: 14px;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    }
+
+    .progress {
+      height: 10px;
+      background: var(--card2);
+      border-radius: 999px;
+      overflow: hidden;
+      border: 1px solid var(--border)
+    }
+
+    .bar {
+      height: 100%;
+      background: var(--accent);
+      width: 0%
+    }
+
+    .row {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 10px
+    }
+
+    .btn {
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      padding: 12px 14px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+    }
+
+    .btn.secondary {
+      background: #fff;
+      border: 1px solid var(--border);
+      color: var(--text);
+      font-weight: 650;
+    }
+
+    .btn.ghost {
+      background: transparent;
+      color: var(--muted);
+      border: 1px dashed var(--border);
+      font-weight: 650;
+    }
+
+    .btn:disabled {
+      opacity: .55;
+      cursor: not-allowed
+    }
+
+    .sub {
+      color: var(--muted);
+      font-size: 13px
+    }
+
+    .small {
+      font-size: 12px;
+      color: var(--muted)
+    }
+
+    .qtitle {
+      font-size: 18px;
+      color: var(--text);
+      margin: 8px 0
+    }
+
+    .scale {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .opt {
+      background: var(--card2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 10px;
+      cursor: pointer;
+      text-align: center;
+      user-select: none;
+      transition: .1s transform ease;
+    }
+
+    .opt:hover {
+      transform: translateY(-1px)
+    }
+
+    .opt strong {
+      display: block;
+      font-size: 16px;
+      color: var(--text)
+    }
+
+    .opt span {
+      display: block;
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 4px
+    }
+
+    .opt.selected {
+      border-color: #60a5fa;
+      box-shadow: 0 0 0 3px rgba(96, 165, 250, .18);
+    }
+
+    .tip {
+      margin-top: 12px;
+      background: #ecfdf5;
+      border: 1px solid #bbf7d0;
+      border-radius: 12px;
+      padding: 12px;
+    }
+
+    .tip .t1 {
+      font-weight: 800;
+      color: #065f46
+    }
+
+    .tip .t2 {
+      color: var(--muted);
+      margin-top: 6px
+    }
+
+    .grid2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px
+    }
+
+    @media (max-width:820px) {
+      .grid2 {
+        grid-template-columns: 1fr
+      }
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 12px;
+      margin-right: 8px;
+      margin-top: 6px;
+      background: var(--card);
+    }
+
+    .kpi {
+      background: var(--card2);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px;
+    }
+
+    .kpi h3 {
+      margin: 0 0 6px 0;
+      font-size: 14px;
+      color: var(--muted)
+    }
+
+    .hr {
+      height: 1px;
+      background: var(--border);
+      margin: 14px 0
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text);
+      padding: 10px;
+      margin-top: 6px;
+    }
+
+    label {
+      display: block;
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 13px
+    }
+
+    .hide {
+      display: none
+    }
+
+    .copybox {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px;
+      white-space: pre-wrap;
+      color: var(--text);
+      font-size: 13px;
+    }
+
+    .note {
+      border: 1px solid rgba(245, 158, 11, .25);
+      background: rgba(245, 158, 11, .08);
+      border-radius: 12px;
+      padding: 12px;
+      color: var(--muted);
+    }
+
+    .langBox select {
+      padding: 7px 10px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--card);
+      color: var(--text);
+      font-size: 14px;
+      cursor: pointer;
     }
   </style>
 </head>
 
 <body>
-<div class="wrap">
-
-  <div class="topbar">
-    <div class="brand">
-      <span class="dot"></span>
-      <b id="brandText">Seedling</b>
-      <span class="pill" id="versionText">v1.2</span>
-    </div>
-
-    <div class="row">
-      <select class="lang" id="langSel" onchange="setLanguage(this.value)">
-        <option value="en">English</option>
-        <option value="hi">हिन्दी</option>
-        <option value="te">తెలుగు</option>
-      </select>
-      <button class="btn ghost" onclick="resetAll()" id="resetBtn">Reset</button>
-    </div>
-  </div>
-
-  <!-- HOME -->
-  <div class="card hero" id="home">
-    <h1 id="homeTitle">Seedling Reflection</h1>
-    <p class="sub" id="homeSub">
-      A short self-reflection to understand how you naturally think, work, and grow.
-    </p>
-
-    <div class="hr"></div>
-
-    <div class="grid2">
-      <div class="kpi">
-        <h3 id="homeWhatTitle">What you’ll get</h3>
-        <ul id="homeWhatList">
-          <li>A clear working-style summary (simple and useful)</li>
-          <li>Hidden strengths + watch-outs</li>
-          <li>A 90-day focus plan for students and freshers</li>
-          <li>Optional micro challenges to turn insight into action</li>
-        </ul>
-      </div>
-
-      <div class="kpi">
-        <h3 id="homeHowTitle">How it works</h3>
-        <ul id="homeHowList">
-          <li>10 questions (takes ~2–4 minutes)</li>
-          <li>No “neutral” option — choose what fits most</li>
-          <li>You can pause and continue anytime</li>
-          <li>Your answers stay on this device only</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="hr"></div>
-
-    <div class="row">
-      <button class="btn" id="startBtn" onclick="startAssessment()">Start</button>
-      <button class="btn secondary" id="continueBtn" onclick="continueAssessment()">Continue</button>
-      <span class="small" id="privacyLine">Note: This is not a test. There are no right or wrong answers.</span>
-    </div>
-  </div>
-
-  <!-- QUIZ -->
-  <div class="card qwrap hide" id="quiz">
-    <div class="row" style="justify-content:space-between">
-      <div>
-        <div class="small" id="stepLine">Question</div>
-        <div class="progress" style="margin-top:8px">
-          <div class="bar" id="bar"></div>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="brand">
+        <div style="font-size:28px">🌱</div>
+        <div>
+          <div class="brandTitle" id="brandTitle">Seedling Assessment</div>
+          <div class="brandSubtitle" id="brandSubtitle">Simple reflection to understand how you think and work</div>
         </div>
+      </div>
+
+      <div style="display:flex;gap:10px;align-items:center">
+        <div class="langBox">
+          <select id="langSelect" onchange="setLanguage(this.value)">
+            <option value="en">English</option>
+            <option value="te">తెలుగు</option>
+            <option value="hi">हिंदी</option>
+          </select>
+        </div>
+        <div class="pill" id="versionPill">v1.2 • 10 questions • ~4 mins</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="progress">
+        <div class="bar" id="bar"></div>
       </div>
       <div class="row">
-        <label class="small" style="display:flex;align-items:center;gap:8px">
-          <input type="checkbox" id="showTips" onchange="renderQuestion()" />
-          <span id="tipsToggle">Show a small tip</span>
-        </label>
+        <div class="sub" id="progressText">Progress will appear once you start.</div>
+        <div class="sub" id="scaleHint">Options: No → Not really → Mostly yes → Yes</div>
       </div>
     </div>
 
-    <div class="hr"></div>
+    <!-- HOME / INTRO -->
+    <div class="card" id="intro">
+      <h2 id="homeH1">🌱 Find your way of thinking and working</h2>
 
-    <h2 class="qtitle" id="qText">...</h2>
-
-    <div class="opts" id="opts"></div>
-
-    <div class="tipbox hide" id="tipBox"></div>
-
-    <div class="hr"></div>
-
-    <div class="row">
-      <button class="btn secondary" onclick="prevQ()" id="prevBtn">Back</button>
-      <button class="btn" onclick="nextQ()" id="nextBtn">Next</button>
-      <button class="btn ghost" onclick="finishNow()" id="finishBtn">Finish</button>
-      <span class="small" id="saveLine">Saved automatically</span>
-    </div>
-  </div>
-
-  <!-- RESULTS -->
-  <div class="card hide" id="results">
-    <h2 id="resTitle">Your Result</h2>
-    <p class="sub" id="resSub">Based on your answers, here’s a clear working-style summary.</p>
-
-    <div class="hr"></div>
-
-    <div class="kpi">
-      <div class="row" style="justify-content:space-between">
-        <div>
-          <h3 id="styleName">...</h3>
-          <p class="sub" id="styleOneLiner">...</p>
-        </div>
-        <span class="tag" id="styleTag">STYLE</span>
-      </div>
-      <div class="hr"></div>
-      <div class="grid2">
-        <div>
-          <h3 id="strengthTitle">Your strengths</h3>
-          <ul id="strengthList"></ul>
-        </div>
-        <div>
-          <h3 id="watchTitle">Watch-outs</h3>
-          <ul id="watchList"></ul>
-        </div>
-      </div>
-    </div>
-
-    <div class="kpi">
-      <h3 id="planTitle">Your 90-day focus plan</h3>
-      <ul id="planList"></ul>
-      <div class="small" id="planNote"></div>
-    </div>
-
-    <div class="kpi">
-      <h3 id="patternsTitle">Your life patterns (based on your answers)</h3>
-      <ul id="patternsList"></ul>
-    </div>
-
-    <div class="kpi">
-      <h3 id="tipsTitle">Helpful tips (recap)</h3>
-      <ul id="tipsRecapList"></ul>
-      <div class="small" id="tipsRecapNote"></div>
-    </div>
-
-    <div class="kpi">
-      <h3 id="actionTitle">Turn insight into action (Quick Micro Challenge)</h3>
-      <p class="sub" id="actionSub">Choose one small real-world challenge. No coding. No pressure. Just thinking.</p>
-      <div class="grid2" style="margin-top:10px">
-        <div class="card" style="background:rgba(255,255,255,.04)">
-          <h3 id="c1t">🛡️ Social App Safety</h3>
-          <p class="small" id="c1s">Think about risks in apps you use daily</p>
-          <button class="btn secondary" onclick="openChallenge('social')" id="c1b">Try this challenge</button>
-        </div>
-        <div class="card" style="background:rgba(255,255,255,.04)">
-          <h3 id="c2t">🤖 AI Thinking</h3>
-          <p class="small" id="c2s">Use AI ideas to solve a real problem</p>
-          <button class="btn secondary" onclick="openChallenge('ai')" id="c2b">Try this challenge</button>
-        </div>
-        <div class="card" style="background:rgba(255,255,255,.04)">
-          <h3 id="c3t">🏫 Improve a System</h3>
-          <p class="small" id="c3s">Fix one small problem around you</p>
-          <button class="btn secondary" onclick="openChallenge('civic')" id="c3b">Try this challenge</button>
-        </div>
-        <div class="card" style="background:rgba(255,255,255,.04)">
-          <h3 id="c4t">🔐 Cyber Basics</h3>
-          <p class="small" id="c4s">Think like a security person (no tools)</p>
-          <button class="btn secondary" onclick="openChallenge('cyber')" id="c4b">Try this challenge</button>
-        </div>
-      </div>
-
-      <div class="small" style="margin-top:10px" id="actionFoot">
-        ✔ Takes 30–60 mins • ✔ One-page output • ✔ Useful for interviews & clarity
-      </div>
-
-      <div class="card hide" id="challengePanel" style="margin-top:12px;background:rgba(255,255,255,.04)">
-        <h3 id="challengeTitle"></h3>
-        <p class="sub" id="challengeIntro"></p>
-        <div class="hr"></div>
-        <div id="challengeContent"></div>
-        <div class="hr"></div>
-        <h3 id="submitTitle">Submission (one page)</h3>
-        <div class="copybox" id="challengeTemplate"></div>
-        <div class="row" style="margin-top:12px">
-          <button class="btn" onclick="submitChallenge()" id="submitEmailBtn">Submit via Email</button>
-          <button class="btn secondary" onclick="copyChallenge()" id="copyBtn">Copy submission</button>
-          <button class="btn ghost" onclick="closeChallenge()" id="closeBtn">Close</button>
-        </div>
-        <div class="small" style="margin-top:8px" id="challengeFoot">
-          Bullet points are enough • No hacking • Think + explain clearly
-        </div>
-      </div>
-    </div>
-
-    <div class="kpi">
-      <h3 id="workshopTitle">Want to go deeper?</h3>
-      <p class="sub" id="workshopSub">
-        Join a live Cybersecurity Thinking Session with industry practitioners (optional).
+      <p class="sub" id="homeP1">
+        This is not an exam. There are no right or wrong answers.<br>
+        Just answer honestly.
       </p>
-      <ul id="workshopList">
-        <li>How professionals think about security (no hacking)</li>
-        <li>Real examples + Q&A</li>
-        <li>Beginner friendly</li>
-      </ul>
-      <div class="row" style="margin-top:10px">
-        <button class="btn secondary" onclick="notifyWorkshop()" id="workshopBtn">Notify me about the next session</button>
-        <span class="small" id="workshopNote">Optional • No pressure • You can join anytime</span>
+
+      <div class="hr"></div>
+
+      <h3 id="homeWhyH">Why this matters</h3>
+      <p class="sub" id="homeWhyP">
+        Many people choose a path without understanding themselves.<br>
+        This helps you get clarity early.
+      </p>
+
+      <h3 id="homeGetH">In about 5 minutes, you will know</h3>
+      <ul class="sub" id="homeGetList"></ul>
+
+      <h3 id="homeHowH">How it works</h3>
+      <ul class="sub" id="homeHowList"></ul>
+
+      <div class="note" style="margin-top:12px" id="homeNote">
+        This shows your current way of working, not your limits.
+      </div>
+
+      <div class="row" style="margin-top:14px">
+        <button class="btn" onclick="startAssessment()" id="startBtn">Start (10 questions)</button>
+        <button class="btn ghost" onclick="resetAll()" id="resetBtn">Reset</button>
+      </div>
+
+      <div class="small" style="margin-top:10px" id="homeTip">
+        Tip: Don’t try to look “perfect”. Answer what is true for you.
       </div>
     </div>
 
-    <div class="hr"></div>
+    <!-- QUIZ -->
+    <div class="card hide" id="quiz">
+      <div class="sub" id="qMeta"></div>
+      <div class="qtitle" id="qText"></div>
 
-    <div class="row">
-      <button class="btn secondary" onclick="restart()" id="retakeBtn">Retake</button>
-      <button class="btn" onclick="copyResult()" id="copyResBtn">Copy result</button>
+      <div class="scale" id="scale"></div>
+
+      <!-- Reflection shown only AFTER answer -->
+      <div class="tip hide" id="tipBox">
+        <div class="t1" id="tipTitle">Reflection</div>
+        <div class="t2" id="tipText"></div>
+      </div>
+
+      <div class="row" style="margin-top:14px">
+        <button class="btn secondary" id="prevBtn" onclick="prev()">Back</button>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <button class="btn ghost" onclick="saveDraft()" id="saveBtn">Save</button>
+          <button class="btn" id="nextBtn" onclick="next()">Next</button>
+        </div>
+      </div>
+      <div class="small" style="margin-top:8px" id="saveNote">Saved answers stay in this browser.</div>
     </div>
 
-    <div class="small" style="margin-top:10px" id="resFooter">
-      Your answers are stored only in your browser (local). No uploads.
+    <!-- RESULTS -->
+    <div class="card hide" id="result">
+      <h2 id="resultTitle">Your Result</h2>
+      <!-- Micro-challenge CTA (safe anchor) -->
+      <div style="margin-top:24px;">
+        <a href="#micro-challenges" style="
+       display:inline-block;
+       padding:12px 18px;
+       background:#2563eb;
+       color:#fff;
+       border-radius:10px;
+       font-weight:600;
+       text-decoration:none;">
+          ⚡ Try a Micro-Challenge (2–3 mins)
+        </a>
+
+        <p style="margin-top:8px;font-size:13px;color:#666;">
+          Optional · Pick ONE · No download · Quick thinking
+        </p>
+      </div>
+      <div class="grid2" style="margin-top:12px">
+        <div class="card" style="margin-top:0">
+          <div class="sub" id="yourStyleLbl">Your style</div>
+          <div style="font-size:28px;font-weight:900;letter-spacing:-0.3px" id="styleName">—</div>
+          <div class="small" id="styleSub">—</div>
+
+          <div class="hr"></div>
+          <div class="sub" id="traitsLbl">Style traits</div>
+          <div style="margin-top:10px" id="tags"></div>
+        </div>
+
+        <div class="card" style="margin-top:0">
+          <div class="sub" id="insightsLbl">Your main strength</div>
+          <h3 style="margin-top:6px" id="mainStrengthH">What this means</h3>
+          <p id="insightText"></p>
+          <div class="hr"></div>
+          <div class="small"><b id="mindsetLbl">Mindset:</b> <span id="heroMindset"></span></div>
+        </div>
+      </div>
+
+      <div class="grid2" style="margin-top:12px">
+        <div class="kpi">
+          <h3 id="strengthsLbl">You are good at</h3>
+          <div id="strengths"></div>
+        </div>
+        <div class="kpi">
+          <h3 id="watchLbl">Be careful about</h3>
+          <div id="watchouts"></div>
+        </div>
+      </div>
+
+      <!-- NEW v1.2: Life patterns -->
+      <div class="kpi" style="margin-top:12px">
+        <h3 id="lifePatternTitle">Your life patterns (based on your answers)</h3>
+        <ul id="lifePatterns"></ul>
+      </div>
+
+      <div class="grid2" style="margin-top:12px">
+        <div class="kpi">
+          <h3 id="everydayLbl">Everyday tips</h3>
+          <ul id="everydayTips"></ul>
+        </div>
+        <div class="kpi">
+          <h3 id="realLifeLbl">How this shows in real life</h3>
+          <ul id="beyondWork"></ul>
+        </div>
+      </div>
+
+      <div class="kpi" style="margin-top:12px">
+        <h3 id="overuseLbl">If you do this too much</h3>
+        <ul id="overuse"></ul>
+      </div>
+
+      <div class="grid2" style="margin-top:12px">
+        <div class="kpi">
+          <h3 id="learnLbl">How you learn best</h3>
+          <div id="learningMode"></div>
+        </div>
+        <div class="kpi">
+          <h3 id="pathsLbl">Good paths to explore (early)</h3>
+          <div id="paths"></div>
+        </div>
+      </div>
+
+      <div class="hr"></div>
+
+      <h3 id="nextStepH">Next step (optional)</h3>
+      <p class="sub" id="nextStepP">
+        We are planning a beginner-friendly cybersecurity session with real professionals.
+        Join if you are interested.
+      </p>
+
+      <div class="card" style="margin-top:12px">
+        <h3 style="margin-top:0" id="waitlistH">Join the waitlist</h3>
+
+        <label id="nameLbl">Name
+          <input id="wName" placeholder="Your name" />
+        </label>
+
+        <label id="emailLbl">Email
+          <input id="wEmail" placeholder="you@example.com" />
+        </label>
+
+        <label id="statusLbl">Current status
+          <select id="wStatus">
+            <option>Student</option>
+            <option>Fresher</option>
+            <option>Working</option>
+            <option>Career switch</option>
+          </select>
+        </label>
+
+        <label id="interestLbl">Interest area
+          <select id="wInterest">
+            <option>Not sure yet</option>
+            <option>SOC / Blue Team</option>
+            <option>GRC / Compliance</option>
+            <option>AppSec</option>
+            <option>Cloud Security</option>
+            <option>Threat Intel</option>
+          </select>
+        </label>
+
+        <label id="challengeLbl">Biggest challenge (optional)
+          <textarea id="wChallenge" rows="3" placeholder="What are you stuck on right now?"></textarea>
+        </label>
+
+        <div class="row" style="margin-top:12px">
+          <button class="btn" onclick="joinWaitlist()" id="joinBtn">Join (email)</button>
+          <button class="btn secondary" onclick="copyResultSummary()" id="copyBtn">Copy result</button>
+        </div>
+
+        <div class="small" style="margin-top:8px" id="mailNote">
+          This opens your email app and sends to: <b>seedling.community@gmail.com</b>
+        </div>
+      </div>
+
+      <div class="hr"></div>
+
+      <h3 id="shareH">Shareable summary</h3>
+      <div class="copybox" id="shareBox"></div>
+      <div class="row" style="margin-top:10px">
+        <button class="btn secondary" onclick="copyText(document.getElementById('shareBox').innerText)"
+          id="copy2Btn">Copy</button>
+        <button class="btn ghost" onclick="restart()" id="retakeBtn">Retake</button>
+      </div>
     </div>
+
   </div>
 
+  <script>
+    const EMAIL_TO = "seedling.community@gmail.com";
+
+    // ---------- v1.2 SETTINGS ----------
+    // Gen Z friendly 4-point scale (no neutral)
+    const scaleLabels = [
+      { v: 1, t: { en: "No", te: "కాదు", hi: "नहीं" } },
+      { v: 2, t: { en: "Not really", te: "అంతగా కాదు", hi: "ज़्यादा नहीं" } },
+      { v: 3, t: { en: "Mostly yes", te: "ఎక్కువగా అవును", hi: "ज़्यादातर हाँ" } },
+      { v: 4, t: { en: "Yes", te: "అవును", hi: "हाँ" } }
+    ];
+
+    // Reverse / negative questions (to reduce “everyone agrees” bias)
+    // Reverse scoring uses: value = 5 - value (since scale is 1..4)
+    const REVERSE_QUESTIONS = ["Q1", "Q4", "Q6", "Q8"];
+
+    // Language state
+    let currentLang = "en";
+
+    // ---------- STATIC TEXT ----------
+    const STATIC_TEXT = {
+      brandTitle: {
+        en: "Seedling Assessment",
+        te: "సీడ్లింగ్ అంచనా",
+        hi: "सीडलिंग आकलन"
+      },
+      brandSubtitle: {
+        en: "Simple reflection to understand how you think and work",
+        te: "మీ ఆలోచన & పని చేసే విధానం తెలుసుకునే చిన్న రిఫ్లెక్షన్",
+        hi: "आप कैसे सोचते और काम करते हैं—एक सरल समझ"
+      },
+      versionPill: {
+        en: "v1.2 • 10 questions • ~4 mins",
+        te: "v1.2 • 10 ప్రశ్నలు • ~4 నిమిషాలు",
+        hi: "v1.2 • 10 सवाल • ~4 मिनट"
+      },
+      progressEmpty: {
+        en: "Progress will appear once you start.",
+        te: "మీరు ప్రారంభించిన తర్వాత ప్రోగ్రెస్ కనిపిస్తుంది.",
+        hi: "शुरू करने के बाद प्रोग्रेस दिखेगा।"
+      },
+      scaleHint: {
+        en: "Options: No → Not really → Mostly yes → Yes",
+        te: "ఎంపికలు: కాదు → అంతగా కాదు → ఎక్కువగా అవును → అవును",
+        hi: "विकल्प: नहीं → ज़्यादा नहीं → ज़्यादातर हाँ → हाँ"
+      },
+      homeH1: {
+        en: "🌱 Find your way of thinking and working",
+        te: "🌱 మీ ఆలోచించే విధానం & పని చేసే విధానం తెలుసుకోండి",
+        hi: "🌱 अपने सोचने और काम करने का तरीका जानें"
+      },
+      homeP1: {
+        en: "This is not an exam. There are no right or wrong answers.\nJust answer honestly.",
+        te: "ఇది పరీక్ష కాదు. సరైన/తప్పు అనే సమాధానాలు లేవు.\nనిజాయితీగా సమాధానం ఇవ్వండి.",
+        hi: "यह कोई परीक्षा नहीं है। सही/गलत जवाब नहीं होते।\nबस ईमानदारी से उत्तर दें।"
+      },
+      homeWhyH: { en: "Why this matters", te: "ఇది ఎందుకు ముఖ్యమంటే", hi: "यह क्यों ज़रूरी है" },
+      homeWhyP: {
+        en: "Many people choose a path without understanding themselves.\nThis helps you get clarity early.",
+        te: "చాలామంది తమను తాము అర్థం చేసుకోకుండా మార్గాన్ని ఎంచుకుంటారు.\nఇది మీకు ముందే స్పష్టత ఇస్తుంది.",
+        hi: "बहुत लोग खुद को समझे बिना रास्ता चुन लेते हैं।\nयह आपको जल्दी स्पष्टता देता है।"
+      },
+      homeGetH: { en: "In about 5 minutes, you will know", te: "సుమారు 5 నిమిషాల్లో మీరు తెలుసుకుంటారు", hi: "लगभग 5 मिनट में आप जानेंगे" },
+      homeGetList: {
+        en: [
+          "Your working style",
+          "What you are naturally good at",
+          "What you should be careful about",
+          "How you learn best",
+          "Simple tips for daily life"
+        ],
+        te: [
+          "మీ పని చేసే శైలి",
+          "మీకు సహజంగా వచ్చే బలాలు",
+          "ఏం జాగ్రత్తగా ఉండాలి",
+          "మీరు ఎలా బాగా నేర్చుకుంటారు",
+          "రోజువారీ ఉపయోగకరమైన టిప్స్"
+        ],
+        hi: [
+          "आपकी काम करने की शैली",
+          "आप किसमें अच्छे हैं",
+          "किस बात से सावधान रहना है",
+          "आप सबसे अच्छा कैसे सीखते हैं",
+          "रोज़मर्रा के लिए आसान टिप्स"
+        ]
+      },
+      homeHowH: { en: "How it works", te: "ఇది ఎలా పనిచేస్తుంది", hi: "यह कैसे काम करता है" },
+      homeHowList: {
+        en: ["Answer 10 short questions", "Get your personal result", "Use it to make better choices"],
+        te: ["10 చిన్న ప్రశ్నలకు సమాధానం ఇవ్వండి", "మీ వ్యక్తిగత ఫలితం పొందండి", "మంచి నిర్ణయాలకు ఉపయోగించండి"],
+        hi: ["10 छोटे सवालों के जवाब दें", "अपना व्यक्तिगत परिणाम पाएं", "बेहतर फैसलों के लिए उपयोग करें"]
+      },
+      homeNote: {
+        en: "This shows your current way of working, not your limits.",
+        te: "ఇది మీ ప్రస్తుత పని విధానాన్ని చూపుతుంది—మీ పరిమితులను కాదు.",
+        hi: "यह आपका वर्तमान तरीका दिखाता है—आपकी सीमा नहीं।"
+      },
+      startBtn: { en: "Start (10 questions)", te: "ప్రారంభించండి (10 ప్రశ్నలు)", hi: "शुरू करें (10 सवाल)" },
+      resetBtn: { en: "Reset", te: "రిసెట్", hi: "रीसेट" },
+      homeTip: {
+        en: "Tip: Don’t try to look “perfect”. Answer what is true for you.",
+        te: "టిప్: “పర్ఫెక్ట్”గా కనిపించడానికి ప్రయత్నించవద్దు. నిజంగా మీకు అనిపించేది చెప్పండి.",
+        hi: "टिप: “परफेक्ट” दिखने की कोशिश न करें। जो सच है वही चुनें।"
+      },
+
+      // Results labels
+      resultTitle: { en: "Your Result", te: "మీ ఫలితం", hi: "आपका परिणाम" },
+      yourStyleLbl: { en: "Your style", te: "మీ శైలి", hi: "आपकी शैली" },
+      styleSub: { en: "This shows your current style, not your limits.", te: "ఇది మీ ప్రస్తుత శైలి—పరిమితులు కాదు.", hi: "यह आपकी वर्तमान शैली है—सीमा नहीं।" },
+      traitsLbl: { en: "Style traits", te: "లక్షణాలు", hi: "गुण" },
+      insightsLbl: { en: "Your main strength", te: "మీ ప్రధాన బలం", hi: "आपकी मुख्य ताकत" },
+      mainStrengthH: { en: "What this means", te: "దీని అర్థం", hi: "इसका मतलब" },
+      mindsetLbl: { en: "Mindset:", te: "మైండ్‌సెట్:", hi: "माइंडसेट:" },
+      strengthsLbl: { en: "You are good at", te: "మీ బలాలు", hi: "आप अच्छे हैं" },
+      watchLbl: { en: "Be careful about", te: "జాగ్రత్తగా ఉండాలి", hi: "सावधान रहें" },
+      lifePatternTitle: { en: "Your life patterns (based on your answers)", te: "మీ జీవన విధానాలు (మీ సమాధానాల ఆధారంగా)", hi: "आपके जीवन के पैटर्न (आपके उत्तरों के आधार पर)" },
+      everydayLbl: { en: "Everyday tips", te: "రోజువారీ టిప్స్", hi: "रोज़मर्रा टिप्स" },
+      realLifeLbl: { en: "How this shows in real life", te: "ఇది నిజ జీవితంలో ఎలా కనిపిస్తుంది", hi: "यह असल ज़िंदगी में कैसे दिखता है" },
+      overuseLbl: { en: "If you do this too much", te: "ఇది ఎక్కువైతే", hi: "अगर यह ज़्यादा हो जाए" },
+      learnLbl: { en: "How you learn best", te: "మీరు ఎలా బాగా నేర్చుకుంటారు", hi: "आप सबसे अच्छा कैसे सीखते हैं" },
+      pathsLbl: { en: "Good paths to explore (early)", te: "ప్రారంభంలో చూడవచ్చు", hi: "शुरुआत में कौन से रास्ते" },
+      nextStepH: { en: "Next step (optional)", te: "తర్వాతి అడుగు (ఐచ్ఛికం)", hi: "अगला कदम (वैकल्पिक)" },
+      nextStepP: {
+        en: "We are planning a beginner-friendly cybersecurity session with real professionals. Join if you are interested.",
+        te: "నిజమైన ప్రొఫెషనల్స్‌తో ప్రారంభస్థాయి సైబర్‌సెక్యూరిటీ సెషన్ ప్లాన్ చేస్తున్నాం. ఆసక్తి ఉంటే జాయిన్ అవండి.",
+        hi: "हम शुरुआती स्तर का साइबरसिक्योरिटी सेशन प्लान कर रहे हैं। रुचि हो तो जुड़ें।"
+      },
+      waitlistH: { en: "Join the waitlist", te: "వెయిట్‌లిస్ట్‌లో చేరండి", hi: "वेटलिस्ट में जुड़ें" },
+      nameLbl: { en: "Name", te: "పేరు", hi: "नाम" },
+      emailLbl: { en: "Email", te: "ఈమెయిల్", hi: "ईमेल" },
+      statusLbl: { en: "Current status", te: "ప్రస్తుత స్థితి", hi: "वर्तमान स्थिति" },
+      interestLbl: { en: "Interest area", te: "ఆసక్తి రంగం", hi: "रुचि क्षेत्र" },
+      challengeLbl: { en: "Biggest challenge (optional)", te: "పెద్ద సమస్య (ఐచ్ఛికం)", hi: "सबसे बड़ी चुनौती (वैकल्पिक)" },
+      joinBtn: { en: "Join (email)", te: "జాయిన్ (ఈమెయిల్)", hi: "जुड़ें (ईमेल)" },
+      copyBtn: { en: "Copy result", te: "ఫలితం కాపీ", hi: "परिणाम कॉपी" },
+      mailNote: {
+        en: "This opens your email app and sends to: seedling.community@gmail.com",
+        te: "ఇది మీ ఈమెయిల్ యాప్‌ను ఓపెన్ చేసి పంపుతుంది: seedling.community@gmail.com",
+        hi: "यह आपका ईमेल ऐप खोलकर भेजेगा: seedling.community@gmail.com"
+      },
+      shareH: { en: "Shareable summary", te: "షేర్ చేయడానికి", hi: "शेयर सारांश" },
+      copy2Btn: { en: "Copy", te: "కాపీ", hi: "कॉपी" },
+      retakeBtn: { en: "Retake", te: "మళ్ళీ", hi: "फिर से" },
+
+      // Reflection label
+      reflectionLabel: { en: "Reflection", te: "ఆలోచించండి", hi: "सोचें" }
+    };
+
+    // ---------- QUESTIONS (10) ----------
+    // 4 reverse questions: Q1, Q4, Q6, Q8
+    const QUESTIONS = [
+      {
+        id: "Q1", dim: "SE",
+        reverse: true,
+        text: {
+          en: "I sometimes wait for others to take responsibility instead of stepping in myself.",
+          te: "నేనే ముందుకు రావాల్సినప్పుడు కూడా, కొన్నిసార్లు ఇతరులు బాధ్యత తీసుకునే వరకు నేను వేచి ఉంటాను.",
+          hi: "कभी-कभी मैं खुद आगे बढ़ने की बजाय दूसरों के ज़िम्मेदारी लेने का इंतज़ार करता हूँ।"
+        },
+        reflection: {
+          en: "If you often wait, you may miss chances to lead. If you don’t wait, you naturally take charge.",
+          te: "ఎక్కువగా వేచి ఉంటే నాయకత్వ అవకాశాలు తగ్గవచ్చు. వేచి ఉండకుండా ముందుకు వస్తే మీరు సహజంగా బాధ్యత తీసుకుంటారు.",
+          hi: "अगर आप अक्सर इंतज़ार करते हैं तो नेतृत्व के मौके कम हो सकते हैं। अगर नहीं करते तो आप स्वाभाविक रूप से आगे बढ़ते हैं।"
+        }
+      },
+      {
+        id: "Q2", dim: "AT",
+        reverse: false,
+        text: {
+          en: "Before solving a problem, I like to understand it step by step.",
+          te: "సమస్యను పరిష్కరించే ముందు, దాన్ని దశలవారీగా అర్థం చేసుకోవాలని నాకు ఇష్టం.",
+          hi: "किसी समस्या को हल करने से पहले, मैं उसे धीरे-धीरे समझना पसंद करता हूँ।"
+        },
+        reflection: {
+          en: "This shows how much you think before acting. Both thinking and action matter.",
+          te: "ఇది మీరు పని చేయడానికి ముందు ఎంతగా ఆలోచిస్తారో చూపిస్తుంది. ఆలోచన, చర్య రెండూ ముఖ్యమే.",
+          hi: "यह दिखाता है कि आप काम से पहले कितना सोचते हैं। सोचना और करना—दोनों ज़रूरी हैं।"
+        }
+      },
+      {
+        id: "Q3", dim: "SE",
+        reverse: false,
+        text: {
+          en: "Once I know what to do, I can plan and complete work on my own.",
+          te: "ఏం చేయాలో తెలిసిన తర్వాత, నేను ప్లాన్ చేసి పని పూర్తి చేయగలను.",
+          hi: "जब मुझे पता होता है कि क्या करना है, तो मैं खुद योजना बनाकर काम पूरा कर सकता हूँ।"
+        },
+        reflection: {
+          en: "This is about independence and finishing. It helps in studies and work.",
+          te: "ఇది స్వతంత్రంగా పని పూర్తి చేసే శక్తి గురించి. చదువులో, పనిలో రెండింటిలో సహాయం చేస్తుంది.",
+          hi: "यह स्वतंत्रता और काम पूरा करने से जुड़ा है। पढ़ाई और काम—दोनों में मदद करता है।"
+        }
+      },
+      {
+        id: "Q4", dim: "SI",
+        reverse: true,
+        text: {
+          en: "I avoid group discussions because they feel tiring or confusing.",
+          te: "గ్రూప్ డిస్కషన్స్ అలసటగా లేదా గందరగోళంగా అనిపిస్తాయని నేను తప్పించుకుంటాను.",
+          hi: "मैं समूह चर्चा से बचता हूँ क्योंकि वह थकाने वाली या उलझन वाली लगती है।"
+        },
+        reflection: {
+          en: "If you avoid groups, you may prefer quiet focus. If you don’t, you gain energy from people.",
+          te: "గ్రూప్స్‌కి దూరంగా ఉంటే మీరు నిశ్శబ్ద ఫోకస్‌ను ఇష్టపడవచ్చు. దూరంగా లేకపోతే ప్రజలతో శక్తి పెరుగుతుంది.",
+          hi: "अगर आप समूह से बचते हैं तो आप शांत फोकस पसंद कर सकते हैं। अगर नहीं, तो लोगों से ऊर्जा मिलती है।"
+        }
+      },
+      {
+        id: "Q5", dim: "EC",
+        reverse: false,
+        text: {
+          en: "I think about how my actions will affect other people.",
+          te: "నా పనులు ఇతరులపై ఎలా ప్రభావం చూపుతాయో నేను ఆలోచిస్తాను.",
+          hi: "मैं सोचता हूँ कि मेरे काम से दूसरों पर क्या असर पड़ेगा।"
+        },
+        reflection: {
+          en: "This shows empathy. Empathy helps in teamwork and relationships.",
+          te: "ఇది సహానుభూతిని చూపిస్తుంది. టీమ్‌వర్క్, సంబంధాల్లో ఇది చాలా ఉపయోగపడుతుంది.",
+          hi: "यह सहानुभूति दिखाता है। टीमवर्क और रिश्तों में यह मदद करता है।"
+        }
+      },
+      {
+        id: "Q6", dim: "CE",
+        reverse: true,
+        text: {
+          en: "I prefer sticking to one safe path rather than trying new options.",
+          te: "కొత్త ఎంపికలను ప్రయత్నించడంకంటే, ఒక సేఫ్ పాత్‌కే నేను ఎక్కువగా కట్టుబడి ఉంటాను.",
+          hi: "नई चीज़ें आज़माने के बजाय मैं एक सुरक्षित रास्ते पर ही टिके रहना पसंद करता हूँ।"
+        },
+        reflection: {
+          en: "Choosing safe is fine, but exploring also opens opportunities. Balance matters.",
+          te: "సేఫ్‌గా ఉండటం మంచిదే, కానీ ఎక్స్‌ప్లోర్ చేయడం అవకాశాలు తెరుస్తుంది. బ్యాలెన్స్ ముఖ్యం.",
+          hi: "सुरक्षित चुनना ठीक है, पर खोज (explore) से अवसर बढ़ते हैं। संतुलन ज़रूरी है।"
+        }
+      },
+      {
+        id: "Q7", dim: "AT",
+        reverse: false,
+        text: {
+          en: "I enjoy solving difficult problems or puzzles.",
+          te: "కష్టం అయిన సమస్యలు లేదా పజిల్స్ పరిష్కరించడం నాకు ఇష్టం.",
+          hi: "मुझे कठिन समस्याएँ या पहेलियाँ हल करना अच्छा लगता है।"
+        },
+        reflection: {
+          en: "This shows comfort with challenge. It helps in tech and logical roles.",
+          te: "ఇది ఛాలెంజ్‌లతో కంఫర్ట్‌ను చూపిస్తుంది. టెక్, లాజిక్ రోల్స్‌లో సహాయం చేస్తుంది.",
+          hi: "यह चुनौती के साथ आराम दिखाता है। टेक और लॉजिक रोल्स में मदद करता है।"
+        }
+      },
+      {
+        id: "Q8", dim: "EC",
+        reverse: true,
+        text: {
+          en: "During disagreements, I focus more on proving my point than understanding others.",
+          te: "వాదనల సమయంలో, ఇతరులను అర్థం చేసుకోవడంకంటే నా పాయింట్ నిరూపించడంపైనే నేను ఎక్కువగా దృష్టి పెడతాను.",
+          hi: "बहस के समय, मैं दूसरों को समझने से ज़्यादा अपनी बात साबित करने पर ध्यान देता हूँ।"
+        },
+        reflection: {
+          en: "If you focus only on proving, relationships may suffer. If not, you balance truth and respect.",
+          te: "నిరూపించడంపైనే దృష్టి పెడితే సంబంధాలు దెబ్బతినవచ్చు. లేకపోతే మీరు నిజం + గౌరవం బ్యాలెన్స్ చేస్తారు.",
+          hi: "अगर सिर्फ साबित करने पर ध्यान हो तो रिश्ते बिगड़ सकते हैं। वरना आप सच और सम्मान का संतुलन रखते हैं।"
+        }
+      },
+      {
+        id: "Q9", dim: "SI",
+        reverse: false,
+        text: {
+          en: "I contact people or ask for help when I need support.",
+          te: "సహాయం అవసరమైనప్పుడు, నేను ఇతరులను సంప్రదిస్తాను.",
+          hi: "जब मुझे मदद चाहिए होती है, तो मैं लोगों से संपर्क करता हूँ।"
+        },
+        reflection: {
+          en: "Asking for help is a strength. It helps you grow faster.",
+          te: "సహాయం అడగడం బలమే. ఇది మీరు త్వరగా ఎదగడానికి సహాయం చేస్తుంది.",
+          hi: "मदद माँगना कमजोरी नहीं है। इससे आप तेज़ी से बढ़ते हैं।"
+        }
+      },
+      {
+        id: "Q10", dim: "CE",
+        reverse: false,
+        text: {
+          en: "I try new tools or skills even if I might fail.",
+          te: "విఫలమయ్యే అవకాశం ఉన్నా, కొత్త సాధనాలు లేదా నైపుణ్యాలను ప్రయత్నిస్తాను.",
+          hi: "असफल होने का डर होने पर भी, मैं नए कौशल या टूल आज़माता हूँ।"
+        },
+        reflection: {
+          en: "Trying new things builds confidence. Small experiments are the best start.",
+          te: "కొత్తవి ప్రయత్నించడం ఆత్మవిశ్వాసం పెంచుతుంది. చిన్న ప్రయోగాలు మంచి ప్రారంభం.",
+          hi: "नई चीज़ें आज़माने से आत्मविश्वास बढ़ता है। छोटे प्रयोग सबसे अच्छा शुरूआत हैं।"
+        }
+      }
+    ];
+
+    const DIM_LABELS = {
+      SE: { en: "Structure & finishing", te: "ప్లాన్ & పూర్తి చేయడం", hi: "योजना और पूरा करना" },
+      AT: { en: "Thinking & logic", te: "ఆలోచన & లాజిక్", hi: "सोच और तर्क" },
+      SI: { en: "People & communication", te: "మాట్లాడటం & కలిసిపని", hi: "लोग और बातचीत" },
+      EC: { en: "Care & balance", te: "శ్రద్ధ & సమతుల్యత", hi: "परवाह और संतुलन" },
+      CE: { en: "Curiosity & trying", te: "కుతూహలం & ప్రయత్నం", hi: "जिज्ञासा और कोशिश" }
+    };
+
+    const STYLE_BY_DIM = {
+      SE: "Executive",
+      AT: "Analyst",
+      SI: "Connector",
+      EC: "Builder",
+      CE: "Explorer"
+    };
+
+    // ---------- STYLE CONTENT (WITH 3 LANGS + LIFE PATTERNS) ----------
+    const STYLE_CONTENT = {
+      Executive: {
+        tags: ["Ownership", "Finishing", "Clarity", "Decisions", "Momentum"],
+        meaning: {
+          en: "You like taking responsibility and finishing work. You bring clarity when things are messy.",
+          te: "మీరు బాధ్యత తీసుకుని పనిని పూర్తి చేయడం ఇష్టపడతారు. గందరగోళంలో స్పష్టత తీసుకువస్తారు.",
+          hi: "आप ज़िम्मेदारी लेकर काम पूरा करना पसंद करते हैं। उलझन में आप स्पष्टता लाते हैं।"
+        },
+        mindset: { en: "Focus + responsibility", te: "ఫోకస్ + బాధ్యత", hi: "फोकस + ज़िम्मेदारी" },
+        strengths: {
+          en: ["Taking charge when others wait", "Planning and finishing work", "Making decisions"],
+          te: ["ఇతరులు ఆగినప్పుడు ముందుకు రావడం", "ప్లాన్ చేసి పని పూర్తి చేయడం", "నిర్ణయాలు తీసుకోవడం"],
+          hi: ["जब लोग रुकते हैं तब आगे बढ़ना", "योजना बनाकर काम पूरा करना", "निर्णय लेना"]
+        },
+        watchouts: {
+          en: ["Doing too much alone", "Getting stressed if others are slow"],
+          te: ["అన్నీ నేనే చేయడం", "ఇతరులు నెమ్మదిగా ఉంటే ఒత్తిడి"],
+          hi: ["सब कुछ अकेले करना", "दूसरे धीमे हों तो तनाव"]
+        },
+        lifePatterns: {
+          en: [
+            "You like taking responsibility in groups and public places",
+            "You feel uncomfortable when things are disorganised",
+            "You may push yourself too hard and forget to rest",
+            "You prefer action over long discussions"
+          ],
+          te: [
+            "గ్రూప్‌లలో లేదా ప్రజా ప్రదేశాల్లో బాధ్యత తీసుకోవడం మీకు సహజం",
+            "అవ్యవస్థగా ఉన్నప్పుడు మీకు అసౌకర్యంగా ఉంటుంది",
+            "కొన్నిసార్లు ఎక్కువగా పని చేసి విశ్రాంతిని మర్చిపోతారు",
+            "ఎక్కువ చర్చలకంటే పనిని చేయడం మీకు ఇష్టం"
+          ],
+          hi: [
+            "समूहों या सार्वजनिक जगहों में ज़िम्मेदारी लेना आपको अच्छा लगता है",
+            "अव्यवस्था आपको परेशान करती है",
+            "कभी-कभी आप ज़्यादा काम करके आराम भूल जाते हैं",
+            "लंबी बातचीत से ज़्यादा, काम करना आपको पसंद है"
+          ]
+        },
+        everydayTips: {
+          en: ["Finish one important task daily", "Ask for help when needed", "Take breaks to avoid burnout", "Follow civic rules even when others don’t"],
+          te: ["రోజూ ఒక ముఖ్యమైన పనిని పూర్తి చేయండి", "అవసరమైతే సహాయం అడగండి", "బర్నౌట్ కోసం బ్రేక్‌లు తీసుకోండి", "ఇతరులు చేయకపోయినా నియమాలు పాటించండి"],
+          hi: ["रोज़ एक ज़रूरी काम पूरा करें", "ज़रूरत हो तो मदद माँगें", "थकान से बचने के लिए ब्रेक लें", "दूसरे न करें तब भी नियम मानें"]
+        },
+        realLife: {
+          en: ["Work/study: people depend on you", "Groups: you bring direction", "Society: you expect discipline", "Self: you need rest to stay strong"],
+          te: ["చదువు/పని: మీపై ఆధారం పెరుగుతుంది", "గ్రూప్‌లో: మీరు దిశ చూపిస్తారు", "సమాజం: క్రమశిక్షణ ఆశిస్తారు", "మీ కోసం: విశ్రాంతి అవసరం"],
+          hi: ["पढ़ाई/काम: लोग आप पर भरोसा करते हैं", "समूह: आप दिशा देते हैं", "समाज: आप अनुशासन चाहते हैं", "खुद: आपको आराम चाहिए"]
+        },
+        overuse: {
+          en: ["Burnout from carrying too much", "People may feel pushed"],
+          te: ["ఎక్కువ బాధ్యత వల్ల బర్నౌట్", "ఇతరులు ప్రెషర్‌గా ఫీల్ కావచ్చు"],
+          hi: ["ज़्यादा बोझ से थकावट", "लोग दबाव महसूस कर सकते हैं"]
+        },
+        learning: {
+          en: ["Clear goals + small steps", "Weekly review of progress"],
+          te: ["స్పష్టమైన లక్ష్యాలు + చిన్న స్టెప్స్", "వారానికి ఒకసారి ప్రోగ్రెస్ చూడండి"],
+          hi: ["स्पष्ट लक्ष्य + छोटे कदम", "हफ्ते में एक बार प्रोग्रेस देखें"]
+        },
+        paths: {
+          en: ["Project coordination", "Operations / process roles", "GRC / compliance starter", "Team leadership roles"],
+          te: ["ప్రాజెక్ట్ కోఆర్డినేషన్", "ఆపరేషన్స్ / ప్రాసెస్ రోల్స్", "GRC / కంప్లయన్స్ ప్రారంభం", "టీమ్ లీడర్ పాత్రలు"],
+          hi: ["प्रोजेक्ट कोऑर्डिनेशन", "ऑपरेशंस / प्रोसेस रोल्स", "GRC / कंप्लायंस शुरुआत", "टीम लीड रोल्स"]
+        }
+      },
+
+      Analyst: {
+        tags: ["Logic", "Depth", "Patterns", "Risk-thinking", "Systems"],
+        meaning: {
+          en: "You like understanding problems deeply. You notice gaps and think clearly before acting.",
+          te: "మీరు సమస్యలను లోతుగా అర్థం చేసుకోవడం ఇష్టపడతారు. ముందుగా ఆలోచించి తర్వాత పని చేస్తారు.",
+          hi: "आप समस्याओं को गहराई से समझना पसंद करते हैं। आप पहले सोचते हैं फिर करते हैं।"
+        },
+        mindset: { en: "Logic + clarity", te: "లాజిక్ + స్పష్టత", hi: "तर्क + स्पष्टता" },
+        strengths: {
+          en: ["Step-by-step thinking", "Finding mistakes early", "Learning complex topics"],
+          te: ["దశలవారీ ఆలోచన", "తప్పులు ముందే కనిపెట్టడం", "కష్టమైనవి నేర్చుకోవడం"],
+          hi: ["क्रम से सोचना", "गलतियाँ जल्दी पकड़ना", "कठिन चीज़ें सीखना"]
+        },
+        watchouts: {
+          en: ["Thinking too much can delay action", "Perfection can reduce speed"],
+          te: ["ఎక్కువ ఆలోచిస్తే పని ఆలస్యం", "పర్ఫెక్షన్ వల్ల వేగం తగ్గుతుంది"],
+          hi: ["ज़्यादा सोचने से काम देर", "परफेक्शन से स्पीड कम"]
+        },
+        lifePatterns: {
+          en: ["You think before acting", "You want to know ‘why’", "You may delay decisions by overthinking", "You trust logic more than emotions"],
+          te: ["పని చేసే ముందు ఆలోచిస్తారు", "‘ఎందుకు’ అనే కారణం తెలుసుకోవాలని ఉంటుంది", "ఎక్కువ ఆలోచించడం వల్ల ఆలస్యం కావచ్చు", "భావాల కంటే లాజిక్‌పై నమ్మకం"],
+          hi: ["आप काम से पहले सोचते हैं", "आप ‘क्यों’ जानना चाहते हैं", "ज़्यादा सोचने से देर हो सकती है", "आप तर्क पर ज़्यादा भरोसा करते हैं"]
+        },
+        everydayTips: {
+          en: ["Take action at 80% clarity", "Write notes to reduce overthinking", "Practice with small problems daily", "Ask one person for feedback"],
+          te: ["80% స్పష్టత వద్దే ప్రారంభించండి", "నోట్స్ రాసి ఓవర్‌థింక్ తగ్గించండి", "రోజూ చిన్న ప్రాబ్లమ్స్ ప్రాక్టీస్ చేయండి", "ఒకరి ఫీడ్‌బ్యాక్ అడగండి"],
+          hi: ["80% स्पष्टता पर शुरू करें", "नोट्स लिखकर ओवरथिंक कम करें", "रोज़ छोटे सवाल प्रैक्टिस करें", "एक व्यक्ति से फीडबैक लें"]
+        },
+        realLife: {
+          en: ["Work/study: you do well in tough subjects", "Groups: you give clarity", "Society: you think system-first", "Self: don’t wait for perfect timing"],
+          te: ["చదువు/పని: కష్టమైన విషయాల్లో బాగా చేస్తారు", "గ్రూప్‌లో: స్పష్టత ఇస్తారు", "సమాజం: సిస్టమ్‌గా ఆలోచిస్తారు", "మీ కోసం: పర్ఫెక్ట్ టైమ్ కోసం వేచి ఉండకండి"],
+          hi: ["पढ़ाई/काम: कठिन विषय में अच्छे", "समूह: आप स्पष्टता देते हैं", "समाज: सिस्टम सोच", "खुद: परफेक्ट समय का इंतज़ार न करें"]
+        },
+        overuse: {
+          en: ["Analysis paralysis", "Less confidence if you delay too long"],
+          te: ["అనాలిసిస్ పారాలిసిస్", "చాలా ఆలస్యం చేస్తే కాన్ఫిడెన్స్ తగ్గవచ్చు"],
+          hi: ["अनालिसिस पैरालिसिस", "बहुत देर करने से आत्मविश्वास कम"]
+        },
+        learning: {
+          en: ["Concept → example → practice", "Teach someone what you learned"],
+          te: ["కాన్సెప్ట్ → ఉదాహరణ → ప్రాక్టీస్", "మీరు నేర్చుకున్నది ఎవరికైనా చెప్పండి"],
+          hi: ["कॉन्सेप्ट → उदाहरण → अभ्यास", "जो सीखा वो किसी को समझाएँ"]
+        },
+        paths: {
+          en: ["SOC / Threat analysis (starter)", "Testing / QA", "Data / analytics", "Security basics + labs"],
+          te: ["SOC / థ్రెట్ అనాలిసిస్ (ప్రారంభం)", "టెస్టింగ్ / QA", "డేటా / అనాలిటిక్స్", "సెక్యూరిటీ బేసిక్స్ + ల్యాబ్స్"],
+          hi: ["SOC / थ्रेट एनालिसिस (शुरुआत)", "टेस्टिंग / QA", "डेटा / एनालिटिक्स", "सिक्योरिटी बेसिक्स + लैब्स"]
+        }
+      },
+
+      Connector: {
+        tags: ["Communication", "People", "Teamwork", "Energy", "Network"],
+        meaning: {
+          en: "You get energy from people. You connect others and help teams move together.",
+          te: "మీకు ప్రజలతో ఉండడం వల్ల శక్తి వస్తుంది. మీరు వాళ్లను కలిపి టీమ్‌ను ముందుకు నడిపిస్తారు.",
+          hi: "आपको लोगों से ऊर्जा मिलती है। आप लोगों को जोड़ते हैं और टीम को साथ चलाते हैं।"
+        },
+        mindset: { en: "People + momentum", te: "ప్రజలు + వేగం", hi: "लोग + गति" },
+        strengths: {
+          en: ["Talking and building connections", "Helping people work together", "Asking for help early"],
+          te: ["మాట్లాడి కనెక్షన్స్ పెంచడం", "టీమ్‌ని కలిపి పనిచేయించడం", "ముందే సహాయం అడగడం"],
+          hi: ["बात करके कनेक्शन बनाना", "लोगों को साथ काम कराना", "जल्दी मदद माँगना"]
+        },
+        watchouts: {
+          en: ["Too many chats can reduce focus", "Avoiding conflict can delay decisions"],
+          te: ["చాలా చాట్స్ వల్ల ఫోకస్ తగ్గొచ్చు", "వాదనలు తప్పించడం వల్ల నిర్ణయాలు ఆలస్యం"],
+          hi: ["बहुत बातचीत से फोकस कम", "टकराव से बचने से निर्णय देर"]
+        },
+        lifePatterns: {
+          en: ["You like talking and building connections", "You bring people together", "You may avoid conflict", "You get energy from interaction"],
+          te: ["మాట్లాడటం, కనెక్షన్స్ పెంచుకోవడం ఇష్టం", "వ్యక్తులను కలిపే పాత్ర", "శాంతి కోసం వాదనలు తప్పించుకోవచ్చు", "ఇంటరాక్షన్‌తో శక్తి పెరుగుతుంది"],
+          hi: ["आप बात करना और कनेक्शन बनाना पसंद करते हैं", "आप लोगों को जोड़ते हैं", "आप टकराव से बच सकते हैं", "लोगों से ऊर्जा मिलती है"]
+        },
+        everydayTips: {
+          en: ["Block 45 minutes daily for focus", "Have one useful conversation daily", "Be honest in hard talks", "Reduce phone time before sleep"],
+          te: ["రోజూ 45 నిమిషాలు ఫోకస్‌కు పెట్టండి", "రోజుకు ఒక ఉపయోగకరమైన సంభాషణ", "కఠినమైన మాటల్లోనూ నిజాయితీ", "నిద్ర ముందు ఫోన్ తగ్గించండి"],
+          hi: ["रोज़ 45 मिनट फोकस टाइम रखें", "रोज़ एक उपयोगी बातचीत करें", "कठिन बात भी ईमानदारी से कहें", "सोने से पहले फोन कम करें"]
+        },
+        realLife: {
+          en: ["Work/study: you learn well with people", "Groups: you reduce confusion", "Society: you can build community", "Self: protect your focus"],
+          te: ["చదువు/పని: ప్రజలతో నేర్చుకుంటారు", "గ్రూప్‌లో: గందరగోళం తగ్గిస్తారు", "సమాజం: కమ్యూనిటీ బిల్డ్ చేయగలరు", "మీ కోసం: ఫోకస్‌ను కాపాడండి"],
+          hi: ["पढ़ाई/काम: आप लोगों के साथ सीखते हैं", "समूह: आप उलझन कम करते हैं", "समाज: आप समुदाय बना सकते हैं", "खुद: फोकस बचाएँ"]
+        },
+        overuse: {
+          en: ["Distraction from too many talks", "People-pleasing"],
+          te: ["ఎక్కువ సంభాషణల వల్ల డిస్ట్రాక్షన్", "అందరికీ నచ్చాలనే ప్రయత్నం"],
+          hi: ["बहुत बातचीत से ध्यान भंग", "सबको खुश करने की आदत"]
+        },
+        learning: {
+          en: ["Group learning + mentors", "Learn by explaining"],
+          te: ["గ్రూప్ లెర్నింగ్ + మెంటర్స్", "ఇతరులకు చెప్పడం ద్వారా నేర్చుకోండి"],
+          hi: ["ग्रुप लर्निंग + मेंटर्स", "समझाकर सीखें"]
+        },
+        paths: {
+          en: ["Awareness programs", "Business/coordination roles", "Community building", "Customer-facing roles"],
+          te: ["అవేర్‌నెస్ ప్రోగ్రామ్స్", "బిజినెస్/కోఆర్డినేషన్ రోల్స్", "కమ్యూనిటీ బిల్డింగ్", "కస్టమర్ రోల్స్"],
+          hi: ["अवेयरनेस प्रोग्राम्स", "कोऑर्डिनेशन रोल्स", "कम्युनिटी बिल्डिंग", "कस्टमर रोल्स"]
+        }
+      },
+
+      Builder: {
+        tags: ["Care", "Trust", "Support", "Balance", "Kindness"],
+        meaning: {
+          en: "You care about people and relationships. You try to keep balance and support others.",
+          te: "మీరు వ్యక్తులు, సంబంధాలపై శ్రద్ధ చూపుతారు. సమతుల్యత ఉంచి ఇతరులను సపోర్ట్ చేస్తారు.",
+          hi: "आप लोगों और रिश्तों की परवाह करते हैं। आप संतुलन रखकर दूसरों को सपोर्ट करते हैं।"
+        },
+        mindset: { en: "Care + stability", te: "శ్రద్ధ + స్థిరత్వం", hi: "परवाह + स्थिरता" },
+        strengths: {
+          en: ["Supporting people", "Keeping peace in teams", "Building trust"],
+          te: ["ఇతరులను సపోర్ట్ చేయడం", "టీమ్‌లో శాంతి ఉంచడం", "నమ్మకం పెంచడం"],
+          hi: ["लोगों को सपोर्ट करना", "टीम में शांति रखना", "भरोसा बनाना"]
+        },
+        watchouts: {
+          en: ["Taking others’ stress", "Saying yes too much"],
+          te: ["ఇతరుల ఒత్తిడిని మీపై తీసుకోవడం", "ఎక్కువగా ‘అవును’ చెప్పడం"],
+          hi: ["दूसरों का तनाव लेना", "बहुत ज़्यादा ‘हाँ’ कहना"]
+        },
+        lifePatterns: {
+          en: ["You care about people", "You try to keep balance", "You may take emotional stress", "You value trust and kindness"],
+          te: ["వ్యక్తులపై శ్రద్ధ", "సమతుల్యత ఉంచడం", "భావోద్వేగ ఒత్తిడిని తీసుకోవచ్చు", "నమ్మకం, మంచితనం విలువ"],
+          hi: ["आप लोगों की परवाह करते हैं", "आप संतुलन रखते हैं", "आप तनाव ले सकते हैं", "आप भरोसा और दया को महत्व देते हैं"]
+        },
+        everydayTips: {
+          en: ["Set one boundary this week", "Help others but protect your time", "Talk openly when hurt", "Do one thing daily for your health"],
+          te: ["ఈ వారం ఒక బౌండరీ పెట్టండి", "సపోర్ట్ చేయండి కానీ మీ టైమ్‌ని కాపాడండి", "దెబ్బతిన్నప్పుడు స్పష్టంగా మాట్లాడండి", "రోజూ ఆరోగ్యానికి ఒక పని చేయండి"],
+          hi: ["इस हफ्ते एक सीमा तय करें", "मदद करें लेकिन अपना समय बचाएँ", "दुख हो तो खुलकर बोलें", "रोज़ स्वास्थ्य के लिए एक काम करें"]
+        },
+        realLife: {
+          en: ["Work/study: people feel safe with you", "Groups: you reduce fights", "Society: you respect others", "Self: don’t carry everyone’s burden"],
+          te: ["చదువు/పని: మీతో సేఫ్‌గా ఫీల్ అవుతారు", "గ్రూప్‌లో: గొడవలు తగ్గిస్తారు", "సమాజం: ఇతరులకు గౌరవం", "మీ కోసం: అందరి భారం మోసుకోకండి"],
+          hi: ["पढ़ाई/काम: लोग आपके साथ सुरक्षित महसूस करते हैं", "समूह: आप झगड़े कम करते हैं", "समाज: आप सम्मान देते हैं", "खुद: सबका बोझ न उठाएँ"]
+        },
+        overuse: {
+          en: ["Emotional fatigue", "Slow progress for your own goals"],
+          te: ["భావోద్వేగ అలసట", "మీ లక్ష్యాల్లో పురోగతి తగ్గడం"],
+          hi: ["भावनात्मक थकान", "अपने लक्ष्य धीमे हो जाना"]
+        },
+        learning: {
+          en: ["Learning with guidance", "Practice in real projects"],
+          te: ["గైడెన్స్‌తో నేర్చుకోండి", "రియల్ ప్రాజెక్ట్స్‌లో ప్రాక్టీస్"],
+          hi: ["गाइडेंस के साथ सीखें", "रियल प्रोजेक्ट में अभ्यास"]
+        },
+        paths: {
+          en: ["Training / teaching", "Support roles", "Compliance coordination", "Team culture roles"],
+          te: ["ట్రైనింగ్ / టీచింగ్", "సపోర్ట్ రోల్స్", "కంప్లయన్స్ కోఆర్డినేషన్", "టీమ్ కల్చర్ రోల్స్"],
+          hi: ["ट्रेनिंग / टीचिंग", "सपोर्ट रोल्स", "कंप्लायंस कोऑर्डिनेशन", "टीम कल्चर रोल्स"]
+        }
+      },
+
+      Explorer: {
+        tags: ["Curiosity", "Trying", "Growth", "Creativity", "Adaptable"],
+        meaning: {
+          en: "You like trying new things and learning by doing. You may not like routine.",
+          te: "మీరు కొత్తవి ప్రయత్నించి అనుభవంతో నేర్చుకుంటారు. రూటీన్ బోర్ చేయొచ్చు.",
+          hi: "आप नई चीज़ें आज़माकर सीखते हैं। आपको रूटीन पसंद नहीं हो सकता।"
+        },
+        mindset: { en: "Curiosity + courage", te: "కుతూహలం + ధైర్యం", hi: "जिज्ञासा + साहस" },
+        strengths: {
+          en: ["Trying new tools/skills", "Learning fast by doing", "Finding unique paths"],
+          te: ["కొత్త టూల్స్/స్కిల్స్ ప్రయత్నం", "చేస్తూ త్వరగా నేర్చుకోవడం", "యూనిక్ మార్గాలు కనుక్కోవడం"],
+          hi: ["नए टूल/स्किल आज़माना", "करके जल्दी सीखना", "नए रास्ते ढूँढना"]
+        },
+        watchouts: {
+          en: ["Starting many things, finishing less", "Less depth if you switch too much"],
+          te: ["చాలా ప్రారంభించి తక్కువ పూర్తిచేయడం", "చాలా మార్చితే లోతు తగ్గడం"],
+          hi: ["बहुत चीज़ें शुरू, कम पूरा", "बहुत बदलने से गहराई कम"]
+        },
+        lifePatterns: {
+          en: ["You like trying new things", "Routine can bore you fast", "You may start many things at once", "You learn best from experience"],
+          te: ["కొత్తవి ప్రయత్నించడం ఇష్టం", "రూటీన్ త్వరగా బోర్", "ఒకేసారి చాలా ప్రారంభించవచ్చు", "అనుభవంతో బాగా నేర్చుకుంటారు"],
+          hi: ["आप नई चीज़ें आज़माते हैं", "रूटीन जल्दी बोर करता है", "आप कई चीज़ें साथ शुरू कर सकते हैं", "आप अनुभव से सीखते हैं"]
+        },
+        everydayTips: {
+          en: ["Try learning in 2-week sprints", "Finish one small project", "Keep a simple routine for health", "Do one civic-good action weekly"],
+          te: ["2 వారాల స్ప్రింట్స్‌లో నేర్చుకోండి", "ఒక చిన్న ప్రాజెక్ట్ పూర్తిచేయండి", "హెల్త్‌కు సింపుల్ రూటీన్", "వారం ఒక్కసారి ఒక మంచి పని"],
+          hi: ["2 हफ्ते के स्प्रिंट में सीखें", "एक छोटा प्रोजेक्ट पूरा करें", "स्वास्थ्य के लिए सरल रूटीन रखें", "हफ्ते में एक अच्छा काम करें"]
+        },
+        realLife: {
+          en: ["Work/study: you like variety", "Groups: you bring new ideas", "Society: you think future-first", "Self: consistency is your superpower"],
+          te: ["చదువు/పని: వెరైటీ ఇష్టం", "గ్రూప్‌లో: కొత్త ఆలోచనలు", "సమాజం: ఫ్యూచర్ ఫస్ట్", "మీ కోసం: స్థిరత్వం మీ బలం"],
+          hi: ["पढ़ाई/काम: आपको वैरायटी पसंद", "समूह: आप नए आइडिया लाते हैं", "समाज: भविष्य सोच", "खुद: निरंतरता आपकी ताकत"]
+        },
+        overuse: {
+          en: ["Low confidence if nothing is finished", "Shallow learning from constant switching"],
+          te: ["ఏదీ పూర్తికాకపోతే కాన్ఫిడెన్స్ తగ్గడం", "ఎప్పటికప్పుడు మారితే షాలో లెర్నింగ్"],
+          hi: ["कुछ पूरा न हो तो आत्मविश्वास कम", "बार-बार बदलने से सतही सीख"]
+        },
+        learning: {
+          en: ["Try → learn → improve", "Small experiments with reflection"],
+          te: ["ప్రయత్నం → నేర్చుకోవడం → మెరుగుదల", "చిన్న ప్రయోగాలు + రిఫ్లెక్షన్"],
+          hi: ["करो → सीखो → सुधारो", "छोटे प्रयोग + रिफ्लेक्शन"]
+        },
+        paths: {
+          en: ["Security basics + projects", "AppSec starter", "Content + tech learning", "Startup-style roles"],
+          te: ["సెక్యూరిటీ బేసిక్స్ + ప్రాజెక్ట్స్", "అ్యప్‌సెక్ ప్రారంభం", "కంటెంట్ + టెక్ లెర్నింగ్", "స్టార్టప్ స్టైల్ రోల్స్"],
+          hi: ["सिक्योरिटी बेसिक्स + प्रोजेक्ट", "AppSec शुरुआत", "कंटेंट + टेक सीखना", "स्टार्टअप जैसे रोल्स"]
+        }
+      }
+    };
+
+    // ---------- State ----------
+    let idx = 0;
+    let answers = loadAnswers(); // {Q1:1..4}
+
+    function $(id) { return document.getElementById(id); }
+    function show(id) { $(id).classList.remove("hide"); }
+    function hide(id) { $(id).classList.add("hide"); }
+
+    function setLanguage(lang) {
+      currentLang = lang;
+      $("langSelect").value = lang;
+      renderStaticText();
+      // Update visible question/results without losing progress
+      if (!document.getElementById("quiz").classList.contains("hide")) renderQuestion();
+      if (!document.getElementById("result").classList.contains("hide")) rerenderResultsFromStored();
+    }
+
+    function renderStaticText() {
+      $("brandTitle").innerText = STATIC_TEXT.brandTitle[currentLang];
+      $("brandSubtitle").innerText = STATIC_TEXT.brandSubtitle[currentLang];
+      $("versionPill").innerText = STATIC_TEXT.versionPill[currentLang];
+      $("scaleHint").innerText = STATIC_TEXT.scaleHint[currentLang];
+
+      $("homeH1").innerText = STATIC_TEXT.homeH1[currentLang];
+      $("homeP1").innerText = STATIC_TEXT.homeP1[currentLang];
+      $("homeWhyH").innerText = STATIC_TEXT.homeWhyH[currentLang];
+      $("homeWhyP").innerText = STATIC_TEXT.homeWhyP[currentLang];
+      $("homeGetH").innerText = STATIC_TEXT.homeGetH[currentLang];
+      $("homeHowH").innerText = STATIC_TEXT.homeHowH[currentLang];
+      $("homeNote").innerText = STATIC_TEXT.homeNote[currentLang];
+      $("startBtn").innerText = STATIC_TEXT.startBtn[currentLang];
+      $("resetBtn").innerText = STATIC_TEXT.resetBtn[currentLang];
+      $("homeTip").innerText = STATIC_TEXT.homeTip[currentLang];
+
+      $("homeGetList").innerHTML = STATIC_TEXT.homeGetList[currentLang].map(x => `<li>${x}</li>`).join("");
+      $("homeHowList").innerHTML = STATIC_TEXT.homeHowList[currentLang].map(x => `<li>${x}</li>`).join("");
+
+      // Results labels
+      $("resultTitle").innerText = STATIC_TEXT.resultTitle[currentLang];
+      $("yourStyleLbl").innerText = STATIC_TEXT.yourStyleLbl[currentLang];
+      $("traitsLbl").innerText = STATIC_TEXT.traitsLbl[currentLang];
+      $("insightsLbl").innerText = STATIC_TEXT.insightsLbl[currentLang];
+      $("mainStrengthH").innerText = STATIC_TEXT.mainStrengthH[currentLang];
+      $("mindsetLbl").innerText = STATIC_TEXT.mindsetLbl[currentLang];
+      $("strengthsLbl").innerText = STATIC_TEXT.strengthsLbl[currentLang];
+      $("watchLbl").innerText = STATIC_TEXT.watchLbl[currentLang];
+      $("lifePatternTitle").innerText = STATIC_TEXT.lifePatternTitle[currentLang];
+      $("everydayLbl").innerText = STATIC_TEXT.everydayLbl[currentLang];
+      $("realLifeLbl").innerText = STATIC_TEXT.realLifeLbl[currentLang];
+      $("overuseLbl").innerText = STATIC_TEXT.overuseLbl[currentLang];
+      $("learnLbl").innerText = STATIC_TEXT.learnLbl[currentLang];
+      $("pathsLbl").innerText = STATIC_TEXT.pathsLbl[currentLang];
+      $("nextStepH").innerText = STATIC_TEXT.nextStepH[currentLang];
+      $("nextStepP").innerText = STATIC_TEXT.nextStepP[currentLang];
+      $("waitlistH").innerText = STATIC_TEXT.waitlistH[currentLang];
+      $("nameLbl").childNodes[0].nodeValue = STATIC_TEXT.nameLbl[currentLang] + " ";
+      $("emailLbl").childNodes[0].nodeValue = STATIC_TEXT.emailLbl[currentLang] + " ";
+      $("statusLbl").childNodes[0].nodeValue = STATIC_TEXT.statusLbl[currentLang] + " ";
+      $("interestLbl").childNodes[0].nodeValue = STATIC_TEXT.interestLbl[currentLang] + " ";
+      $("challengeLbl").childNodes[0].nodeValue = STATIC_TEXT.challengeLbl[currentLang] + " ";
+      $("joinBtn").innerText = STATIC_TEXT.joinBtn[currentLang];
+      $("copyBtn").innerText = STATIC_TEXT.copyBtn[currentLang];
+      $("mailNote").innerText = STATIC_TEXT.mailNote[currentLang];
+      $("shareH").innerText = STATIC_TEXT.shareH[currentLang];
+      $("copy2Btn").innerText = STATIC_TEXT.copy2Btn[currentLang];
+      $("retakeBtn").innerText = STATIC_TEXT.retakeBtn[currentLang];
+
+      $("tipTitle").innerText = STATIC_TEXT.reflectionLabel[currentLang];
+    }
+
+    function startAssessment() {
+      hide("intro");
+      show("quiz");
+      idx = firstUnansweredIndex();
+      renderQuestion();
+    }
+
+    function restart() {
+      hide("result");
+      show("intro");
+      hide("quiz");
+      idx = 0;
+      updateProgress();
+    }
+
+    function resetAll() {
+      if (!confirm("Reset all saved answers?")) return;
+      answers = {};
+      localStorage.removeItem("seedling_answers_v12");
+      restart();
+    }
+
+    function saveDraft() {
+      localStorage.setItem("seedling_answers_v12", JSON.stringify({ answers, currentLang }));
+      alert(currentLang === "te" ? "సేవ్ అయ్యింది ✅" : currentLang === "hi" ? "सेव हो गया ✅" : "Saved ✅");
+    }
+
+    function loadAnswers() {
+      try {
+        const s = localStorage.getItem("seedling_answers_v12");
+        if (!s) return {};
+        const obj = JSON.parse(s);
+        if (obj && obj.answers) {
+          // restore language too if present
+          if (obj.currentLang) currentLang = obj.currentLang;
+          return obj.answers;
+        }
+        return {};
+      } catch (e) {
+        return {};
+      }
+    }
+
+    function firstUnansweredIndex() {
+      for (let i = 0; i < QUESTIONS.length; i++) {
+        if (!answers[QUESTIONS[i].id]) return i;
+      }
+      return 0;
+    }
+
+    function updateProgress() {
+      const total = QUESTIONS.length;
+      const done = Object.keys(answers).filter(k => answers[k]).length;
+      const pct = Math.round((done / total) * 100);
+      $("bar").style.width = pct + "%";
+      $("progressText").innerText = (done === 0)
+        ? STATIC_TEXT.progressEmpty[currentLang]
+        : (currentLang === "te" ? `ప్రోగ్రెస్: ${done}/${total} (${pct}%)`
+          : currentLang === "hi" ? `प्रोग्रेस: ${done}/${total} (${pct}%)`
+            : `Progress: ${done}/${total} (${pct}%)`);
+    }
+
+    function renderQuestion() {
+      updateProgress();
+      const q = QUESTIONS[idx];
+
+      // Hide reflection until user answers THIS question
+      const tipBox = $("tipBox");
+      if (!answers[q.id]) tipBox.classList.add("hide");
+      else tipBox.classList.remove("hide");
+
+      $("qMeta").innerText =
+        (currentLang === "te"
+          ? `ప్రశ్న ${idx + 1} / ${QUESTIONS.length} • ${DIM_LABELS[q.dim].te}`
+          : currentLang === "hi"
+            ? `सवाल ${idx + 1} / ${QUESTIONS.length} • ${DIM_LABELS[q.dim].hi}`
+            : `Question ${idx + 1} of ${QUESTIONS.length} • ${DIM_LABELS[q.dim].en}`);
+
+      $("qText").innerText = q.text[currentLang];
+
+      // reflection text (shown only after answering)
+      $("tipTitle").innerText = STATIC_TEXT.reflectionLabel[currentLang];
+      $("tipText").innerText = q.reflection[currentLang];
+
+      const wrap = $("scale");
+      wrap.innerHTML = "";
+
+      scaleLabels.forEach(s => {
+        const div = document.createElement("div");
+        div.className = "opt" + ((answers[q.id] === s.v) ? " selected" : "");
+        div.innerHTML = `<strong>${s.v}</strong><span>${s.t[currentLang]}</span>`;
+        div.onclick = () => selectAnswer(q.id, s.v);
+        wrap.appendChild(div);
+      });
+
+      $("prevBtn").disabled = (idx === 0);
+      $("nextBtn").innerText =
+        (idx === QUESTIONS.length - 1)
+          ? (currentLang === "te" ? "పూర్తి" : currentLang === "hi" ? "समाप्त" : "Finish")
+          : (currentLang === "te" ? "తర్వాత" : currentLang === "hi" ? "अगला" : "Next");
+
+      $("nextBtn").disabled = !answers[q.id];
+
+      // Localize nav buttons
+      $("prevBtn").innerText = (currentLang === "te" ? "వెనక్కి" : currentLang === "hi" ? "पीछे" : "Back");
+      $("saveBtn").innerText = (currentLang === "te" ? "సేవ్" : currentLang === "hi" ? "सेव" : "Save");
+      $("saveNote").innerText = (currentLang === "te" ? "సేవ్ చేసిన సమాధానాలు ఈ బ్రౌజర్‌లోనే ఉంటాయి."
+        : currentLang === "hi" ? "सेव किए गए उत्तर इसी ब्राउज़र में रहेंगे।"
+          : "Saved answers stay in this browser.");
+    }
+
+    function selectAnswer(qid, value) {
+      answers[qid] = value;
+      localStorage.setItem("seedling_answers_v12", JSON.stringify({ answers, currentLang }));
+
+      // show reflection AFTER answer is locked
+      $("tipBox").classList.remove("hide");
+
+      renderQuestion();
+    }
+
+    function prev() {
+      if (idx > 0) { idx--; renderQuestion(); }
+    }
+
+    function next() {
+      const q = QUESTIONS[idx];
+      if (!answers[q.id]) {
+        alert(currentLang === "te" ? "దయచేసి ఒక ఆప్షన్ ఎంచుకోండి." : currentLang === "hi" ? "कृपया एक विकल्प चुनें।" : "Please select an option.");
+        return;
+      }
+      if (idx < QUESTIONS.length - 1) {
+        idx++;
+        renderQuestion();
+      } else {
+        // 🔖 Mark that assessment is complete
+        document.body.setAttribute("data-seedling-stage", "results");
+
+        finish();
+      }
+    }
+
+    // ---------- Scoring ----------
+    // ---------- Scoring ----------
+    function finish() {
+      // 1) Calculate scores safely
+      const score = { SE: 0, AT: 0, SI: 0, EC: 0, CE: 0 };
+
+      QUESTIONS.forEach(q => {
+        let value = Number(answers[q.id] || 0); // 1..4
+        if (q.reverse && value) value = 5 - value; // reverse scoring
+        score[q.dim] += value;
+      });
+
+      // 2) Pick primary + secondary
+      const dims = Object.keys(score)
+        .map(d => ({ d, v: score[d] }))
+        .sort((a, b) => b.v - a.v);
+
+      const primaryDim = dims[0]?.d || "SE";
+      const secondaryDim = dims[1]?.d || "AT";
+
+      const primaryStyle = STYLE_BY_DIM[primaryDim];
+      const secondaryStyle = STYLE_BY_DIM[secondaryDim];
+
+      // Store for rerender on language change (keep your existing key)
+      localStorage.setItem("seedling_last_result_v12",
+        JSON.stringify({ primaryStyle, secondaryStyle, score })
+      );
+
+      // 3) Render results
+      renderResults(primaryStyle, secondaryStyle, score);
+
+      // 4) Show micro-challenges AFTER results render
+      const mc = document.getElementById("microChallenges");
+      if (mc) mc.style.display = "block";
+
+      // Optional scroll
+      (document.getElementById("results") || mc)?.scrollIntoView({ behavior: "smooth", block: "start" });
+
+    }
+
+    function rerenderResultsFromStored() {
+      try {
+        const s = localStorage.getItem("seedling_last_result_v12");
+        if (!s) return;
+        const obj = JSON.parse(s);
+        if (obj && obj.primaryStyle) renderResults(obj.primaryStyle, obj.secondaryStyle, obj.score);
+      } catch (e) { }
+    }
+
+    function renderResults(primaryStyle, secondaryStyle, score) {
+      hide("quiz");
+      show("result");
+      updateProgress();
+
+      const content = STYLE_CONTENT[primaryStyle];
+
+      $("styleName").innerText =
+        (currentLang === "te"
+          ? `${translateStyle(primaryStyle)} ( ${translateStyle(secondaryStyle)} ప్రభావం )`
+          : currentLang === "hi"
+            ? `${translateStyle(primaryStyle)} ( ${translateStyle(secondaryStyle)} प्रभाव )`
+            : `${primaryStyle} (with ${secondaryStyle} influence)`);
+
+      $("styleSub").innerText = STATIC_TEXT.styleSub[currentLang];
+
+      $("insightText").innerText = content.meaning[currentLang];
+      $("heroMindset").innerText = content.mindset[currentLang];
+
+      $("tags").innerHTML = content.tags.map(t => `<span class="tag">${t}</span>`).join("");
+
+      $("strengths").innerHTML = `<ul>${content.strengths[currentLang].map(x => `<li>${x}</li>`).join("")}</ul>`;
+      $("watchouts").innerHTML = `<ul>${content.watchouts[currentLang].map(x => `<li>${x}</li>`).join("")}</ul>`;
+
+      $("lifePatternTitle").innerText = STATIC_TEXT.lifePatternTitle[currentLang];
+      $("lifePatterns").innerHTML = content.lifePatterns[currentLang].map(x => `<li>${x}</li>`).join("");
+
+      $("everydayTips").innerHTML = content.everydayTips[currentLang].map(x => `<li>${x}</li>`).join("");
+      $("beyondWork").innerHTML = content.realLife[currentLang].map(x => `<li>${x}</li>`).join("");
+      $("overuse").innerHTML = content.overuse[currentLang].map(x => `<li>${x}</li>`).join("");
+
+      $("learningMode").innerHTML = `<ul>${content.learning[currentLang].map(x => `<li>${x}</li>`).join("")}</ul>`;
+      $("paths").innerHTML = `<ul>${content.paths[currentLang].map(x => `<li>${x}</li>`).join("")}</ul>`;
+
+      // Build share summary in current language (simple)
+      const dimLinesSimple = ["SE", "AT", "SI", "EC", "CE"].map(d => {
+        const label = DIM_LABELS[d][currentLang];
+        return `${label}: ${score[d]}`;
+      }).join("\n");
+
+      const share = [
+        (currentLang === "te" ? "Seedling — ఫలిత సారాంశం" : currentLang === "hi" ? "Seedling — परिणाम सारांश" : "Seedling — Result Summary"),
+        "-----------------------------------",
+        (currentLang === "te" ? `శైలి: ${translateStyle(primaryStyle)}` : currentLang === "hi" ? `शैली: ${translateStyle(primaryStyle)}` : `Style: ${primaryStyle}`),
+        (currentLang === "te" ? `ద్వితీయ ప్రభావం: ${translateStyle(secondaryStyle)}` : currentLang === "hi" ? `दूसरा प्रभाव: ${translateStyle(secondaryStyle)}` : `Secondary influence: ${secondaryStyle}`),
+        "",
+        (currentLang === "te" ? "స్కోర్లు:" : currentLang === "hi" ? "स्कोर:" : "Scores:"),
+        dimLinesSimple,
+        "",
+        (currentLang === "te" ? "మీ ప్రధాన బలం:" : currentLang === "hi" ? "मुख्य ताकत:" : "Main strength:"),
+        content.meaning[currentLang],
+        "",
+        (currentLang === "te" ? "రోజువారీ టిప్స్:" : currentLang === "hi" ? "रोज़मर्रा टिप्स:" : "Everyday tips:"),
+        content.everydayTips[currentLang].map(x => `- ${x}`).join("\n")
+      ].join("\n");
+
+      $("shareBox").innerText = share;
+    }
+
+    function translateStyle(style) {
+      const map = {
+        Executive: { te: "నాయకత్వం తీసుకునే వ్యక్తి", hi: "नेतृत्व करने वाला" },
+        Analyst: { te: "విశ్లేషకుడు", hi: "विश्लेषक" },
+        Connector: { te: "కనెక్ట్ చేసే వ్యక్తి", hi: "जोड़ने वाला" },
+        Builder: { te: "నిర్మాణకర్త", hi: "निर्माता" },
+        Explorer: { te: "అన్వేషకుడు", hi: "अन्वेषक" }
+      };
+      if (currentLang === "en") return style;
+      return map[style] ? map[style][currentLang] : style;
+    }
+
+    function copyText(text) {
+      navigator.clipboard.writeText(text)
+        .then(() => alert(currentLang === "te" ? "కాపీ అయ్యింది ✅" : currentLang === "hi" ? "कॉपी हो गया ✅" : "Copied ✅"))
+        .catch(() => alert(currentLang === "te" ? "కాపీ కాలేదు. చేతితో కాపీ చేయండి." : currentLang === "hi" ? "कॉपी नहीं हुआ। हाथ से कॉपी करें।" : "Copy failed. Please copy manually."));
+    }
+
+    function copyResultSummary() {
+      copyText($("shareBox").innerText);
+    }
+
+    function joinWaitlist() {
+      const name = $("wName").value.trim();
+      const email = $("wEmail").value.trim();
+      const status = $("wStatus").value;
+      const interest = $("wInterest").value;
+      const challenge = $("wChallenge").value.trim();
+
+      if (!name || !email) {
+        alert(currentLang === "te" ? "దయచేసి పేరు, ఈమెయిల్ ఇవ్వండి." : currentLang === "hi" ? "कृपया नाम और ईमेल भरें।" : "Please enter name and email.");
+        return;
+      }
+
+      const subject = encodeURIComponent("Seedling: Cybersecurity session waitlist");
+      const body = encodeURIComponent(
+        `Hi Seedling Team,
+
+Please add me to the cybersecurity session waitlist.
+
+Name: ${name}
+Email: ${email}
+Status: ${status}
+Interest: ${interest}
+Challenge: ${challenge || "-"}
+
+Thanks!`
+      );
+
+      window.location.href = `mailto:${EMAIL_TO}?subject=${subject}&body=${body}`;
+    }
+
+    // ---------- Init ----------
+    renderStaticText();
+    $("langSelect").value = currentLang;
+    updateProgress();
+
+    (function () {
+      const done = Object.keys(answers).filter(k => answers[k]).length;
+      if (done > 0) {
+        $("progressText").innerText =
+          (currentLang === "te" ? `డ్రాఫ్ట్ ఉంది: ${done}/${QUESTIONS.length}. Start నొక్కండి.`
+            : currentLang === "hi" ? `ड्राफ्ट मिला: ${done}/${QUESTIONS.length}. Start दबाएँ।`
+              : `Draft found: ${done}/${QUESTIONS.length}. Click Start to continue.`);
+      }
+    })();
+  </script>
+  <script>
+    /* ================================
+       Seedling v1.3 — Micro Challenges + Workshop (NO backend)
+       - Auto-injects on results screen
+       - Works even if you don't know results container id
+       - Works even if results are rendered later
+    ================================== */
+
+    (function () {
+      // ----- Config -----
+      const EMAIL_TO = "seedling.community@gmail.com";
+
+      const MICRO_CHALLENGES = [
+        {
+          title: "⚡ 3-Min Risk Spotter (Cyber)",
+          why: "Build the habit of seeing risks early — like a calm strategist.",
+          task: "Pick any app you use daily (WhatsApp / Instagram / Gmail). List 3 risks and 1 simple fix for each.",
+          output: "Example: Risk: weak password → Fix: enable passkey / 2FA."
+        },
+        {
+          title: "🧠 2-Min Focus Reset (Wellbeing)",
+          why: "Train your mind to reset under pressure — like a disciplined hero.",
+          task: "Do 10 deep breaths. Then write 1 thing you will finish in the next 15 minutes.",
+          output: "Example: 'I will finish my math homework Q1–Q3.'"
+        },
+        {
+          title: "🏙️ Civic Sense Mini-Mission",
+          why: "Small actions create big change — like a responsible leader.",
+          task: "Observe your street/college area. Note 2 issues (trash, traffic, safety) + 1 practical improvement.",
+          output: "Example: 'No zebra crossing → Request one + awareness poster.'"
+        },
+        {
+          title: "🚀 India Builder Thought (Development)",
+          why: "Think in systems, not complaints — like an innovator.",
+          task: "Pick one topic (water, roads, jobs). Write 1 problem + 1 solution idea in simple words.",
+          output: "Example: 'Water leaks → sensor alerts + local repair dashboard.'"
+        }
+      ];
+
+      // ----- Helpers -----
+      function $(id) { return document.getElementById(id); }
+
+      function findResultsRoot() {
+        // 1) Try common ids first
+        const candidates = ["results", "result", "resultScreen", "resultCard", "final", "done", "output"];
+        for (const id of candidates) {
+          const el = $(id);
+          if (el && el.offsetParent !== null) return el;
+        }
+
+        // 2) Otherwise: find a visible section that likely contains results text
+        const all = Array.from(document.querySelectorAll("section, main, .card, .wrap, body div"));
+        const visible = all.filter(el => el && el.offsetParent !== null);
+
+        // Heuristic: search for keywords you already display in your results
+        const keywords = ["Your", "Style", "Mindset", "Result", "Strength", "Watch-out", "Tips", "Seedling"];
+        for (const el of visible) {
+          const t = (el.innerText || "").trim();
+          if (t.length > 80 && keywords.some(k => t.includes(k))) return el;
+        }
+
+        // fallback: just return body
+        return document.body;
+      }
+
+      function alreadyInjected(root) {
+        return !!root.querySelector("#seedling-micro-challenges");
+      }
+
+      // ----- Main injection -----
+      window.seedlingInjectMicroChallenges = function seedlingInjectMicroChallenges() {
+        const root = findResultsRoot();
+        if (!root || alreadyInjected(root)) return false;
+
+        const box = document.createElement("div");
+        box.id = "seedling-micro-challenges";
+        box.style.marginTop = "18px";
+        box.style.padding = "16px";
+        box.style.border = "1px solid rgba(255,255,255,0.12)";
+        box.style.borderRadius = "14px";
+        box.style.background = "rgba(255,255,255,0.06)";
+
+        const h = document.createElement("h2");
+    <!-- Results area -->
+<div id="resultArea">
+  <!-- your result summary -->
 </div>
 
-<script>
-/* =========================
-   STORAGE KEYS
-========================= */
-const KEY_ANS = "seedling_answers_v12";
-const KEY_IDX = "seedling_qindex_v12";
-const KEY_LANG = "seedling_lang_v12";
-
-/* =========================
-   LANGUAGE CONTENT
-========================= */
-const UI = {
-  en:{
-    seedling:"Seedling",
-    reset:"Reset",
-    homeTitle:"Seedling Reflection",
-    homeSub:"A short self-reflection to understand how you naturally think, work, and grow.",
-    homeWhatTitle:"What you’ll get",
-    homeWhatList:[
-      "A clear working-style summary (simple and useful)",
-      "Hidden strengths + watch-outs",
-      "A 90-day focus plan for students and freshers",
-      "Optional micro challenges to turn insight into action"
-    ],
-    homeHowTitle:"How it works",
-    homeHowList:[
-      "10 questions (takes ~2–4 minutes)",
-      "No “neutral” option — choose what fits most",
-      "You can pause and continue anytime",
-      "Your answers stay on this device only"
-    ],
-    start:"Start",
-    continue:"Continue",
-    privacy:"Note: This is not a test. There are no right or wrong answers.",
-    stepLine:(i,n)=>`Question ${i+1} of ${n}`,
-    back:"Back",
-    next:"Next",
-    finish:"Finish",
-    saved:"Saved automatically",
-    showTip:"Show a small tip",
-    resTitle:"Your Result",
-    resSub:"Based on your answers, here’s a clear working-style summary.",
-    strengths:"Your strengths",
-    watchouts:"Watch-outs",
-    planTitle:"Your 90-day focus plan",
-    planNote:"Keep it simple: one focus, small actions, real proof.",
-    patternsTitle:"Your life patterns (based on your answers)",
-    tipsTitle:"Helpful tips (recap)",
-    tipsRecapNote:"Tips are guidance, not rules. Use what helps you.",
-    actionTitle:"Turn insight into action (Quick Micro Challenge)",
-    actionSub:"Choose one small real-world challenge. No coding. No pressure. Just thinking.",
-    actionFoot:"✔ Takes 30–60 mins • ✔ One-page output • ✔ Useful for interviews & clarity",
-    submitTitle:"Submission (one page)",
-    submitEmail:"Submit via Email",
-    copySubmission:"Copy submission",
-    close:"Close",
-    challengeFoot:"Bullet points are enough • No hacking • Think + explain clearly",
-    workshopTitle:"Want to go deeper?",
-    workshopSub:"Join a live Cybersecurity Thinking Session with industry practitioners (optional).",
-    workshopList:[
-      "How professionals think about security (no hacking)",
-      "Real examples + Q&A",
-      "Beginner friendly"
-    ],
-    workshopBtn:"Notify me about the next session",
-    workshopNote:"Optional • No pressure • You can join anytime",
-    retake:"Retake",
-    copyRes:"Copy result",
-    resFooter:"Your answers are stored only in your browser (local). No uploads.",
-    cardTitles:{
-      c1t:"🛡️ Social App Safety",
-      c1s:"Think about risks in apps you use daily",
-      c1b:"Try this challenge",
-      c2t:"🤖 AI Thinking",
-      c2s:"Use AI ideas to solve a real problem",
-      c2b:"Try this challenge",
-      c3t:"🏫 Improve a System",
-      c3s:"Fix one small problem around you",
-      c3b:"Try this challenge",
-      c4t:"🔐 Cyber Basics",
-      c4s:"Think like a security person (no tools)",
-      c4b:"Try this challenge",
-    }
-  },
-
-  hi:{
-    seedling:"Seedling",
-    reset:"रीसेट",
-    homeTitle:"Seedling Reflection",
-    homeSub:"एक छोटा सा self-reflection ताकि आप समझ सकें कि आप कैसे सोचते, काम करते और बढ़ते हैं।",
-    homeWhatTitle:"आपको क्या मिलेगा",
-    homeWhatList:[
-      "आपका working-style summary (simple और useful)",
-      "Strengths + watch-outs",
-      "Students/Freshers के लिए 90-day focus plan",
-      "Optional micro challenges ताकि आप action ले सकें"
-    ],
-    homeHowTitle:"कैसे काम करता है",
-    homeHowList:[
-      "10 questions (लगभग 2–4 मिनट)",
-      "Neutral option नहीं — जो सबसे सही लगे वह चुनें",
-      "आप कभी भी pause करके continue कर सकते हैं",
-      "आपके answers इसी device पर रहेंगे"
-    ],
-    start:"Start",
-    continue:"Continue",
-    privacy:"Note: यह टेस्ट नहीं है। सही-गलत answers नहीं होते।",
-    stepLine:(i,n)=>`Question ${i+1} / ${n}`,
-    back:"Back",
-    next:"Next",
-    finish:"Finish",
-    saved:"Auto saved",
-    showTip:"छोटी tip दिखाएँ",
-    resTitle:"आपका Result",
-    resSub:"आपके answers के आधार पर आपका working-style summary।",
-    strengths:"आपकी strengths",
-    watchouts:"Watch-outs",
-    planTitle:"आपका 90-day focus plan",
-    planNote:"Simple रखें: एक focus, छोटे actions, और proof बनाइए।",
-    patternsTitle:"आपके life patterns (आपके answers के आधार पर)",
-    tipsTitle:"Helpful tips (recap)",
-    tipsRecapNote:"Tips guidance हैं, rules नहीं। जो मदद करे वही लें।",
-    actionTitle:"Insight से Action (Quick Micro Challenge)",
-    actionSub:"एक छोटा real-world challenge चुनें। No coding. No pressure.",
-    actionFoot:"✔ 30–60 mins • ✔ One-page output • ✔ Interviews/clarity में मदद",
-    submitTitle:"Submission (one page)",
-    submitEmail:"Email से submit करें",
-    copySubmission:"Copy करें",
-    close:"Close",
-    challengeFoot:"Bullet points काफी हैं • No hacking • साफ़ लिखें",
-    workshopTitle:"और गहराई में जाना है?",
-    workshopSub:"Industry experts के साथ live Cybersecurity Thinking Session (optional).",
-    workshopList:[
-      "Security teams कैसे सोचती हैं (no hacking)",
-      "Real examples + Q&A",
-      "Beginners के लिए"
-    ],
-    workshopBtn:"Next session की info भेजें",
-    workshopNote:"Optional • No pressure",
-    retake:"Retake",
-    copyRes:"Result copy करें",
-    resFooter:"आपके answers सिर्फ browser में save होते हैं। Upload नहीं होता।",
-    cardTitles:{
-      c1t:"🛡️ Social App Safety",
-      c1s:"Daily apps में risks सोचें",
-      c1b:"Challenge शुरू करें",
-      c2t:"🤖 AI Thinking",
-      c2s:"AI ideas से problem solve करें",
-      c2b:"Challenge शुरू करें",
-      c3t:"🏫 Improve a System",
-      c3s:"अपने आसपास एक system improve करें",
-      c3b:"Challenge शुरू करें",
-      c4t:"🔐 Cyber Basics",
-      c4s:"Security person की तरह सोचें",
-      c4b:"Challenge शुरू करें",
-    }
-  },
-
-  te:{
-    seedling:"Seedling",
-    reset:"రిసెట్",
-    homeTitle:"Seedling Reflection",
-    homeSub:"మీరు సహజంగా ఎలా ఆలోచిస్తారు, ఎలా పని చేస్తారు, ఎలా ఎదుగుతారు అన్నది తెలుసుకోడానికి చిన్న self-reflection.",
-    homeWhatTitle:"మీకు ఏమి వస్తుంది",
-    homeWhatList:[
-      "మీ working-style summary (సింపుల్‌గా, ఉపయోగకరంగా)",
-      "Strengths + watch-outs",
-      "Students/Freshers కోసం 90-day focus plan",
-      "Action తీసుకోవడానికి optional micro challenges"
-    ],
-    homeHowTitle:"ఇది ఎలా పని చేస్తుంది",
-    homeHowList:[
-      "10 questions (సుమారు 2–4 నిమిషాలు)",
-      "Neutral option లేదు — మీకు ఎక్కువగా సరిపోయేది ఎంచుకోండి",
-      "Pause చేసి తర్వాత continue చేయచ్చు",
-      "Answers మీ device లోనే ఉంటాయి"
-    ],
-    start:"Start",
-    continue:"Continue",
-    privacy:"Note: ఇది టెస్ట్ కాదు. Right/Wrong answers లేవు.",
-    stepLine:(i,n)=>`Question ${i+1} / ${n}`,
-    back:"Back",
-    next:"Next",
-    finish:"Finish",
-    saved:"Auto saved",
-    showTip:"చిన్న tip చూపించు",
-    resTitle:"మీ Result",
-    resSub:"మీ answers ఆధారంగా మీ working-style summary.",
-    strengths:"మీ strengths",
-    watchouts:"Watch-outs",
-    planTitle:"మీ 90-day focus plan",
-    planNote:"సింపుల్‌గా ఉంచండి: ఒక focus, చిన్న actions, నిజమైన proof.",
-    patternsTitle:"మీ life patterns (మీ answers ఆధారంగా)",
-    tipsTitle:"Helpful tips (recap)",
-    tipsRecapNote:"Tips guidance మాత్రమే. మీకు ఉపయోగపడేది తీసుకోండి.",
-    actionTitle:"Insight నుంచి Action (Quick Micro Challenge)",
-    actionSub:"ఒక చిన్న real-world challenge ఎంచుకోండి. No coding. No pressure.",
-    actionFoot:"✔ 30–60 mins • ✔ One-page output • ✔ Interviews/clarity కి సహాయం",
-    submitTitle:"Submission (one page)",
-    submitEmail:"Email ద్వారా submit",
-    copySubmission:"Copy చేయండి",
-    close:"Close",
-    challengeFoot:"Bullet points చాలు • No hacking • స్పష్టంగా రాయండి",
-    workshopTitle:"ఇంకా లోతుగా వెళ్దామా?",
-    workshopSub:"Industry practitioners తో live Cybersecurity Thinking Session (optional).",
-    workshopList:[
-      "Security teams ఎలా ఆలోచిస్తాయి (no hacking)",
-      "Real examples + Q&A",
-      "Beginners కి friendly"
-    ],
-    workshopBtn:"Next session info పంపండి",
-    workshopNote:"Optional • No pressure",
-    retake:"Retake",
-    copyRes:"Result copy",
-    resFooter:"మీ answers browser లోనే save అవుతాయి. Upload కాదు.",
-    cardTitles:{
-      c1t:"🛡️ Social App Safety",
-      c1s:"Daily apps లో risks ఆలోచించండి",
-      c1b:"Challenge start",
-      c2t:"🤖 AI Thinking",
-      c2s:"AI ideas తో problem solve",
-      c2b:"Challenge start",
-      c3t:"🏫 Improve a System",
-      c3s:"మీ చుట్టూ ఒక system improve",
-      c3b:"Challenge start",
-      c4t:"🔐 Cyber Basics",
-      c4s:"Security person లాగా ఆలోచించండి",
-      c4b:"Challenge start",
-    }
-  }
-};
-
-/* =========================
-   QUESTIONS (10)
-   5 dimensions, 2 each
-   Scale: 0..3 (No / Not really / Mostly / Yes)
-   reverse:true => score reversed (3-value)
-========================= */
-const QUESTIONS = [
-  // Structure & Execution (SE)
-  {id:"q1", dim:"SE", reverse:false,
-   text:{
-     en:"I like to plan my work and finish tasks on time.",
-     hi:"मुझे काम की planning करना और time पर खत्म करना पसंद है।",
-     te:"నేను పని plan చేసి సమయానికి పూర్తి చేయడం ఇష్టం."
-   },
-   tip:{
-     en:"Small plan beats big stress: write 3 steps, start step 1.",
-     hi:"छोटी planning > बड़ा stress: 3 steps लिखें, step 1 से शुरू करें।",
-     te:"చిన్న plan > పెద్ద stress: 3 steps రాసి, step 1 మొదలు పెట్టండి."
-   }},
-  {id:"q2", dim:"SE", reverse:true,
-   text:{
-     en:"I often delay important tasks until the last minute.",
-     hi:"मैं अक्सर ज़रूरी काम आख़िरी minute तक टाल देता/देती हूँ।",
-     te:"నేను ముఖ్యమైన పనిని చివరి నిమిషం వరకు ఆలస్యం చేస్తాను."
-   },
-   tip:{
-     en:"If you delay, make it tiny: do 5 minutes now.",
-     hi:"अगर टालते हैं, तो छोटा करें: अभी 5 मिनट करें।",
-     te:"ఆలస్యం అయితే, చిన్నగా చేయండి: ఇప్పుడే 5 నిమిషాలు."
-   }},
-
-  // Analytical Thinking (AT)
-  {id:"q3", dim:"AT", reverse:false,
-   text:{
-     en:"Before I decide, I like to understand the reason and details.",
-     hi:"फैसला करने से पहले मैं कारण और details समझना चाहता/चाहती हूँ।",
-     te:"నిర్ణయం తీసుకునే ముందు కారణం, వివరాలు తెలుసుకోవాలి అనుకుంటాను."
-   },
-   tip:{
-     en:"Ask: What’s the real problem? What’s the simplest proof?",
-     hi:"पूछें: असली problem क्या है? सबसे आसान proof क्या है?",
-     te:"అడగండి: నిజమైన problem ఏది? సింపుల్ proof ఏది?"
-   }},
-  {id:"q4", dim:"AT", reverse:true,
-   text:{
-     en:"I accept things easily without asking questions.",
-     hi:"मैं बिना सवाल पूछे चीज़ें आसानी से मान लेता/लेती हूँ।",
-     te:"నేను ప్రశ్నలు అడగకుండా సులభంగా నమ్మేస్తాను."
-   },
-   tip:{
-     en:"One good question can save a lot of time later.",
-     hi:"एक अच्छा सवाल बाद में बहुत time बचाता है।",
-     te:"ఒక మంచి ప్రశ్న తర్వాత చాలా సమయం ఆదా చేస్తుంది."
-   }},
-
-  // Social Initiative (SI)
-  {id:"q5", dim:"SI", reverse:false,
-   text:{
-     en:"I can start conversations and connect with new people easily.",
-     hi:"मैं आसानी से बातचीत शुरू करके नए लोगों से connect कर सकता/सकती हूँ।",
-     te:"నేను కొత్త వ్యక్తులతో సులభంగా మాట్లాడటం, connect అవడం చేయగలను."
-   },
-   tip:{
-     en:"Confidence hack: say hello + one simple question.",
-     hi:"Confidence: hello कहें + एक simple question पूछें।",
-     te:"Confidence: హాయ్ చెప్పి + ఒక సింపుల్ ప్రశ్న అడగండి."
-   }},
-  {id:"q6", dim:"SI", reverse:true,
-   text:{
-     en:"In groups, I stay quiet even when I have a good point.",
-     hi:"Group में मेरे पास अच्छा point होने पर भी मैं चुप रहता/रहती हूँ।",
-     te:"Group లో మంచి point ఉన్నా నేను నిశ్శబ్దంగా ఉంటాను."
-   },
-   tip:{
-     en:"Try: speak one sentence. That’s enough to start.",
-     hi:"Try: एक sentence बोलें. शुरुआत हो जाएगी।",
-     te:"Try: ఒక వాక్యం చెప్పండి. అదే స్టార్ట్."
-   }},
-
-  // Empathy & Cooperation (EC)
-  {id:"q7", dim:"EC", reverse:false,
-   text:{
-     en:"I try to understand how others feel before I react.",
-     hi:"मैं react करने से पहले दूसरों की feelings समझने की कोशिश करता/करती हूँ।",
-     te:"నేను స్పందించే ముందు ఇతరులు ఎలా feel అవుతున్నారు అనేది అర్థం చేసుకుంటాను."
-   },
-   tip:{
-     en:"A calm response is a superpower in teams.",
-     hi:"Team में calm response एक superpower है।",
-     te:"Team లో calm response ఒక superpower."
-   }},
-  {id:"q8", dim:"EC", reverse:true,
-   text:{
-     en:"I get annoyed quickly when people work slowly.",
-     hi:"जब लोग धीरे काम करते हैं तो मुझे जल्दी चिढ़ होती है।",
-     te:"ఇతరులు నెమ్మదిగా పని చేస్తే నాకు త్వరగా చిరాకు వస్తుంది."
-   },
-   tip:{
-     en:"Try: ask what’s blocking them before judging.",
-     hi:"Try: judge करने से पहले पूछें, blocking क्या है?",
-     te:"Try: జడ్జ్ చేసేముందు, ఏం బ్లాక్ అవుతోంది అడగండి."
-   }},
-
-  // Curiosity & Experimentation (CE)
-  {id:"q9", dim:"CE", reverse:false,
-   text:{
-     en:"I like trying new tools or ideas, even if I may fail.",
-     hi:"मैं नए tools/ideas try करना पसंद करता/करती हूँ, भले fail हो जाए।",
-     te:"నేను కొత్త tools/ideas try చేస్తాను, fail అయినా సరే."
-   },
-   tip:{
-     en:"Small experiments build big confidence.",
-     hi:"छोटे experiments बड़ी confidence बनाते हैं।",
-     te:"చిన్న experiments పెద్ద confidence ఇస్తాయి."
-   }},
-  {id:"q10", dim:"CE", reverse:true,
-   text:{
-     en:"I avoid new things because I fear making mistakes.",
-     hi:"मैं गलती के डर से नई चीज़ें avoid करता/करती हूँ।",
-     te:"తప్పు అవుతుందనే భయంతో నేను కొత్త విషయాలు avoid చేస్తాను."
-   },
-   tip:{
-     en:"Mistakes are data. Learn → adjust → move.",
-     hi:"Mistakes data हैं: सीखें → सुधारें → आगे बढ़ें।",
-     te:"Mistakes data: నేర్చుకోండి → సరిదిద్దండి → ముందుకు."
-   }},
-];
-
-const SCALE = [
-  {v:0, en:"No", hi:"नहीं", te:"కాదు"},
-  {v:1, en:"Not really", hi:"ज़्यादा नहीं", te:"అంతగా కాదు"},
-  {v:2, en:"Mostly", hi:"अधिकतर", te:"ఎక్కువగా"},
-  {v:3, en:"Yes", hi:"हाँ", te:"అవును"},
-];
-
-/* =========================
-   STYLES (5)
-========================= */
-const STYLE_INFO = {
-  Executive:{
-    tag:"EXECUTIVE",
-    one:{
-      en:"You like ownership, speed, and getting things done.",
-      hi:"आप ownership लेते हैं, fast move करते हैं और काम पूरा करते हैं।",
-      te:"మీకు ownership, speed, పనిని పూర్తి చేయడం ఇష్టం."
-    },
-    strengths:{
-      en:["You take responsibility quickly","You drive tasks to completion","You keep teams moving"],
-      hi:["आप जल्दी responsibility लेते हैं","काम पूरा करवाते हैं","Team को आगे बढ़ाते हैं"],
-      te:["మీరు త్వరగా బాధ్యత తీసుకుంటారు","పనిని పూర్తి చేయిస్తారు","Team ని ముందుకు నడిపిస్తారు"]
-    },
-    watch:{
-      en:["May rush and miss details","Can feel impatient with slow progress","May do too much yourself"],
-      hi:["जल्दी में details miss हो सकते हैं","Slow progress से impatience हो सकती है","सब कुछ खुद करने का risk"],
-      te:["త్వరలో details miss కావచ్చు","Slow progress తో impatience","అన్ని మీరే చేయాలనిపించడం"]
-    },
-    plan:{
-      en:["Pick 1 goal (internship / skill) and finish it","Make a weekly plan: 3 priorities only","Build proof: one project write-up or mini portfolio","Practice calm communication in teams"],
-      hi:["1 goal चुनें और पूरा करें","Weekly plan: सिर्फ 3 priorities","Proof बनाएं: project write-up / mini portfolio","Team में calm communication practice करें"],
-      te:["1 goal ఎంచుకుని పూర్తి చేయండి","Weekly plan: 3 priorities మాత్రమే","Proof: project write-up / mini portfolio","Team లో calm communication practice చేయండి"]
-    },
-    patterns:{
-      en:["You prefer action over long discussion","You learn best by doing","You feel good when you ‘finish’ things"],
-      hi:["आप discussion से ज़्यादा action पसंद करते हैं","आप doing से best सीखते हैं","काम finish होने पर अच्छा लगता है"],
-      te:["మీరు discussion కంటే action ఇష్టపడతారు","చేసి నేర్చుకోవడం మీకు బెటర్","పని ‘finish’ అయితే సంతోషం"]
-    }
-  },
-
-  Builder:{
-    tag:"BUILDER",
-    one:{
-      en:"You like making things practical and usable.",
-      hi:"आप चीज़ों को practical और usable बनाना पसंद करते हैं।",
-      te:"మీకు practical గా, usable గా తయారు చేయడం ఇష్టం."
-    },
-    strengths:{
-      en:["You simplify complex things","You care about real usefulness","You improve systems step by step"],
-      hi:["आप complex चीज़ें simple करते हैं","आप usefulness पर ध्यान देते हैं","आप systems धीरे-धीरे सुधारते हैं"],
-      te:["మీరు complex విషయాలు సింపుల్ చేస్తారు","ఉపయోగపడేలా చూస్తారు","సిస్టమ్స్ ని step-by-step మెరుగుపరుస్తారు"]
-    },
-    watch:{
-      en:["May avoid big risks","May delay if perfect is not clear","Can be too focused on small details"],
-      hi:["Big risk avoid हो सकता है","Perfect clear न हो तो delay","Small details में फँस सकते हैं"],
-      te:["Big risk avoid చేయచ్చు","Perfect స్పష్టంగా లేకపోతే delay","చిన్న details లో ఎక్కువగా ఉండిపోవచ్చు"]
-    },
-    plan:{
-      en:["Choose one skill and build a small ‘usable’ output","Do tiny improvements daily (15 minutes)","Share your work publicly once a month","Learn to ship v1, then improve"],
-      hi:["एक skill चुनें और छोटा usable output बनाएं","Daily tiny improvement (15 mins)","महीने में 1 बार share करें","पहले v1 ship करें, फिर improve"],
-      te:["ఒక skill ఎంచుకుని usable output చేయండి","Daily 15 mins చిన్న improvement","నెలకు 1 సారి share చేయండి","ముందు v1 ship చేసి, తర్వాత improve"]
-    },
-    patterns:{
-      en:["You prefer steady progress","You like clear steps","You feel confident when things are practical"],
-      hi:["आप steady progress पसंद करते हैं","आपको clear steps पसंद हैं","Practical चीज़ों से confidence आता है"],
-      te:["మీకు steady progress ఇష్టం","clear steps ఇష్టం","practical గా ఉంటే confidence వస్తుంది"]
-    }
-  },
-
-  Analyst:{
-    tag:"ANALYST",
-    one:{
-      en:"You like clarity, logic, and understanding ‘why’.",
-      hi:"आप clarity, logic और ‘why’ समझना पसंद करते हैं।",
-      te:"మీకు clarity, logic, ‘why’ అర్థం చేసుకోవడం ఇష్టం."
-    },
-    strengths:{
-      en:["You think deeply before deciding","You spot gaps and risks","You explain ideas clearly"],
-      hi:["आप सोच-समझकर फैसला लेते हैं","आप gaps/risks पकड़ते हैं","आप ideas clearly समझाते हैं"],
-      te:["మీరు ఆలోచించి నిర్ణయం తీసుకుంటారు","gaps/risks గుర్తిస్తారు","ideas స్పష్టంగా చెప్తారు"]
-    },
-    watch:{
-      en:["May overthink and delay action","Can get stuck in ‘more info’ mode","May sound too critical"],
-      hi:["Overthink करके action late हो सकता है","‘More info’ में फँस सकते हैं","कभी-कभी critical लग सकता है"],
-      te:["Overthink వల్ల action ఆలస్యం","‘More info’ లో ఇరుక్కోవచ్చు","కొన్ని సార్లు critical గా అనిపించచ్చు"]
-    },
-    plan:{
-      en:["Pick one domain and learn fundamentals well","Do 1 small project and write a clean explanation","Practice speed: decide with 70% info","Improve communication: simple words"],
-      hi:["एक domain चुनें और fundamentals मजबूत करें","1 छोटा project + clean explanation","Speed practice: 70% info पर decide","Simple words में बोलें"],
-      te:["ఒక domain ఎంచుకుని fundamentals బలంగా చేయండి","1 చిన్న project + clean explanation","70% info తో decide చేయడం practice","simple words వాడండి"]
-    },
-    patterns:{
-      en:["You value correctness","You like learning in depth","You feel safe with facts"],
-      hi:["आप correctness पसंद करते हैं","आप in-depth सीखना चाहते हैं","Facts से safety महसूस होती है"],
-      te:["మీకు correctness ఇష్టం","in-depth నేర్చుకోవడం ఇష్టం","facts ఉంటే safe గా అనిపిస్తుంది"]
-    }
-  },
-
-  Connector:{
-    tag:"CONNECTOR",
-    one:{
-      en:"You enjoy people, teamwork, and bringing energy.",
-      hi:"आप लोगों, teamwork और positive energy को पसंद करते हैं।",
-      te:"మీకు people, teamwork, energy ఇష్టం."
-    },
-    strengths:{
-      en:["You build relationships easily","You motivate teams","You understand people well"],
-      hi:["आप relationships बनाते हैं","आप teams को motivate करते हैं","आप लोगों को समझते हैं"],
-      te:["మీరు relationships build చేస్తారు","teams ని motivate చేస్తారు","people ని బాగా అర్థం చేసుకుంటారు"]
-    },
-    watch:{
-      en:["May avoid tough feedback","Can get distracted by social activities","May say yes too often"],
-      hi:["Tough feedback avoid हो सकता है","Social चीज़ों से distract","बहुत ज़्यादा yes कहना"],
-      te:["Tough feedback avoid కావచ్చు","Social విషయాలతో distract","చాలా సార్లు yes అనడం"]
-    },
-    plan:{
-      en:["Use your network: find 1 mentor + 2 peers","Build one portfolio piece and share it","Practice boundaries: say no politely","Learn one strong skill to support your people strength"],
-      hi:["Network use करें: 1 mentor + 2 peers","1 portfolio piece बनाकर share करें","Boundaries: politely no कहना","People strength के साथ 1 skill मजबूत करें"],
-      te:["Network వాడండి: 1 mentor + 2 peers","1 portfolio piece చేసి share చేయండి","Boundaries: politely no చెప్పండి","people strength తో పాటు 1 skill బలంగా"]
-    },
-    patterns:{
-      en:["You learn best with others","You enjoy collaboration","You feel good when people feel included"],
-      hi:["आप दूसरों के साथ best सीखते हैं","आप collaboration पसंद करते हैं","People included हों तो अच्छा लगता है"],
-      te:["మీరు others తో కలిసి best నేర్చుకుంటారు","collaboration ఇష్టం","people included అయితే బాగా అనిపిస్తుంది"]
-    }
-  },
-
-  Explorer:{
-    tag:"EXPLORER",
-    one:{
-      en:"You enjoy curiosity, trying things, and learning fast.",
-      hi:"आप curiosity, नए चीज़ें try करना और fast सीखना पसंद करते हैं।",
-      te:"మీకు curiosity, కొత్తవి try చేయడం, వేగంగా నేర్చుకోవడం ఇష్టం."
-    },
-    strengths:{
-      en:["You adapt quickly","You discover new ideas","You enjoy experimentation"],
-      hi:["आप जल्दी adapt करते हैं","आप नए ideas ढूँढते हैं","आप experiments पसंद करते हैं"],
-      te:["మీరు త్వరగా adapt అవుతారు","కొత్త ideas కనుగొంటారు","experiments ఇష్టం"]
-    },
-    watch:{
-      en:["May jump too quickly between interests","Can leave things unfinished","May resist routines"],
-      hi:["Interests जल्दी change","चीज़ें अधूरी छोड़ सकते हैं","Routine पसंद नहीं हो सकता"],
-      te:["Interests త్వరగా మారవచ్చు","పనులు పూర్తి కాకుండా ఉండవచ్చు","routine ఇష్టం కాకపోవచ్చు"]
-    },
-    plan:{
-      en:["Pick 1 focus for 4 weeks (no switching)","Use tiny experiments, but finish 1 output","Track learning: 5 lines daily","Build a ‘showcase’ page of what you tried"],
-      hi:["4 हफ्ते 1 focus (switch नहीं)","Small experiments करें, लेकिन 1 output पूरा करें","Learning track: रोज़ 5 lines","जो try किया उसका showcase बनाएं"],
-      te:["4 వారాలు 1 focus (switch వద్దు)","చిన్న experiments కానీ 1 output పూర్తి","daily 5 lines learning track","మీ showcase పేజ్ తయారు చేయండి"]
-    },
-    patterns:{
-      en:["You feel alive when learning new things","You enjoy variety","You get bored by repetition"],
-      hi:["नई चीज़ें सीखकर energy आती है","आप variety पसंद करते हैं","Repetition से boredom"],
-      te:["కొత్తవి నేర్చుకుంటే energy","variety ఇష్టం","repetition తో boredom"]
-    }
-  }
-};
-
-/* =========================
-   MICRO CHALLENGES (HTML-only)
-========================= */
-const CHALLENGES = {
-  social:{
-    title:{
-      en:"🛡️ Social App Safety — Quick Micro Challenge",
-      hi:"🛡️ Social App Safety — Quick Micro Challenge",
-      te:"🛡️ Social App Safety — Quick Micro Challenge"
-    },
-    intro:{
-      en:"Pick one app you use daily (Instagram/Snapchat/WhatsApp/etc.). No hacking. Only thinking + explaining.",
-      hi:"एक daily app चुनें (Instagram/Snapchat/WhatsApp/etc.). No hacking. सिर्फ thinking + explaining.",
-      te:"మీరు daily use చేసే app ఎంచుకోండి (Instagram/Snapchat/WhatsApp/etc.). No hacking. కేవలం thinking + explaining."
-    },
-    content:{
-      en:[
-        "1) Which app did you choose? Why do people use it most?",
-        "2) What personal info users share without thinking?",
-        "3) One common mistake users make",
-        "4) One misuse that can happen because of it",
-        "5) Pick ONE risk and explain why it matters most",
-        "6) Suggest ONE simple rule/feature to reduce this risk",
-        "7) What did you learn about yourself?"
-      ],
-      hi:[
-        "1) कौन सा app चुना? लोग इसे क्यों use करते हैं?",
-        "2) कौन-सी personal info लोग बिना सोचे share करते हैं?",
-        "3) Users की एक common mistake",
-        "4) इसी वजह से एक misuse क्या हो सकता है?",
-        "5) ONE risk चुनें और क्यों important है लिखें",
-        "6) ONE simple rule/feature बताएं",
-        "7) आपने अपने बारे में क्या सीखा?"
-      ],
-      te:[
-        "1) ఏ app ఎంచుకున్నారు? ఎందుకు ఎక్కువగా use చేస్తారు?",
-        "2) ఏ personal info ని people ఆలోచించకుండా share చేస్తారు?",
-        "3) Users చేసే ఒక common mistake",
-        "4) దాని వల్ల ఒక misuse ఏమవచ్చు?",
-        "5) ONE risk ఎంచుకుని ఎందుకు important చెప్పండి",
-        "6) ONE simple rule/feature సూచించండి",
-        "7) మీ గురించి మీరు ఏమి నేర్చుకున్నారు?"
-      ]
-    },
-    template:{
-      en:`Seedling Micro Challenge – Social App Safety
-
-App chosen:
-One risk I focused on:
-Why it matters:
-One simple improvement idea:
-What I learned about myself:`,
-      hi:`Seedling Micro Challenge – Social App Safety
-
-App chosen:
-Main risk:
-Why it matters:
-One improvement idea:
-What I learned about myself:`,
-      te:`Seedling Micro Challenge – Social App Safety
-
-App chosen:
-Main risk:
-Why it matters:
-One improvement idea:
-What I learned about myself:`
-    }
-  },
-
-  ai:{
-    title:{
-      en:"🤖 AI Thinking — Quick Micro Challenge",
-      hi:"🤖 AI Thinking — Quick Micro Challenge",
-      te:"🤖 AI Thinking — Quick Micro Challenge"
-    },
-    intro:{
-      en:"Pick one everyday problem and explain how AI could help (logic, not coding).",
-      hi:"एक everyday problem चुनें और बताएं AI कैसे help करेगा (logic, no coding).",
-      te:"ఒక everyday problem ఎంచుకుని AI ఎలా help చేస్తుందో చెప్పండి (logic, no coding)."
-    },
-    content:{
-      en:[
-        "1) What problem did you choose? Who is affected?",
-        "2) How could AI help (logic, not tools)?",
-        "3) What data would be needed?",
-        "4) One risk/limitation of AI in this case",
-        "5) ONE simple improvement idea",
-        "6) What did you enjoy thinking about?"
-      ],
-      hi:[
-        "1) कौन-सा problem चुना? किस पर असर होता है?",
-        "2) AI कैसे help करेगा (logic)?",
-        "3) कौन-सा data चाहिए?",
-        "4) एक risk/limitation क्या है?",
-        "5) ONE simple improvement idea",
-        "6) क्या सोचकर मज़ा आया?"
-      ],
-      te:[
-        "1) ఏ problem ఎంచుకున్నారు? ఎవరు affect అవుతారు?",
-        "2) AI ఎలా help చేస్తుంది (logic)?",
-        "3) ఏ data అవసరం?",
-        "4) ఒక risk/limitation ఏమిటి?",
-        "5) ONE simple improvement idea",
-        "6) ఏది ఆలోచించడం మీకు నచ్చింది?"
-      ]
-    },
-    template:{
-      en:`Seedling Micro Challenge – AI Thinking
-
-Problem chosen:
-How AI could help:
-Data needed:
-One risk/limitation:
-One improvement idea:
-What I learned about myself:`,
-      hi:`Seedling Micro Challenge – AI Thinking
-
-Problem:
-AI help (logic):
-Data:
-One risk:
-One improvement:
-What I learned about myself:`,
-      te:`Seedling Micro Challenge – AI Thinking
-
-Problem:
-AI help (logic):
-Data:
-One risk:
-One improvement:
-What I learned about myself:`
-    }
-  },
-
-  civic:{
-    title:{
-      en:"🏫 Improve a System — Quick Micro Challenge",
-      hi:"🏫 Improve a System — Quick Micro Challenge",
-      te:"🏫 Improve a System — Quick Micro Challenge"
-    },
-    intro:{
-      en:"Pick one system around you (college/hostel/traffic/etc.) and suggest one practical improvement.",
-      hi:"अपने आसपास एक system चुनें (college/hostel/traffic/etc.) और one practical improvement बताएं।",
-      te:"మీ చుట్టూ ఒక system ఎంచుకోండి (college/hostel/traffic/etc.) మరియు one practical improvement సూచించండి."
-    },
-    content:{
-      en:[
-        "1) What system did you choose?",
-        "2) What works well today?",
-        "3) What doesn’t work?",
-        "4) Who is affected most?",
-        "5) ONE biggest problem",
-        "6) ONE practical improvement",
-        "7) Why this improvement matters"
-      ],
-      hi:[
-        "1) कौन-सा system चुना?",
-        "2) क्या अच्छा काम कर रहा है?",
-        "3) क्या नहीं काम कर रहा?",
-        "4) सबसे ज़्यादा किस पर असर?",
-        "5) ONE biggest problem",
-        "6) ONE practical improvement",
-        "7) यह improvement क्यों important है?"
-      ],
-      te:[
-        "1) ఏ system ఎంచుకున్నారు?",
-        "2) ఏది బాగా పనిచేస్తోంది?",
-        "3) ఏది పనిచేయడం లేదు?",
-        "4) ఎవరు ఎక్కువగా affect అవుతున్నారు?",
-        "5) ONE biggest problem",
-        "6) ONE practical improvement",
-        "7) ఇది ఎందుకు important?"
-      ]
-    },
-    template:{
-      en:`Seedling Micro Challenge – Improve a System
-
-System chosen:
-Biggest problem:
-Who is affected:
-One improvement idea:
-Why it matters:
-What I learned about myself:`,
-      hi:`Seedling Micro Challenge – Improve a System
-
-System:
-Problem:
-Affected:
-Improvement:
-Why it matters:
-What I learned about myself:`,
-      te:`Seedling Micro Challenge – Improve a System
-
-System:
-Problem:
-Affected:
-Improvement:
-Why it matters:
-What I learned about myself:`
-    }
-  },
-
-  cyber:{
-    title:{
-      en:"🔐 Cyber Basics — Quick Micro Challenge",
-      hi:"🔐 Cyber Basics — Quick Micro Challenge",
-      te:"🔐 Cyber Basics — Quick Micro Challenge"
-    },
-    intro:{
-      en:"Pick one system (UPI/Gmail/college portal). Think like a security person. No tools needed.",
-      hi:"एक system चुनें (UPI/Gmail/college portal). Security person की तरह सोचें. No tools.",
-      te:"ఒక system ఎంచుకోండి (UPI/Gmail/college portal). Security person లాగా ఆలోచించండి. No tools."
-    },
-    content:{
-      en:[
-        "1) What system did you choose?",
-        "2) What sensitive data does it store?",
-        "3) One human mistake users make",
-        "4) One system/design mistake",
-        "5) ONE highest risk (why?)",
-        "6) ONE simple protection rule",
-        "7) What surprised you?"
-      ],
-      hi:[
-        "1) कौन-सा system चुना?",
-        "2) कौन-सा sensitive data होता है?",
-        "3) Users की एक human mistake",
-        "4) System/design की एक mistake",
-        "5) ONE highest risk (क्यों?)",
-        "6) ONE simple protection rule",
-        "7) क्या surprising लगा?"
-      ],
-      te:[
-        "1) ఏ system ఎంచుకున్నారు?",
-        "2) ఏ sensitive data ఉంటుంది?",
-        "3) Users చేసే ఒక human mistake",
-        "4) System/design లో ఒక mistake",
-        "5) ONE highest risk (why?)",
-        "6) ONE simple protection rule",
-        "7) మీకు ఏది surprising అనిపించింది?"
-      ]
-    },
-    template:{
-      en:`Seedling Micro Challenge – Cyber Basics
-
-System chosen:
-Main risk:
-Why it matters:
-One protection idea:
-What I learned about myself:`,
-      hi:`Seedling Micro Challenge – Cyber Basics
-
-System:
-Main risk:
-Why it matters:
-Protection idea:
-What I learned about myself:`,
-      te:`Seedling Micro Challenge – Cyber Basics
-
-System:
-Main risk:
-Why it matters:
-Protection idea:
-What I learned about myself:`
-    }
-  }
-};
-
-/* =========================
-   STATE
-========================= */
-let currentLang = "en";
-let answers = {};        // { qid: 0..3 }
-let qIndex = 0;
-
-/* =========================
-   INIT
-========================= */
-(function init(){
-  // Language
-  const savedLang = localStorage.getItem(KEY_LANG);
-  if(savedLang && UI[savedLang]) currentLang = savedLang;
-  document.getElementById("langSel").value = currentLang;
-
-  // Answers
-  try{
-    answers = JSON.parse(localStorage.getItem(KEY_ANS)) || {};
-  }catch(e){answers={};}
-
-  // Index
-  const savedIdx = localStorage.getItem(KEY_IDX);
-  if(savedIdx!==null) qIndex = Math.max(0, Math.min(QUESTIONS.length-1, parseInt(savedIdx,10) || 0));
-
-  renderStaticText();
-
-  // Show/hide Continue based on progress
-  document.getElementById("continueBtn").style.display = Object.keys(answers).length ? "inline-flex" : "none";
-})();
-
-/* =========================
-   UI RENDERERS
-========================= */
-function t(obj){ return obj[currentLang] || obj.en; }
-
-function renderStaticText(){
-  const L = UI[currentLang];
-
-  document.getElementById("brandText").innerText = L.seedling;
-  document.getElementById("resetBtn").innerText = L.reset;
-
-  document.getElementById("homeTitle").innerText = L.homeTitle;
-  document.getElementById("homeSub").innerText = L.homeSub;
-  document.getElementById("homeWhatTitle").innerText = L.homeWhatTitle;
-  document.getElementById("homeHowTitle").innerText = L.homeHowTitle;
-
-  setList("homeWhatList", L.homeWhatList);
-  setList("homeHowList", L.homeHowList);
-
-  document.getElementById("startBtn").innerText = L.start;
-  document.getElementById("continueBtn").innerText = L.continue;
-  document.getElementById("privacyLine").innerText = L.privacy;
-
-  document.getElementById("tipsToggle").innerText = L.showTip;
-
-  // Results static labels
-  document.getElementById("resTitle").innerText = L.resTitle;
-  document.getElementById("resSub").innerText = L.resSub;
-  document.getElementById("strengthTitle").innerText = L.strengths;
-  document.getElementById("watchTitle").innerText = L.watchouts;
-  document.getElementById("planTitle").innerText = L.planTitle;
-  document.getElementById("planNote").innerText = L.planNote;
-  document.getElementById("patternsTitle").innerText = L.patternsTitle;
-  document.getElementById("tipsTitle").innerText = L.tipsTitle;
-  document.getElementById("tipsRecapNote").innerText = L.tipsRecapNote;
-
-  document.getElementById("actionTitle").innerText = L.actionTitle;
-  document.getElementById("actionSub").innerText = L.actionSub;
-  document.getElementById("actionFoot").innerText = L.actionFoot;
-
-  document.getElementById("submitTitle").innerText = L.submitTitle;
-  document.getElementById("submitEmailBtn").innerText = L.submitEmail;
-  document.getElementById("copyBtn").innerText = L.copySubmission;
-  document.getElementById("ტერესოBtn"); // no-op
-  document.getElementById("closeBtn").innerText = L.close;
-  document.getElementById("challengeFoot").innerText = L.challengeFoot;
-
-  document.getElementById("workshopTitle").innerText = L.workshopTitle;
-  document.getElementById("workshopSub").innerText = L.workshopSub;
-  setList("workshopList", L.workshopList);
-  document.getElementById("workshopBtn").innerText = L.workshopBtn;
-  document.getElementById("workshopNote").innerText = L.workshopNote;
-
-  document.getElementById("retakeBtn").innerText = L.retake;
-  document.getElementById("copyResBtn").innerText = L.copyRes;
-  document.getElementById("resFooter").innerText = L.resFooter;
-
-  // Challenge card titles
-  const C = L.cardTitles;
-  document.getElementById("c1t").innerText = C.c1t;
-  document.getElementById("c1s").innerText = C.c1s;
-  document.getElementById("c1b").innerText = C.c1b;
-  document.getElementById("c2t").innerText = C.c2t;
-  document.getElementById("c2s").innerText = C.c2s;
-  document.getElementById("c2b").innerText = C.c2b;
-  document.getElementById("c3t").innerText = C.c3t;
-  document.getElementById("c3s").innerText = C.c3s;
-  document.getElementById("c3b").innerText = C.c3b;
-  document.getElementById("c4t").innerText = C.c4t;
-  document.getElementById("c4s").innerText = C.c4s;
-  document.getElementById("c4b").innerText = C.c4b;
-
-  // Quiz buttons
-  document.getElementById("prevBtn").innerText = L.back;
-  document.getElementById("nextBtn").innerText = L.next;
-  document.getElementById("finishBtn").innerText = L.finish;
-  document.getElementById("saveLine").innerText = L.saved;
-
-  // If quiz/results visible, re-render them in new language
-  if(!document.getElementById("quiz").classList.contains("hide")) renderQuestion();
-  if(!document.getElementById("results").classList.contains("hide")) renderResults();
-}
-
-function setList(id, arr){
-  const ul = document.getElementById(id);
-  ul.innerHTML = "";
-  arr.forEach(x=>{
-    const li = document.createElement("li");
-    li.innerText = x;
-    ul.appendChild(li);
-  });
-}
-
-/* =========================
-   LANGUAGE
-========================= */
-function setLanguage(lang){
-  if(!UI[lang]) return;
-  currentLang = lang;
-  localStorage.setItem(KEY_LANG, lang);
-  renderStaticText();
-}
-
-/* =========================
-   NAV
-========================= */
-function show(id){
-  ["home","quiz","results"].forEach(x=>document.getElementById(x).classList.add("hide"));
-  document.getElementById(id).classList.remove("hide");
-  window.scrollTo({top:0,behavior:"smooth"});
-}
-
-function startAssessment(){
-  qIndex = 0;
-  localStorage.setItem(KEY_IDX, String(qIndex));
-  show("quiz");
-  renderQuestion();
-}
-
-function continueAssessment(){
-  show("quiz");
-  renderQuestion();
-}
-
-function restart(){
-  // keep language
-  answers = {};
-  qIndex = 0;
-  localStorage.removeItem(KEY_ANS);
-  localStorage.removeItem(KEY_IDX);
-  document.getElementById("continueBtn").style.display = "none";
-  show("home");
-}
-
-/* =========================
-   QUIZ RENDER
-========================= */
-function renderQuestion(){
-  const L = UI[currentLang];
-  const q = QUESTIONS[qIndex];
-
-  document.getElementById("stepLine").innerText = L.stepLine(qIndex, QUESTIONS.length);
-  document.getElementById("qText").innerText = t(q.text);
-
-  const pct = ((qIndex)/(QUESTIONS.length-1))*100;
-  document.getElementById("bar").style.width = isFinite(pct)? `${pct}%` : "0%";
-
-  const opts = document.getElementById("opts");
-  opts.innerHTML = "";
-
-  const sel = answers[q.id];
-
-  SCALE.forEach(s=>{
-    const div = document.createElement("div");
-    div.className = "opt" + (sel===s.v ? " sel":"");
-    div.innerHTML = `<b>${s[currentLang] || s.en}</b><small>${hintForScale(s.v)}</small>`;
-    div.onclick = ()=>selectAnswer(q.id, s.v);
-    opts.appendChild(div);
-  });
-
-  // Tip (optional toggle)
-  const showTips = document.getElementById("showTips").checked;
-  const tipBox = document.getElementById("tipBox");
-  if(showTips){
-    tipBox.classList.remove("hide");
-    tipBox.innerText = "Tip: " + t(q.tip);
-  }else{
-    tipBox.classList.add("hide");
-  }
-
-  document.getElementById("prevBtn").disabled = (qIndex===0);
-  document.getElementById("nextBtn").style.display = (qIndex===QUESTIONS.length-1) ? "none" : "inline-flex";
-  document.getElementById("finishBtn").style.display = (qIndex===QUESTIONS.length-1) ? "inline-flex" : "none";
-}
-
-function hintForScale(v){
-  // micro hint in English only for simplicity (kept subtle)
-  if(currentLang==="en"){
-    return v===0?"Not me":v===1?"Sometimes":v===2?"Often": "Very me";
-  }
-  if(currentLang==="hi"){
-    return v===0?"मेरे जैसा नहीं":v===1?"कभी-कभी":v===2?"अक्सर":"बहुत ज़्यादा";
-  }
-  if(currentLang==="te"){
-    return v===0?"నా లాంటి కాదు":v===1?"కొన్ని సార్లు":v===2?"చాలా సార్లు":"చాలా ఎక్కువ";
-  }
-  return "";
-}
-
-function selectAnswer(qid, value){
-  answers[qid] = value;
-  localStorage.setItem(KEY_ANS, JSON.stringify(answers));
-  document.getElementById("continueBtn").style.display = "inline-flex";
-  renderQuestion();
-}
-
-function prevQ(){
-  qIndex = Math.max(0, qIndex-1);
-  localStorage.setItem(KEY_IDX, String(qIndex));
-  renderQuestion();
-}
-
-function nextQ(){
-  qIndex = Math.min(QUESTIONS.length-1, qIndex+1);
-  localStorage.setItem(KEY_IDX, String(qIndex));
-  renderQuestion();
-}
-
-function finishNow(){
-  localStorage.setItem(KEY_IDX, String(qIndex));
-  show("results");
-  renderResults();
-}
-
-/* =========================
-   SCORING + STYLE PICK
-========================= */
-function computeScores(){
-  const dims = {SE:0, AT:0, SI:0, EC:0, CE:0};
-  const counts = {SE:0, AT:0, SI:0, EC:0, CE:0};
-
-  QUESTIONS.forEach(q=>{
-    if(answers[q.id]===undefined) return;
-    let v = answers[q.id];
-    if(q.reverse) v = 3 - v;
-    dims[q.dim] += v;
-    counts[q.dim] += 1;
-  });
-
-  // normalize to 0..6 (2 questions each, max 6)
-  return {dims, counts};
-}
-
-function pickStyle(scores){
-  const {dims} = scores;
-
-  // Simple mapping:
-  // Executive: high SE + SI
-  // Builder: high SE + EC
-  // Analyst: high AT
-  // Connector: high SI + EC
-  // Explorer: high CE
-  const executive = dims.SE + dims.SI;
-  const builder   = dims.SE + dims.EC;
-  const analyst   = dims.AT + Math.floor(dims.SE/2);
-  const connector = dims.SI + dims.EC;
-  const explorer  = dims.CE + Math.floor(dims.AT/2);
-
-  const list = [
-    {name:"Executive", score: executive},
-    {name:"Builder", score: builder},
-    {name:"Analyst", score: analyst},
-    {name:"Connector", score: connector},
-    {name:"Explorer", score: explorer},
-  ];
-  list.sort((a,b)=>b.score-a.score);
-
-  // If tie, pick based on highest single dim
-  return list[0].name;
-}
-
-/* =========================
-   RESULTS RENDER
-========================= */
-function renderResults(){
-  const L = UI[currentLang];
-  const scores = computeScores();
-
-  // If incomplete, allow result but mention
-  const answeredCount = Object.keys(answers).length;
-  if(answeredCount < QUESTIONS.length){
-    document.getElementById("resSub").innerText =
-      (currentLang==="en")
-      ? `You answered ${answeredCount}/${QUESTIONS.length}. For best accuracy, complete all questions.`
-      : (currentLang==="hi")
-      ? `आपने ${answeredCount}/${QUESTIONS.length} questions किए हैं। बेहतर accuracy के लिए सभी complete करें।`
-      : `మీరు ${answeredCount}/${QUESTIONS.length} questions చేసారు. accuracy కోసం అన్ని complete చేయండి.`;
-  }else{
-    document.getElementById("resSub").innerText = L.resSub;
-  }
-
-  const style = pickStyle(scores);
-  const info = STYLE_INFO[style];
-
-  document.getElementById("styleName").innerText = style;
-  document.getElementById("styleOneLiner").innerText = t(info.one);
-  document.getElementById("styleTag").innerText = info.tag;
-
-  fillList("strengthList", info.strengths[currentLang] || info.strengths.en);
-  fillList("watchList", info.watch[currentLang] || info.watch.en);
-  fillList("planList", info.plan[currentLang] || info.plan.en);
-  fillList("patternsList", info.patterns[currentLang] || info.patterns.en);
-
-  // Tips recap from questions (all)
-  const tips = QUESTIONS.map(q=>t(q.tip));
-  fillList("tipsRecapList", tips);
-
-  // Close challenge panel if language changed
-  closeChallenge();
-}
-
-function fillList(id, items){
-  const ul = document.getElementById(id);
-  ul.innerHTML = "";
-  items.forEach(x=>{
-    const li = document.createElement("li");
-    li.innerText = x;
-    ul.appendChild(li);
-  });
-}
-
-/* =========================
-   CHALLENGES (INLINE)
-========================= */
-let activeChallengeKey = null;
-
-function openChallenge(key){
-  activeChallengeKey = key;
-  const c = CHALLENGES[key];
-  if(!c) return;
-
-  document.getElementById("challengeTitle").innerText = t(c.title);
-  document.getElementById("challengeIntro").innerText = t(c.intro);
-
-  const lines = c.content[currentLang] || c.content.en;
-  document.getElementById("challengeContent").innerHTML =
-    "<ul>" + lines.map(x=>`<li>${x}</li>`).join("") + "</ul>";
-
-  document.getElementById("challengeTemplate").innerText =
-    (c.template[currentLang] || c.template.en);
-
-  document.getElementById("challengePanel").classList.remove("hide");
-  document.getElementById("challengePanel").scrollIntoView({behavior:"smooth"});
-}
-
-function closeChallenge(){
-  document.getElementById("challengePanel").classList.add("hide");
-  activeChallengeKey = null;
-}
-
-function copyChallenge(){
-  const txt = document.getElementById("challengeTemplate").innerText;
-  navigator.clipboard.writeText(txt);
-  alert(currentLang==="en" ? "Copied. Paste into a doc and submit by email." :
-        currentLang==="hi" ? "Copied. Doc में paste करें और email से submit करें." :
-                             "Copied. Doc లో paste చేసి email ద్వారా submit చేయండి.");
-}
-
-function submitChallenge(){
-  const txt = document.getElementById("challengeTemplate").innerText;
-  const subject = encodeURIComponent("Seedling Micro Challenge Submission");
-  const body = encodeURIComponent(txt);
-  window.location.href = `mailto:seedling.community@gmail.com?subject=${subject}&body=${body}`;
-}
-
-/* =========================
-   WORKSHOP
-========================= */
-function notifyWorkshop(){
-  const subject = encodeURIComponent("Interested in Cybersecurity Thinking Session");
-  const body = encodeURIComponent(
-    (currentLang==="en")
-    ? "Hi Seedling team,\n\nI completed the Seedling assessment and would like to be notified about the next Cybersecurity Thinking Session.\n\nName:\nBackground (Student/Fresher/Working):\nCity:\n\nThanks."
-    : (currentLang==="hi")
-    ? "Hi Seedling team,\n\nमैंने Seedling assessment पूरा किया है और अगले Cybersecurity Thinking Session की जानकारी चाहता/चाहती हूँ।\n\nName:\nBackground (Student/Fresher/Working):\nCity:\n\nThanks."
-    : "Hi Seedling team,\n\nనేను Seedling assessment పూర్తి చేశాను. తదుపరి Cybersecurity Thinking Session సమాచారం కావాలి.\n\nName:\nBackground (Student/Fresher/Working):\nCity:\n\nThanks."
-  );
-  window.location.href = `mailto:seedling.community@gmail.com?subject=${subject}&body=${body}`;
-}
-
-/* =========================
-   COPY RESULT
-========================= */
-function copyResult(){
-  const scores = computeScores();
-  const style = pickStyle(scores);
-  const info = STYLE_INFO[style];
-
-  const txt =
-`Seedling Reflection Result
-
-Style: ${style}
-Summary: ${t(info.one)}
-
-Strengths:
-- ${(info.strengths[currentLang] || info.strengths.en).join("\n- ")}
-
-Watch-outs:
-- ${(info.watch[currentLang] || info.watch.en).join("\n- ")}
-
-90-day focus plan:
-- ${(info.plan[currentLang] || info.plan.en).join("\n- ")}
-
-Life patterns:
-- ${(info.patterns[currentLang] || info.patterns.en).join("\n- ")}
-
-(Generated by Seedling Assessment)`;
-
-  navigator.clipboard.writeText(txt);
-  alert(currentLang==="en" ? "Result copied." : currentLang==="hi" ? "Result copied." : "Result copied.");
-}
-
-/* =========================
-   RESET ALL
-========================= */
-function resetAll(){
-  if(!confirm(currentLang==="en" ? "Reset your answers on this device?" :
-              currentLang==="hi" ? "इस device पर answers reset करें?" :
-                                   "ఈ device లో answers reset చేయాలా?")) return;
-  answers = {};
-  qIndex = 0;
-  localStorage.removeItem(KEY_ANS);
-  localStorage.removeItem(KEY_IDX);
-  document.getElementById("continueBtn").style.display = "none";
-  show("home");
-}
-
-</script>
+<!--Micro section-- >
+<div id="microChallenges" style="display:none;">
+  <!-- micro cards -->
+</div>
+
+<!--Finish button OUTSIDE-- >
+          <button type="button" onclick="finish()">Finish</button>
+        h.innerText = "Turn Insight into Action ⚡";
+        h.style.margin = "0 0 8px 0";
+        h.style.fontSize = "22px";
+
+        const p = document.createElement("p");
+        p.innerText = "Pick ONE micro challenge now. Finish it in 2–3 minutes. Share it if you want feedback.";
+        p.style.margin = "0 0 14px 0";
+        p.style.opacity = "0.9";
+
+        box.appendChild(h);
+        box.appendChild(p);
+
+        MICRO_CHALLENGES.forEach((c, idx) => {
+          const card = document.createElement("div");
+          card.style.padding = "12px";
+          card.style.borderRadius = "12px";
+          card.style.border = "1px solid rgba(255,255,255,0.10)";
+          card.style.background = "rgba(0,0,0,0.10)";
+          card.style.margin = "10px 0";
+
+          card.innerHTML = `
+        <div style="font-weight:700;font-size:16px;margin-bottom:6px;">${c.title}</div>
+        <div style="font-size:13px;opacity:0.9;margin-bottom:8px;">${c.why}</div>
+        <div style="font-size:14px;margin-bottom:8px;"><b>Task:</b> ${c.task}</div>
+        <div style="font-size:13px;opacity:0.9;margin-bottom:10px;"><b>Output:</b> ${c.output}</div>
+        <button id="seedCopy${idx}" style="padding:10px 12px;border-radius:10px;border:none;cursor:pointer;font-weight:700;">
+          Copy this challenge
+        </button>
+      `;
+
+          box.appendChild(card);
+
+          setTimeout(() => {
+            const btn = document.getElementById(`seedCopy${idx}`);
+            if (!btn) return;
+            btn.onclick = async () => {
+              const text = `${c.title}\nWhy: ${c.why}\nTask: ${c.task}\nOutput: ${c.output}\n\n#SeedlingChallenge`;
+              try {
+                await navigator.clipboard.writeText(text);
+                btn.innerText = "Copied ✅";
+                setTimeout(() => (btn.innerText = "Copy this challenge"), 1200);
+              } catch (e) {
+                alert("Copy failed. You can manually select and copy.");
+              }
+            };
+          }, 0);
+        });</div >
+
+    // Optional Cyber Workshop CTA (no form, no backend)
+    const cta = document.createElement("div");
+        cta.style.marginTop = "14px";
+        cta.style.padding = "12px";
+        cta.style.borderRadius = "12px";
+        cta.style.border = "1px solid rgba(34,197,94,0.35)";
+        cta.style.background = "rgba(34,197,94,0.08)";
+        cta.innerHTML = `
+      <div style="font-weight:800;margin-bottom:6px;">Join a Cybersecurity Workshop (Industry Experts) 🛡️</div>
+      <div style="opacity:0.9;margin-bottom:10px;font-size:14px;">
+        If you want to learn real-world cyber skills in simple language, send a quick “I’m interested”.
+      </div>
+      <button id="seedWorkshopBtn" style="padding:10px 12px;border-radius:10px;border:none;cursor:pointer;font-weight:800;">
+        Email: I'm Interested
+      </button>
+    `;
+        box.appendChild(cta);
+
+        setTimeout(() => {
+          const b = document.getElementById("seedWorkshopBtn");
+          if (!b) return;
+          b.onclick = () => {
+            const subject = encodeURIComponent("Seedling Workshop — I'm interested");
+            const body = encodeURIComponent(
+              "Hi Seedling Team,\n\nI completed the Seedling Assessment and I'm interested in joining the Cybersecurity workshop.\n\nName:\nCity:\nStudent/Working:\nPreferred language (EN/HI/TE):\n\nThanks!"
+            );
+            window.location.href = `mailto:${EMAIL_TO}?subject=${subject}&body=${body}`;
+          };
+        }, 0);
+
+        // Put it at the end of the results screen
+        root.appendChild(box);
+        return true;
+      };
+
+      // ----- Auto trigger (THIS is what fixes your issue) -----
+      function autoInject() {
+        try { window.seedlingInjectMicroChallenges(); } catch (e) { }
+      }
+
+      // Run a few times after load (results often appear after clicks)
+      setTimeout(autoInject, 200);
+      setTimeout(autoInject, 800);
+      setTimeout(autoInject, 1500);
+
+      // Observe DOM changes (works even if results screen is created later)
+      const obs = new MutationObserver(() => {
+        const injected = window.seedlingInjectMicroChallenges();
+        if (injected) obs.disconnect();
+      });
+      obs.observe(document.body, { childList: true, subtree: true });
+    })();
+  </script>
+  <!-- ========================= -->
+  <!-- Micro-Challenges Section -->
+  <!-- (Copied AS-IS from index-2) -->
+  <!-- ========================= -->
+
+  <section id="micro-challenges" style="margin-top:80px;">
+
+    <!-- 🔽 PASTE ENTIRE Micro-Challenges HTML FROM index-2 HERE -->
+    <!-- Do NOT remove IDs or JS hooks -->
+
+  </section>
 </body>
+
 </html>
