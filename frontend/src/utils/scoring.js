@@ -146,7 +146,7 @@ const getStyleProfile = (category) => {
         strengths: ['Versatile', 'Adaptable', 'Well-rounded perspective'],
         watchOuts: ['May lack a standout strength', 'Could feel unclear about direction'],
         patterns: 'You bring multiple perspectives to situations. No single style dominates.',
-        nextSteps: 'Reflect on which situations energize you most—that's your hidden strength.'
+        nextSteps: 'Reflect on which situations energize you most - that is your hidden strength.'
       }
     },
     hi: {
