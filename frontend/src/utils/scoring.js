@@ -512,7 +512,7 @@ const getDetailedInsights = (primaryCategory, secondaryCategory, language = 'en'
         }
       ],
       superhero: {
-        name: 'The Healer',
+        name: 'The Supporter',
         power: 'Feels what others feel',
         motto: 'I see you, I hear you',
         strength: 'You create safe spaces where people can be vulnerable'
