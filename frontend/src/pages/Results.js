@@ -155,7 +155,7 @@ const Results = () => {
                   </div>
                 </div>
                 <div>
-                  <h4 className="font-semibold text-foreground mb-3">Watch-outs</h4>
+                  <h4 className="font-semibold text-foreground mb-3">{t('results.watchOuts')}</h4>
                   <ul className="space-y-2">
                     {primary.watchOuts.map((watchOut, index) => (
                       <li key={index} className="flex items-start gap-2 text-muted-foreground">
