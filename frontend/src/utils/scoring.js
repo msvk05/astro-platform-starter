@@ -360,7 +360,7 @@ const getStyleProfile = (category) => {
 };
 
 
-const getDetailedInsights = (primaryCategory, secondaryCategory) => {
+const getDetailedInsights = (primaryCategory, secondaryCategory, language = 'en') => {
   const detailedProfiles = {
     structure: {
       workStyle: {
