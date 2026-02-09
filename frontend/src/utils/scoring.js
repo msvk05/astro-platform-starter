@@ -29,10 +29,21 @@ export const calculateResults = (answers) => {
   const primaryCategory = sortedCategories[0]?.[0] || 'balanced';
   const secondaryCategory = sortedCategories[1]?.[0] || 'balanced';
   
+  // Get all category profiles with scores
+  const allCategories = sortedCategories.map(([category, score]) => ({
+    category,
+    score,
+    maxScore: 3,
+    percentage: Math.round((score / 3) * 100),
+    profile: getStyleProfile(category)
+  }));
+  
   return {
     primary: getStyleProfile(primaryCategory),
     secondary: getStyleProfile(secondaryCategory),
-    scores: categoryScores
+    scores: categoryScores,
+    allCategories,
+    detailedInsights: getDetailedInsights(primaryCategory, secondaryCategory)
   };
 };
 
