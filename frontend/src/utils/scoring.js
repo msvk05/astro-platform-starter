@@ -41,13 +41,17 @@ export const calculateResults = (answers, language = 'en') => {
   // Ensure all categories are present even if score is 0
   const allCategoryNames = ['structure', 'analytical', 'social', 'empathy', 'curiosity', 'focus', 'civic', 'responsibility', 'decisiveness', 'adaptability'];
   
+  // Categories with 2 questions have max score of 6, others have max score of 3
+  const categoriesWithTwoQuestions = ['empathy', 'responsibility'];
+  
   const completeCategories = allCategoryNames.map(category => {
     const score = categoryScores[category] || 0;
+    const maxScore = categoriesWithTwoQuestions.includes(category) ? 6 : 3;
     return {
       category,
       score,
-      maxScore: 3,
-      percentage: Math.round((score / 3) * 100),
+      maxScore,
+      percentage: Math.round((score / maxScore) * 100),
       profile: getStyleProfile(category)
     };
   }).sort((a, b) => b.score - a.score);
