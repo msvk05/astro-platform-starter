@@ -77,10 +77,41 @@ Next Step: ${results.primary.nextSteps}
 Completed via Seedling - Self-Reflection Tool`;
   };
   
-  const handleCopy = () => {
-    navigator.clipboard.writeText(generateSummary());
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+  const handleCopy = async () => {
+    const summary = generateSummary();
+    
+    // Try modern clipboard API first
+    if (navigator.clipboard && window.isSecureContext) {
+      try {
+        await navigator.clipboard.writeText(summary);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+        return;
+      } catch (err) {
+        console.log('Clipboard API failed, using fallback');
+      }
+    }
+    
+    // Fallback for non-secure contexts or if clipboard API fails
+    const textArea = document.createElement('textarea');
+    textArea.value = summary;
+    textArea.style.position = 'fixed';
+    textArea.style.left = '-999999px';
+    textArea.style.top = '-999999px';
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+    
+    try {
+      document.execCommand('copy');
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (err) {
+      console.error('Failed to copy:', err);
+      alert('Failed to copy. Please manually select and copy the text above.');
+    }
+    
+    document.body.removeChild(textArea);
   };
   
   if (!results) {
