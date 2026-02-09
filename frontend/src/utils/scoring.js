@@ -434,7 +434,7 @@ const getDetailedInsights = (primaryCategory, secondaryCategory, language = 'en'
         }
       ],
       superhero: {
-        name: 'The Detective',
+        name: 'The Thinker',
         power: 'Sees patterns others miss',
         motto: 'Question everything',
         strength: 'You solve complex puzzles with logic and evidence'
