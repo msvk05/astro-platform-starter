@@ -15,7 +15,7 @@ export const translations = {
       whatYouGet: 'What will you get?',
       whatYouGetDesc: 'Practical insights about your strengths, watch-outs, and immediate next steps. Plus optional micro-challenges to take action right away.',
       startButton: 'Start Assessment',
-      duration: '~3 minutes',
+      duration: '~4 minutes',
       promise: 'No login. No data collection. Just reflection.'
     },
     assessment: {
