@@ -395,7 +395,7 @@ const getDetailedInsights = (primaryCategory, secondaryCategory, language = 'en'
         }
       ],
       superhero: {
-        name: 'The Architect',
+        name: 'The Planner',
         power: 'Turns chaos into order',
         motto: 'A place for everything, and everything in its place',
         strength: 'You build systems that others can follow'
