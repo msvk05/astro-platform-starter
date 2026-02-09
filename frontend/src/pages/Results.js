@@ -24,7 +24,7 @@ const Results = () => {
     }
     
     const answers = JSON.parse(savedAnswers);
-    const calculatedResults = calculateResults(answers);
+    const calculatedResults = calculateResults(answers, language);
     setResults(calculatedResults);
   }, [navigate]);
   
