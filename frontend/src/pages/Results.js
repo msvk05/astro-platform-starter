@@ -191,7 +191,7 @@ const Results = () => {
               <div className="bg-accent/10 border border-accent/30 rounded-2xl p-6">
                 <h4 className="font-semibold text-foreground mb-2 flex items-center gap-2">
                   <Zap className="w-4 h-4 text-accent-foreground" />
-                  Next Steps
+                  {t('results.nextSteps')}
                 </h4>
                 <p className="text-base text-foreground/80 leading-relaxed">
                   {primary.nextSteps}
