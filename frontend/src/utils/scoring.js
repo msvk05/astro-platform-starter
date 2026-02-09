@@ -780,7 +780,7 @@ const getDetailedInsights = (primaryCategory, secondaryCategory, language = 'en'
         }
       ],
       superhero: {
-        name: 'The Versatile',
+        name: 'The Balanced',
         power: 'Adapts to any situation',
         motto: 'Jack of all trades, master of choice',
         strength: 'Your flexibility is your foundation - now build upward'
