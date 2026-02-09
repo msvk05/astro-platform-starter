@@ -215,6 +215,7 @@ export const translations = {
     },
     results: {
       title: 'మీ ప్రతిబింబ ఫలితాలు',
+      subtitle: 'మీ సమగ్ర స్వీయ-ప్రతిబింబ అంతర్దృష్టులు',
       primaryStyle: 'ప్రాథమిక శైలి',
       secondaryStyle: 'ద్వితీయ శైలి',
       strengths: 'మీ బలాలు',
@@ -224,7 +225,24 @@ export const translations = {
       tryChallenge: 'మైక్రో-ఛాలెంజ్ ప్రయత్నించండి',
       challengeDuration: '2-3 నిమిషాలు',
       shareResults: 'ఫలితాలను పంచుకోండి',
-      restart: 'మళ్లీ ప్రారంభించండి'
+      restart: 'మళ్లీ ప్రారంభించండి',
+      patternBreakdown: 'మీ నమూనా విభజన',
+      strengthsWatchouts: 'బలాలు మరియు హెచ్చరికలు',
+      lifePatternsNextSteps: 'మీ జీవిత నమూనాలు మరియు తదుపరి దశలు',
+      howYouWorkBest: 'మీరు ఎలా ఉత్తమంగా పని చేస్తారు',
+      careerStudyPaths: 'కెరీర్ మరియు అధ్యయన మార్గాలు',
+      growthAreas: 'వృద్ధి ప్రాంతాలు',
+      superheroArchetype: 'మీ సూపర్‌హీరో ఆర్కిటైప్',
+      environment: 'వాతావరణం',
+      schedule: 'షెడ్యూల్',
+      collaboration: 'సహకారం',
+      tools: 'సాధనాలు',
+      careerPathsNote: 'మీ ప్రొఫైల్ ఆధారంగా, ఈ మార్గాలు మీ సహజ బలాలతో బాగా సరిపోతాయి:',
+      careerPathsDisclaimer: 'గమనిక: ఇవి సూచనలు, పరిమితులు కాదు। మీ ఆసక్తులు మరియు పరిస్థితులు అత్యంత ముఖ్యం।',
+      tryThis: 'దీన్ని ప్రయత్నించండి:',
+      why: 'ఎందుకు:',
+      superpower: 'మహాశక్తి:',
+      yourImpact: 'మీ ప్రభావం:'
     },
     challenges: {
       title: 'మైక్రో-ఛాలెంజ్‌లు',
