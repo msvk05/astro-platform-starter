@@ -183,7 +183,7 @@ const Results = () => {
             </AccordionTrigger>
             <AccordionContent className="px-8 pb-6 space-y-4">
               <div>
-                <h4 className="font-semibold text-foreground mb-2">Your Patterns</h4>
+                <h4 className="font-semibold text-foreground mb-2">{t('results.patterns')}</h4>
                 <p className="text-base text-muted-foreground leading-relaxed">
                   {primary.patterns}
                 </p>
