@@ -344,3 +344,436 @@ const getStyleProfile = (category) => {
   
   return profiles.en[category] || profiles.en.balanced;
 };
+
+
+const getDetailedInsights = (primaryCategory, secondaryCategory) => {
+  const detailedProfiles = {
+    structure: {
+      workStyle: {
+        environment: 'Organized workspace with clear systems and routines',
+        schedule: 'Prefer fixed schedules with planned breaks',
+        collaboration: 'Work well in structured teams with defined roles',
+        tools: 'Love planners, checklists, project management tools'
+      },
+      careerPaths: [
+        'Project Manager',
+        'Operations Coordinator',
+        'Event Planner',
+        'Administrative Specialist',
+        'Supply Chain Analyst',
+        'Quality Assurance'
+      ],
+      growthAreas: [
+        {
+          area: 'Embrace Flexibility',
+          tip: 'Practice saying "yes" to one unplanned activity each week',
+          why: 'Life does not always follow plans - adaptability is a superpower'
+        },
+        {
+          area: 'Creative Thinking',
+          tip: 'Spend 15 minutes weekly brainstorming without judging ideas',
+          why: 'Structure + creativity = innovation'
+        },
+        {
+          area: 'Delegation',
+          tip: 'Let others complete tasks their way, even if different from yours',
+          why: 'Trust builds stronger teams than control'
+        }
+      ],
+      superhero: {
+        name: 'The Architect',
+        power: 'Turns chaos into order',
+        motto: 'A place for everything, and everything in its place',
+        strength: 'You build systems that others can follow'
+      }
+    },
+    analytical: {
+      workStyle: {
+        environment: 'Quiet space for deep thinking, access to information',
+        schedule: 'Flexible with blocks of uninterrupted time',
+        collaboration: 'Enjoy problem-solving discussions, prefer data over opinions',
+        tools: 'Research databases, analytical software, whiteboards'
+      },
+      careerPaths: [
+        'Data Analyst',
+        'Research Scientist',
+        'Software Developer',
+        'Financial Analyst',
+        'UX Researcher',
+        'Strategy Consultant'
+      ],
+      growthAreas: [
+        {
+          area: 'Trust Your Gut',
+          tip: 'Make one small decision daily based on intuition, not analysis',
+          why: 'Not everything can be optimized - sometimes you need to feel it'
+        },
+        {
+          area: 'Emotional Intelligence',
+          tip: 'Ask "How do they feel?" before "What do they think?"',
+          why: 'People are not problems to solve, but humans to understand'
+        },
+        {
+          area: 'Speed Over Perfection',
+          tip: 'Set a 10-minute timer for simple decisions',
+          why: 'Done is better than perfect in most cases'
+        }
+      ],
+      superhero: {
+        name: 'The Detective',
+        power: 'Sees patterns others miss',
+        motto: 'Question everything',
+        strength: 'You solve complex puzzles with logic and evidence'
+      }
+    },
+    social: {
+      workStyle: {
+        environment: 'Collaborative spaces with people around',
+        schedule: 'Energized by meetings and group activities',
+        collaboration: 'Natural facilitator, brings teams together',
+        tools: 'Communication platforms, networking events, team projects'
+      },
+      careerPaths: [
+        'Human Resources',
+        'Sales Professional',
+        'Teacher/Trainer',
+        'Marketing Manager',
+        'Community Manager',
+        'Event Coordinator'
+      ],
+      growthAreas: [
+        {
+          area: 'Solo Work',
+          tip: 'Schedule one hour weekly for independent deep work',
+          why: 'Some breakthroughs happen in solitude'
+        },
+        {
+          area: 'Saying No',
+          tip: 'Decline one request monthly that overextends you',
+          why: 'You cannot pour from an empty cup'
+        },
+        {
+          area: 'Written Communication',
+          tip: 'Write down ideas before verbal discussions',
+          why: 'Not everyone processes thoughts through talking'
+        }
+      ],
+      superhero: {
+        name: 'The Connector',
+        power: 'Builds bridges between people',
+        motto: 'Together we are stronger',
+        strength: 'You create networks that amplify everyone'
+      }
+    },
+    empathy: {
+      workStyle: {
+        environment: 'Supportive, psychologically safe spaces',
+        schedule: 'Need breaks for emotional processing',
+        collaboration: 'Excel in mentoring, counseling, team harmony',
+        tools: 'One-on-one meetings, feedback sessions, support groups'
+      },
+      careerPaths: [
+        'Counselor/Therapist',
+        'Social Worker',
+        'Healthcare Professional',
+        'Customer Success',
+        'NGO/Nonprofit Work',
+        'HR Specialist'
+      ],
+      growthAreas: [
+        {
+          area: 'Boundaries',
+          tip: 'Practice "I need time to recharge" without guilt',
+          why: 'Caring for yourself enables caring for others'
+        },
+        {
+          area: 'Direct Feedback',
+          tip: 'Share one honest critique weekly (kindly)',
+          why: 'True support sometimes means difficult conversations'
+        },
+        {
+          area: 'Objectivity',
+          tip: 'In conflicts, list facts before feelings',
+          why: 'Balance heart with head for better decisions'
+        }
+      ],
+      superhero: {
+        name: 'The Healer',
+        power: 'Feels what others feel',
+        motto: 'I see you, I hear you',
+        strength: 'You create safe spaces where people can be vulnerable'
+      }
+    },
+    curiosity: {
+      workStyle: {
+        environment: 'Dynamic, ever-changing with new challenges',
+        schedule: 'Variety over routine, rotation of activities',
+        collaboration: 'Enjoy brainstorming, innovation projects',
+        tools: 'Learning platforms, experimentation tools, diverse projects'
+      },
+      careerPaths: [
+        'Product Designer',
+        'Entrepreneur',
+        'Journalist',
+        'R&D Specialist',
+        'Content Creator',
+        'Innovation Consultant'
+      ],
+      growthAreas: [
+        {
+          area: 'Follow Through',
+          tip: 'Finish one project before starting two new ones',
+          why: 'Depth creates mastery; breadth creates surface knowledge'
+        },
+        {
+          area: 'Commitment',
+          tip: 'Stick with one hobby for 3 months minimum',
+          why: 'Real growth happens past the initial excitement'
+        },
+        {
+          area: 'Focus',
+          tip: 'Use Pomodoro technique: 25 min focus, 5 min break',
+          why: 'Your curiosity is a gift; focus turns it into achievement'
+        }
+      ],
+      superhero: {
+        name: 'The Explorer',
+        power: 'Infinite learning capacity',
+        motto: 'What if we tried...',
+        strength: 'You bring fresh perspectives to old problems'
+      }
+    },
+    focus: {
+      workStyle: {
+        environment: 'Currently struggles with distractions',
+        schedule: 'Benefits from external structure and accountability',
+        collaboration: 'May work better with body doubling or focus partners',
+        tools: 'Needs time-blocking, distraction blockers, focus apps'
+      },
+      careerPaths: [
+        'Roles with built-in structure',
+        'Jobs with variety and movement',
+        'Careers with clear deadlines',
+        'Work with accountability partners',
+        'Consider ADHD assessment if patterns persist'
+      ],
+      growthAreas: [
+        {
+          area: 'Environment Design',
+          tip: 'Create a dedicated distraction-free zone',
+          why: 'Your environment shapes your behavior more than willpower'
+        },
+        {
+          area: 'Phone Management',
+          tip: 'Use grayscale mode and app limits during work hours',
+          why: 'Digital tools should serve you, not control you'
+        },
+        {
+          area: 'Micro-Habits',
+          tip: 'Start with just 5 minutes of focused work daily',
+          why: 'Small wins build momentum for bigger changes'
+        }
+      ],
+      superhero: {
+        name: 'The Phoenix',
+        power: 'Rising from distraction',
+        motto: 'Every moment is a chance to refocus',
+        strength: 'You are aware of the challenge - that is the first step'
+      }
+    },
+    civic: {
+      workStyle: {
+        environment: 'Values-driven organizations with social impact',
+        schedule: 'Energized by community projects and volunteering',
+        collaboration: 'Lead by example, inspire others to action',
+        tools: 'Community platforms, volunteer networks, activism tools'
+      },
+      careerPaths: [
+        'Social Entrepreneur',
+        'Urban Planner',
+        'Environmental Scientist',
+        'Policy Analyst',
+        'NGO Leader',
+        'Sustainability Consultant'
+      ],
+      growthAreas: [
+        {
+          area: 'Systemic Thinking',
+          tip: 'Learn about root causes, not just symptoms',
+          why: 'Real change requires understanding systems'
+        },
+        {
+          area: 'Self-Care',
+          tip: 'Schedule rest as seriously as you schedule service',
+          why: 'Burnout helps no one - sustainable impact needs sustainable energy'
+        },
+        {
+          area: 'Influence Skills',
+          tip: 'Practice persuading others to join your causes',
+          why: 'Collective action creates bigger impact than solo efforts'
+        }
+      ],
+      superhero: {
+        name: 'The Guardian',
+        power: 'Protects the common good',
+        motto: 'Be the change',
+        strength: 'You take responsibility when others look away'
+      }
+    },
+    responsibility: {
+      workStyle: {
+        environment: 'Trust-based cultures valuing integrity',
+        schedule: 'Self-directed, owns their commitments',
+        collaboration: 'Reliable team member, others count on them',
+        tools: 'Accountability systems, reflection journals, feedback loops'
+      },
+      careerPaths: [
+        'Leadership Roles',
+        'Ethics & Compliance',
+        'Financial Management',
+        'Legal Professions',
+        'Quality Control',
+        'Any field valuing integrity'
+      ],
+      growthAreas: [
+        {
+          area: 'Self-Compassion',
+          tip: 'Treat yourself as kindly as you treat others',
+          why: 'Responsibility without self-forgiveness leads to paralysis'
+        },
+        {
+          area: 'Shared Accountability',
+          tip: 'Let others take responsibility too',
+          why: 'Taking all blame prevents others from growing'
+        },
+        {
+          area: 'Celebrate Wins',
+          tip: 'Acknowledge what went right, not just what went wrong',
+          why: 'Progress needs recognition, not just correction'
+        }
+      ],
+      superhero: {
+        name: 'The Keeper',
+        power: 'Unwavering integrity',
+        motto: 'Own it, fix it, grow from it',
+        strength: 'You are trustworthy in a world that needs more trust'
+      }
+    },
+    decisiveness: {
+      workStyle: {
+        environment: 'Benefits from structured decision frameworks',
+        schedule: 'Needs time for consideration but working on faster choices',
+        collaboration: 'Values input from others, sometimes too much',
+        tools: 'Decision matrices, pros/cons lists, consultation processes'
+      },
+      careerPaths: [
+        'Analyst roles with time for deliberation',
+        'Research positions',
+        'Advisory services',
+        'Roles with collaborative decision-making'
+      ],
+      growthAreas: [
+        {
+          area: 'Two-Minute Rule',
+          tip: 'If decision takes less than 2 minutes to make, decide now',
+          why: 'Most decisions are reversible - speed matters more than perfection'
+        },
+        {
+          area: 'Fail Fast',
+          tip: 'Make one "safe to fail" decision weekly and learn from it',
+          why: 'Experience builds confidence faster than analysis'
+        },
+        {
+          area: 'Decision Fatigue',
+          tip: 'Automate routine decisions (meal plans, clothes, etc.)',
+          why: 'Save mental energy for decisions that truly matter'
+        }
+      ],
+      superhero: {
+        name: 'The Strategist',
+        power: 'Considers all angles',
+        motto: 'Measure twice, cut once (but actually cut)',
+        strength: 'Your thoughtfulness prevents costly mistakes'
+      }
+    },
+    adaptability: {
+      workStyle: {
+        environment: 'Dynamic, fast-paced with frequent changes',
+        schedule: 'Thrives on variety and surprises',
+        collaboration: 'Go-to person when plans change',
+        tools: 'Agile methodologies, flexible systems, improvisation'
+      },
+      careerPaths: [
+        'Startup Environment',
+        'Crisis Management',
+        'Emergency Services',
+        'Travel Industry',
+        'Freelance/Consulting',
+        'Change Management'
+      ],
+      growthAreas: [
+        {
+          area: 'Consistency',
+          tip: 'Build one non-negotiable daily habit',
+          why: 'Flexibility works best on a foundation of stability'
+        },
+        {
+          area: 'Planning',
+          tip: 'Create a basic plan even if you expect to change it',
+          why: 'Having something to deviate from is better than chaos'
+        },
+        {
+          area: 'Documentation',
+          tip: 'Track your pivots and what you learn from them',
+          why: 'Your adaptability is valuable - capture the lessons'
+        }
+      ],
+      superhero: {
+        name: 'The Shapeshifter',
+        power: 'Thrives in uncertainty',
+        motto: 'When the wind changes, adjust your sails',
+        strength: 'You find opportunity where others see obstacles'
+      }
+    },
+    balanced: {
+      workStyle: {
+        environment: 'Adaptable to various settings',
+        schedule: 'Can work in different structures',
+        collaboration: 'Flexible in team dynamics',
+        tools: 'Open to different approaches and methods'
+      },
+      careerPaths: [
+        'Generalist roles',
+        'Project coordination',
+        'Business operations',
+        'Multiple career paths possible'
+      ],
+      growthAreas: [
+        {
+          area: 'Find Your Edge',
+          tip: 'Try 3 different activities and see which one excites you most',
+          why: 'Being balanced is good; finding your passion is better'
+        },
+        {
+          area: 'Deep Practice',
+          tip: 'Choose one skill and go deep instead of staying broad',
+          why: 'Specialization often creates more value than generalization'
+        },
+        {
+          area: 'Personal Brand',
+          tip: 'Identify what you want to be known for',
+          why: 'Clarity of direction helps others help you'
+        }
+      ],
+      superhero: {
+        name: 'The Versatile',
+        power: 'Adapts to any situation',
+        motto: 'Jack of all trades, master of choice',
+        strength: 'Your flexibility is your foundation - now build upward'
+      }
+    }
+  };
+  
+  return detailedProfiles[primaryCategory] || detailedProfiles.balanced;
+};
+
