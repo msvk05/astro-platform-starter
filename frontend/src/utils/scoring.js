@@ -57,7 +57,7 @@ export const calculateResults = (answers, language = 'en') => {
     secondary: getStyleProfile(secondaryCategory),
     scores: categoryScores,
     allCategories: completeCategories,
-    detailedInsights: getDetailedInsights(primaryCategory, secondaryCategory, 'en')
+    detailedInsights: getDetailedInsights(primaryCategory, secondaryCategory, language)
   };
 };
 
