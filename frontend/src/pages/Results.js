@@ -280,10 +280,10 @@ const Results = () => {
                   <div key={index} className="border-l-4 border-primary pl-6 py-2">
                     <h4 className="font-semibold text-foreground mb-2">{growth.area}</h4>
                     <p className="text-sm text-muted-foreground mb-2">
-                      <span className="font-medium text-foreground">Try this:</span> {growth.tip}
+                      <span className="font-medium text-foreground">{t('results.tryThis')}</span> {growth.tip}
                     </p>
                     <p className="text-xs text-muted-foreground italic">
-                      <span className="font-medium">Why:</span> {growth.why}
+                      <span className="font-medium">{t('results.why')}</span> {growth.why}
                     </p>
                   </div>
                 ))}
