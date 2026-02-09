@@ -299,7 +299,7 @@ const Results = () => {
                   <Shield className="w-5 h-5 text-accent-foreground" />
                 </div>
                 <span className="text-xl font-heading font-semibold text-foreground">
-                  Your Superhero Archetype
+                  {t('results.superheroArchetype')}
                 </span>
               </div>
             </AccordionTrigger>
