@@ -242,7 +242,7 @@ const Results = () => {
                   <Target className="w-5 h-5 text-secondary" />
                 </div>
                 <span className="text-xl font-heading font-semibold text-foreground">
-                  Career & Study Paths
+                  {t('results.careerStudyPaths')}
                 </span>
               </div>
             </AccordionTrigger>
