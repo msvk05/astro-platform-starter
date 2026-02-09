@@ -1,4 +1,4 @@
-export const calculateResults = (answers) => {
+export const calculateResults = (answers, language = 'en') => {
   const categoryScores = {};
   const maxScore = 4; // Max value for each answer (0-3 mapped to "No" through "Yes")
   
