@@ -208,7 +208,7 @@ const Results = () => {
                   <Briefcase className="w-5 h-5 text-primary" />
                 </div>
                 <span className="text-xl font-heading font-semibold text-foreground">
-                  How You Work Best
+                  {t('results.howYouWorkBest')}
                 </span>
               </div>
             </AccordionTrigger>
