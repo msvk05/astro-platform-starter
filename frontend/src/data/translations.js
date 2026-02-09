@@ -123,6 +123,7 @@ export const translations = {
     },
     results: {
       title: 'आपके चिंतन के परिणाम',
+      subtitle: 'आपकी व्यापक आत्म-चिंतन अंतर्दृष्टि',
       primaryStyle: 'प्राथमिक शैली',
       secondaryStyle: 'द्वितीयक शैली',
       strengths: 'आपकी ताकत',
@@ -132,7 +133,24 @@ export const translations = {
       tryChallenge: 'माइक्रो-चैलेंज आजमाएं',
       challengeDuration: '2-3 मिनट',
       shareResults: 'परिणाम साझा करें',
-      restart: 'फिर से शुरू करें'
+      restart: 'फिर से शुरू करें',
+      patternBreakdown: 'आपके पैटर्न का विवरण',
+      strengthsWatchouts: 'ताकत और सावधानियां',
+      lifePatternsNextSteps: 'आपके जीवन के पैटर्न और अगले कदम',
+      howYouWorkBest: 'आप सबसे अच्छा कैसे काम करते हैं',
+      careerStudyPaths: 'करियर और अध्ययन पथ',
+      growthAreas: 'विकास के क्षेत्र',
+      superheroArchetype: 'आपका सुपरहीरो आर्किटाइप',
+      environment: 'वातावरण',
+      schedule: 'शेड्यूल',
+      collaboration: 'सहयोग',
+      tools: 'उपकरण',
+      careerPathsNote: 'आपकी प्रोफाइल के आधार पर, ये पथ आपकी प्राकृतिक ताकत के साथ अच्छी तरह मेल खा सकते हैं:',
+      careerPathsDisclaimer: 'नोट: ये सुझाव हैं, सीमाएं नहीं। आपकी रुचियां और परिस्थितियां सबसे अधिक महत्वपूर्ण हैं।',
+      tryThis: 'यह करें:',
+      why: 'क्यों:',
+      superpower: 'महाशक्ति:',
+      yourImpact: 'आपका प्रभाव:'
     },
     challenges: {
       title: 'माइक्रो-चैलेंज',
