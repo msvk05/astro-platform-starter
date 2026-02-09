@@ -80,7 +80,7 @@ const getQuestionCategory = (index) => {
 };
 
 const isQuestionPositive = (index) => {
-  // Questions 6 and 9 are negatively framed
+  // Questions 6 and 9 are negatively framed (index 5 and 8)
   return index !== 5 && index !== 8;
 };
 
