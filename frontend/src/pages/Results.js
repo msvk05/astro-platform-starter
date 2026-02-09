@@ -44,18 +44,44 @@ const Results = () => {
   // Get category label
   const getCategoryLabel = (category) => {
     const labels = {
-      structure: 'Structure & Planning',
-      analytical: 'Analytical Thinking',
-      social: 'Social Initiative',
-      empathy: 'Empathy & Support',
-      curiosity: 'Curiosity & Learning',
-      focus: 'Focus Management',
-      civic: 'Civic Responsibility',
-      responsibility: 'Personal Accountability',
-      decisiveness: 'Decision Making',
-      adaptability: 'Adaptability'
+      en: {
+        structure: 'Structure & Planning',
+        analytical: 'Analytical Thinking',
+        social: 'Social Initiative',
+        empathy: 'Empathy & Support',
+        curiosity: 'Curiosity & Learning',
+        focus: 'Focus Management',
+        civic: 'Civic Responsibility',
+        responsibility: 'Personal Accountability',
+        decisiveness: 'Decision Making',
+        adaptability: 'Adaptability'
+      },
+      hi: {
+        structure: 'संरचना और योजना',
+        analytical: 'विश्लेषणात्मक सोच',
+        social: 'सामाजिक पहल',
+        empathy: 'सहानुभूति और समर्थन',
+        curiosity: 'जिज्ञासा और सीखना',
+        focus: 'फोकस प्रबंधन',
+        civic: 'नागरिक जिम्मेदारी',
+        responsibility: 'व्यक्तिगत जवाबदेही',
+        decisiveness: 'निर्णय लेना',
+        adaptability: 'अनुकूलन क्षमता'
+      },
+      te: {
+        structure: 'నిర్మాణం & ప్రణాళిक',
+        analytical: 'విశ్లేషణాత్మక ఆలోచన',
+        social: 'సామాజిక చొరవ',
+        empathy: 'సానుభూతి & మద్దతు',
+        curiosity: 'ఉత్సుకత & నేర్చుకోవడం',
+        focus: 'ఫోకస్ నిర్వహణ',
+        civic: 'పౌర బాధ్యత',
+        responsibility: 'వ్యక్తిగత జవాబుదారీతనం',
+        decisiveness: 'నిర్ణయం తీసుకోవడం',
+        adaptability: 'అనుకూలత'
+      }
     };
-    return labels[category] || category;
+    return labels[language]?.[category] || labels.en[category] || category;
   };
   
   return (
