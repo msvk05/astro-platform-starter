@@ -362,7 +362,7 @@ const getStyleProfile = (category, language = 'en') => {
     }
   };
   
-  return profiles.en[category] || profiles.en.balanced;
+  return profiles[language]?.[category] || profiles.en[category] || profiles.en.balanced;
 };
 
 
