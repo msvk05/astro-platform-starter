@@ -26,7 +26,7 @@ const Results = () => {
     const answers = JSON.parse(savedAnswers);
     const calculatedResults = calculateResults(answers, language);
     setResults(calculatedResults);
-  }, [navigate]);
+  }, [navigate, language]);
   
   const handleRestart = () => {
     localStorage.removeItem('seedling-answers');
