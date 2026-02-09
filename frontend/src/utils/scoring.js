@@ -743,7 +743,7 @@ const getDetailedInsights = (primaryCategory, secondaryCategory, language = 'en'
         }
       ],
       superhero: {
-        name: 'The Shapeshifter',
+        name: 'The Flexible',
         power: 'Thrives in uncertainty',
         motto: 'When the wind changes, adjust your sails',
         strength: 'You find opportunity where others see obstacles'
