@@ -368,46 +368,45 @@ const getStyleProfile = (category, language = 'en') => {
 
 const getDetailedInsights = (primaryCategory, secondaryCategory, language = 'en') => {
   const detailedProfiles = {
-    en: {
-      structure: {
-        workStyle: {
-          environment: 'Organized workspace with clear systems and routines',
-          schedule: 'Prefer fixed schedules with planned breaks',
-          collaboration: 'Work well in structured teams with defined roles',
-          tools: 'Love planners, checklists, project management tools'
-        },
-        careerPaths: [
-          'Project Manager',
-          'Operations Coordinator',
-          'Event Planner',
-          'Administrative Specialist',
-          'Supply Chain Analyst',
-          'Quality Assurance'
-        ],
-        growthAreas: [
-          {
-            area: 'Embrace Flexibility',
-            tip: 'Practice saying "yes" to one unplanned activity each week',
-            why: 'Life does not always follow plans - adaptability is a superpower'
-          },
-          {
-            area: 'Creative Thinking',
-            tip: 'Spend 15 minutes weekly brainstorming without judging ideas',
-            why: 'Structure + creativity = innovation'
-          },
-          {
-            area: 'Delegation',
-            tip: 'Let others complete tasks their way, even if different from yours',
-            why: 'Trust builds stronger teams than control'
-          }
-        ],
-        superhero: {
-          name: 'The Planner',
-          power: 'Turns chaos into order',
-          motto: 'A place for everything, and everything in its place',
-          strength: 'You build systems that others can follow'
-        }
+    structure: {
+      workStyle: {
+        environment: 'Organized workspace with clear systems and routines',
+        schedule: 'Prefer fixed schedules with planned breaks',
+        collaboration: 'Work well in structured teams with defined roles',
+        tools: 'Love planners, checklists, project management tools'
       },
+      careerPaths: [
+        'Project Manager',
+        'Operations Coordinator',
+        'Event Planner',
+        'Administrative Specialist',
+        'Supply Chain Analyst',
+        'Quality Assurance'
+      ],
+      growthAreas: [
+        {
+          area: 'Embrace Flexibility',
+          tip: 'Practice saying "yes" to one unplanned activity each week',
+          why: 'Life does not always follow plans - adaptability is a superpower'
+        },
+        {
+          area: 'Creative Thinking',
+          tip: 'Spend 15 minutes weekly brainstorming without judging ideas',
+          why: 'Structure + creativity = innovation'
+        },
+        {
+          area: 'Delegation',
+          tip: 'Let others complete tasks their way, even if different from yours',
+          why: 'Trust builds stronger teams than control'
+        }
+      ],
+      superhero: {
+        name: 'The Planner',
+        power: 'Turns chaos into order',
+        motto: 'A place for everything, and everything in its place',
+        strength: 'You build systems that others can follow'
+      }
+    },
     analytical: {
       workStyle: {
         environment: 'Quiet space for deep thinking, access to information',
