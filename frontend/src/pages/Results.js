@@ -314,11 +314,11 @@ const Results = () => {
                 </p>
                 <div className="bg-card rounded-2xl p-6 space-y-3">
                   <div>
-                    <span className="font-semibold text-foreground">Superpower:</span>
+                    <span className="font-semibold text-foreground">{t('results.superpower')}</span>
                     <p className="text-muted-foreground">{detailedInsights.superhero.power}</p>
                   </div>
                   <div>
-                    <span className="font-semibold text-foreground">Your Impact:</span>
+                    <span className="font-semibold text-foreground">{t('results.yourImpact')}</span>
                     <p className="text-muted-foreground">{detailedInsights.superhero.strength}</p>
                   </div>
                 </div>
