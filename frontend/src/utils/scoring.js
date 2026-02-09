@@ -38,11 +38,25 @@ export const calculateResults = (answers) => {
     profile: getStyleProfile(category)
   }));
   
+  // Ensure all categories are present even if score is 0
+  const allCategoryNames = ['structure', 'analytical', 'social', 'empathy', 'curiosity', 'focus', 'civic', 'responsibility', 'decisiveness', 'adaptability'];
+  
+  const completeCategories = allCategoryNames.map(category => {
+    const score = categoryScores[category] || 0;
+    return {
+      category,
+      score,
+      maxScore: 3,
+      percentage: Math.round((score / 3) * 100),
+      profile: getStyleProfile(category)
+    };
+  }).sort((a, b) => b.score - a.score);
+  
   return {
     primary: getStyleProfile(primaryCategory),
     secondary: getStyleProfile(secondaryCategory),
     scores: categoryScores,
-    allCategories,
+    allCategories: completeCategories,
     detailedInsights: getDetailedInsights(primaryCategory, secondaryCategory)
   };
 };
