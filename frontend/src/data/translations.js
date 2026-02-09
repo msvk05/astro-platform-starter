@@ -31,6 +31,7 @@ export const translations = {
     },
     results: {
       title: 'Your Reflection Results',
+      subtitle: 'Your comprehensive self-reflection insights',
       primaryStyle: 'Primary Style',
       secondaryStyle: 'Secondary Style',
       strengths: 'Your Strengths',
@@ -40,7 +41,24 @@ export const translations = {
       tryChallenge: 'Try a Micro-Challenge',
       challengeDuration: '2-3 mins',
       shareResults: 'Share Results',
-      restart: 'Start Over'
+      restart: 'Start Over',
+      patternBreakdown: 'Your Pattern Breakdown',
+      strengthsWatchouts: 'Strengths & Watch-outs',
+      lifePatternsNextSteps: 'Your Life Patterns & Next Steps',
+      howYouWorkBest: 'How You Work Best',
+      careerStudyPaths: 'Career & Study Paths',
+      growthAreas: 'Growth Areas',
+      superheroArchetype: 'Your Superhero Archetype',
+      environment: 'Environment',
+      schedule: 'Schedule',
+      collaboration: 'Collaboration',
+      tools: 'Tools',
+      careerPathsNote: 'Based on your profile, these paths may align well with your natural strengths:',
+      careerPathsDisclaimer: 'Note: These are suggestions, not limitations. Your interests and circumstances matter most.',
+      tryThis: 'Try this:',
+      why: 'Why:',
+      superpower: 'Superpower:',
+      yourImpact: 'Your Impact:'
     },
     challenges: {
       title: 'Micro-Challenges',
