@@ -52,13 +52,13 @@ export const calculateResults = (answers, language = 'en') => {
       score,
       maxScore,
       percentage: Math.round((score / maxScore) * 100),
-      profile: getStyleProfile(category)
+      profile: getStyleProfile(category, language)
     };
   }).sort((a, b) => b.score - a.score);
   
   return {
-    primary: getStyleProfile(primaryCategory),
-    secondary: getStyleProfile(secondaryCategory),
+    primary: getStyleProfile(primaryCategory, language),
+    secondary: getStyleProfile(secondaryCategory, language),
     scores: categoryScores,
     allCategories: completeCategories,
     detailedInsights: getDetailedInsights(primaryCategory, secondaryCategory, language)
