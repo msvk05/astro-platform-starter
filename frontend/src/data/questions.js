@@ -135,6 +135,18 @@ export const questions = {
       category: "adaptability",
       positive: true,
       superhero: true
+    },
+    {
+      id: 11,
+      text: "जब कोई मुझसे कोई समस्या साझा करता है, तो मैं वास्तव में परवाह करता हूं और उन्हें बेहतर महसूस कराना चाहता हूं।",
+      category: "empathy",
+      positive: true
+    },
+    {
+      id: 12,
+      text: "जब मैं किसी चीज के लिए प्रतिबद्ध होता हूं, तो लोग इस बात पर भरोसा कर सकते हैं कि मैं अनुसरण करूंगा।",
+      category: "responsibility",
+      positive: true
     }
   ],
   te: [
