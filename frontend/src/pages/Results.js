@@ -1,9 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Sprout, TrendingUp, AlertCircle, Lightbulb, Zap, RotateCcw } from 'lucide-react';
+import { Sprout, TrendingUp, AlertCircle, Lightbulb, Zap, RotateCcw, Briefcase, Target, TrendingDown, Shield, BarChart3, ChevronDown } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { LanguageToggle } from '../components/LanguageToggle';
 import { calculateResults } from '../utils/scoring';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "../components/ui/accordion";
 
 const Results = () => {
   const navigate = useNavigate();
@@ -33,13 +39,30 @@ const Results = () => {
     </div>;
   }
   
-  const { primary, secondary } = results;
+  const { primary, secondary, allCategories, detailedInsights } = results;
+  
+  // Get category label
+  const getCategoryLabel = (category) => {
+    const labels = {
+      structure: 'Structure & Planning',
+      analytical: 'Analytical Thinking',
+      social: 'Social Initiative',
+      empathy: 'Empathy & Support',
+      curiosity: 'Curiosity & Learning',
+      focus: 'Focus Management',
+      civic: 'Civic Responsibility',
+      responsibility: 'Personal Accountability',
+      decisiveness: 'Decision Making',
+      adaptability: 'Adaptability'
+    };
+    return labels[category] || category;
+  };
   
   return (
     <div className="min-h-screen bg-background">
       <LanguageToggle />
       
-      <div className="max-w-4xl mx-auto px-6 py-16">
+      <div className="max-w-5xl mx-auto px-6 py-16">
         {/* Header */}
         <div className="text-center mb-12 space-y-4 animate-fade-in">
           <div className="flex justify-center">
@@ -50,11 +73,11 @@ const Results = () => {
           <h1 className="text-3xl md:text-4xl font-heading font-bold text-foreground">
             {t('results.title')}
           </h1>
+          <p className="text-lg text-muted-foreground">Your comprehensive self-reflection insights</p>
         </div>
         
         {/* Primary & Secondary Styles */}
         <div className="grid md:grid-cols-2 gap-6 mb-8">
-          {/* Primary Style */}
           <div data-testid="primary-style-card" className="bg-primary text-primary-foreground rounded-3xl p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
             <div className="flex items-center gap-2 mb-3">
               <TrendingUp className="w-5 h-5" />
@@ -64,7 +87,6 @@ const Results = () => {
             <p className="text-base opacity-90">{primary.description}</p>
           </div>
           
-          {/* Secondary Style */}
           <div data-testid="secondary-style-card" className="bg-secondary text-secondary-foreground rounded-3xl p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
             <div className="flex items-center gap-2 mb-3">
               <Lightbulb className="w-5 h-5" />
@@ -75,80 +97,235 @@ const Results = () => {
           </div>
         </div>
         
-        {/* Detailed Insights */}
-        <div className="space-y-6 mb-8">
-          {/* Strengths */}
-          <div data-testid="strengths-card" className="bg-card border border-border/50 rounded-3xl p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 bg-primary/10 rounded-2xl flex items-center justify-center">
-                <TrendingUp className="w-5 h-5 text-primary" />
-              </div>
-              <h3 className="text-2xl font-heading font-semibold text-foreground">
-                {t('results.strengths')}
-              </h3>
+        {/* All Categories Score Breakdown */}
+        <div className="bg-card border border-border/50 rounded-3xl p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] mb-8">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="w-10 h-10 bg-accent/20 rounded-2xl flex items-center justify-center">
+              <BarChart3 className="w-5 h-5 text-accent-foreground" />
             </div>
-            <div className="flex flex-wrap gap-2">
-              {primary.strengths.map((strength, index) => (
-                <span 
-                  key={index}
-                  className="px-4 py-2 bg-primary/10 text-primary rounded-full text-sm font-medium"
-                >
-                  {strength}
-                </span>
-              ))}
-            </div>
+            <h3 className="text-2xl font-heading font-semibold text-foreground">
+              Your Pattern Breakdown
+            </h3>
           </div>
-          
-          {/* Watch-outs */}
-          <div data-testid="watchouts-card" className="bg-card border border-border/50 rounded-3xl p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 bg-accent/20 rounded-2xl flex items-center justify-center">
-                <AlertCircle className="w-5 h-5 text-accent-foreground" />
+          <div className="space-y-4">
+            {allCategories.map(({ category, score, maxScore, percentage, profile }) => (
+              <div key={category} className="space-y-2">
+                <div className="flex justify-between items-center">
+                  <span className="text-sm font-medium text-foreground">{getCategoryLabel(category)}</span>
+                  <span className="text-sm text-muted-foreground">{score}/{maxScore}</span>
+                </div>
+                <div className="h-3 bg-muted rounded-full overflow-hidden">
+                  <div 
+                    className="h-full bg-primary transition-all duration-500"
+                    style={{ width: `${percentage}%` }}
+                  />
+                </div>
               </div>
-              <h3 className="text-2xl font-heading font-semibold text-foreground">
-                {t('results.watchOuts')}
-              </h3>
-            </div>
-            <ul className="space-y-2">
-              {primary.watchOuts.map((watchOut, index) => (
-                <li key={index} className="flex items-start gap-2 text-muted-foreground">
-                  <span className="text-accent-foreground mt-1">•</span>
-                  <span>{watchOut}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-          
-          {/* Patterns */}
-          <div data-testid="patterns-card" className="bg-card border border-border/50 rounded-3xl p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 bg-secondary/20 rounded-2xl flex items-center justify-center">
-                <Lightbulb className="w-5 h-5 text-secondary" />
-              </div>
-              <h3 className="text-2xl font-heading font-semibold text-foreground">
-                {t('results.patterns')}
-              </h3>
-            </div>
-            <p className="text-base text-muted-foreground leading-relaxed">
-              {primary.patterns}
-            </p>
-          </div>
-          
-          {/* Next Steps */}
-          <div data-testid="nextsteps-card" className="bg-accent/10 border border-accent/30 rounded-3xl p-8">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 bg-accent/30 rounded-2xl flex items-center justify-center">
-                <Zap className="w-5 h-5 text-accent-foreground" />
-              </div>
-              <h3 className="text-2xl font-heading font-semibold text-foreground">
-                {t('results.nextSteps')}
-              </h3>
-            </div>
-            <p className="text-base text-foreground/80 leading-relaxed mb-4">
-              {primary.nextSteps}
-            </p>
+            ))}
           </div>
         </div>
+        
+        {/* Collapsible Detailed Sections */}
+        <Accordion type="multiple" className="space-y-4 mb-8">
+          {/* Strengths & Watch-outs */}
+          <AccordionItem value="strengths" className="bg-card border border-border/50 rounded-3xl overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
+            <AccordionTrigger className="px-8 py-6 hover:no-underline">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-primary/10 rounded-2xl flex items-center justify-center">
+                  <TrendingUp className="w-5 h-5 text-primary" />
+                </div>
+                <span className="text-xl font-heading font-semibold text-foreground">
+                  Strengths & Watch-outs
+                </span>
+              </div>
+            </AccordionTrigger>
+            <AccordionContent className="px-8 pb-6">
+              <div className="space-y-6">
+                <div>
+                  <h4 className="font-semibold text-foreground mb-3">Your Strengths</h4>
+                  <div className="flex flex-wrap gap-2">
+                    {primary.strengths.map((strength, index) => (
+                      <span 
+                        key={index}
+                        className="px-4 py-2 bg-primary/10 text-primary rounded-full text-sm font-medium"
+                      >
+                        {strength}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+                <div>
+                  <h4 className="font-semibold text-foreground mb-3">Watch-outs</h4>
+                  <ul className="space-y-2">
+                    {primary.watchOuts.map((watchOut, index) => (
+                      <li key={index} className="flex items-start gap-2 text-muted-foreground">
+                        <AlertCircle className="w-4 h-4 text-accent-foreground mt-1 flex-shrink-0" />
+                        <span>{watchOut}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            </AccordionContent>
+          </AccordionItem>
+          
+          {/* Life Patterns & Next Steps */}
+          <AccordionItem value="patterns" className="bg-card border border-border/50 rounded-3xl overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
+            <AccordionTrigger className="px-8 py-6 hover:no-underline">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-secondary/20 rounded-2xl flex items-center justify-center">
+                  <Lightbulb className="w-5 h-5 text-secondary" />
+                </div>
+                <span className="text-xl font-heading font-semibold text-foreground">
+                  Your Life Patterns & Next Steps
+                </span>
+              </div>
+            </AccordionTrigger>
+            <AccordionContent className="px-8 pb-6 space-y-4">
+              <div>
+                <h4 className="font-semibold text-foreground mb-2">Your Patterns</h4>
+                <p className="text-base text-muted-foreground leading-relaxed">
+                  {primary.patterns}
+                </p>
+              </div>
+              <div className="bg-accent/10 border border-accent/30 rounded-2xl p-6">
+                <h4 className="font-semibold text-foreground mb-2 flex items-center gap-2">
+                  <Zap className="w-4 h-4 text-accent-foreground" />
+                  Next Steps
+                </h4>
+                <p className="text-base text-foreground/80 leading-relaxed">
+                  {primary.nextSteps}
+                </p>
+              </div>
+            </AccordionContent>
+          </AccordionItem>
+          
+          {/* How You Work Best */}
+          <AccordionItem value="workstyle" className="bg-card border border-border/50 rounded-3xl overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
+            <AccordionTrigger className="px-8 py-6 hover:no-underline">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-primary/10 rounded-2xl flex items-center justify-center">
+                  <Briefcase className="w-5 h-5 text-primary" />
+                </div>
+                <span className="text-xl font-heading font-semibold text-foreground">
+                  How You Work Best
+                </span>
+              </div>
+            </AccordionTrigger>
+            <AccordionContent className="px-8 pb-6">
+              <div className="grid md:grid-cols-2 gap-6">
+                <div>
+                  <h4 className="font-semibold text-foreground mb-2">Environment</h4>
+                  <p className="text-sm text-muted-foreground">{detailedInsights.workStyle.environment}</p>
+                </div>
+                <div>
+                  <h4 className="font-semibold text-foreground mb-2">Schedule</h4>
+                  <p className="text-sm text-muted-foreground">{detailedInsights.workStyle.schedule}</p>
+                </div>
+                <div>
+                  <h4 className="font-semibold text-foreground mb-2">Collaboration</h4>
+                  <p className="text-sm text-muted-foreground">{detailedInsights.workStyle.collaboration}</p>
+                </div>
+                <div>
+                  <h4 className="font-semibold text-foreground mb-2">Tools</h4>
+                  <p className="text-sm text-muted-foreground">{detailedInsights.workStyle.tools}</p>
+                </div>
+              </div>
+            </AccordionContent>
+          </AccordionItem>
+          
+          {/* Career & Study Paths */}
+          <AccordionItem value="career" className="bg-card border border-border/50 rounded-3xl overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
+            <AccordionTrigger className="px-8 py-6 hover:no-underline">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-secondary/20 rounded-2xl flex items-center justify-center">
+                  <Target className="w-5 h-5 text-secondary" />
+                </div>
+                <span className="text-xl font-heading font-semibold text-foreground">
+                  Career & Study Paths
+                </span>
+              </div>
+            </AccordionTrigger>
+            <AccordionContent className="px-8 pb-6">
+              <p className="text-sm text-muted-foreground mb-4">Based on your profile, these paths may align well with your natural strengths:</p>
+              <div className="grid md:grid-cols-2 gap-3">
+                {detailedInsights.careerPaths.map((path, index) => (
+                  <div key={index} className="flex items-center gap-2 text-foreground bg-muted/50 rounded-xl px-4 py-3">
+                    <div className="w-2 h-2 bg-primary rounded-full" />
+                    <span className="text-sm font-medium">{path}</span>
+                  </div>
+                ))}
+              </div>
+              <p className="text-xs text-muted-foreground mt-4 italic">
+                Note: These are suggestions, not limitations. Your interests and circumstances matter most.
+              </p>
+            </AccordionContent>
+          </AccordionItem>
+          
+          {/* Growth Areas */}
+          <AccordionItem value="growth" className="bg-card border border-border/50 rounded-3xl overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
+            <AccordionTrigger className="px-8 py-6 hover:no-underline">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-accent/20 rounded-2xl flex items-center justify-center">
+                  <TrendingDown className="w-5 h-5 text-accent-foreground" />
+                </div>
+                <span className="text-xl font-heading font-semibold text-foreground">
+                  Growth Areas
+                </span>
+              </div>
+            </AccordionTrigger>
+            <AccordionContent className="px-8 pb-6">
+              <div className="space-y-6">
+                {detailedInsights.growthAreas.map((growth, index) => (
+                  <div key={index} className="border-l-4 border-primary pl-6 py-2">
+                    <h4 className="font-semibold text-foreground mb-2">{growth.area}</h4>
+                    <p className="text-sm text-muted-foreground mb-2">
+                      <span className="font-medium text-foreground">Try this:</span> {growth.tip}
+                    </p>
+                    <p className="text-xs text-muted-foreground italic">
+                      <span className="font-medium">Why:</span> {growth.why}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </AccordionContent>
+          </AccordionItem>
+          
+          {/* Superhero Archetype */}
+          <AccordionItem value="superhero" className="bg-gradient-to-br from-primary/5 to-secondary/5 border border-border/50 rounded-3xl overflow-hidden shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
+            <AccordionTrigger className="px-8 py-6 hover:no-underline">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-accent/30 rounded-2xl flex items-center justify-center">
+                  <Shield className="w-5 h-5 text-accent-foreground" />
+                </div>
+                <span className="text-xl font-heading font-semibold text-foreground">
+                  Your Superhero Archetype
+                </span>
+              </div>
+            </AccordionTrigger>
+            <AccordionContent className="px-8 pb-6">
+              <div className="text-center space-y-4">
+                <div className="text-5xl mb-4">🦸</div>
+                <h3 className="text-2xl font-heading font-bold text-foreground">
+                  {detailedInsights.superhero.name}
+                </h3>
+                <p className="text-lg text-muted-foreground italic">
+                  "{detailedInsights.superhero.motto}"
+                </p>
+                <div className="bg-card rounded-2xl p-6 space-y-3">
+                  <div>
+                    <span className="font-semibold text-foreground">Superpower:</span>
+                    <p className="text-muted-foreground">{detailedInsights.superhero.power}</p>
+                  </div>
+                  <div>
+                    <span className="font-semibold text-foreground">Your Impact:</span>
+                    <p className="text-muted-foreground">{detailedInsights.superhero.strength}</p>
+                  </div>
+                </div>
+              </div>
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
         
         {/* Action Buttons */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
