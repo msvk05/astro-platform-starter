@@ -589,7 +589,7 @@ const getDetailedInsights = (primaryCategory, secondaryCategory, language = 'en'
         }
       ],
       superhero: {
-        name: 'The Phoenix',
+        name: 'The Distracted',
         power: 'Rising from distraction',
         motto: 'Every moment is a chance to refocus',
         strength: 'You are aware of the challenge - that is the first step'
