@@ -73,7 +73,7 @@ const Results = () => {
           <h1 className="text-3xl md:text-4xl font-heading font-bold text-foreground">
             {t('results.title')}
           </h1>
-          <p className="text-lg text-muted-foreground">Your comprehensive self-reflection insights</p>
+          <p className="text-lg text-muted-foreground">{t('results.subtitle')}</p>
         </div>
         
         {/* Primary & Secondary Styles */}
