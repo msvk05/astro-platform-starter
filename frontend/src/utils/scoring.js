@@ -788,6 +788,10 @@ const getDetailedInsights = (primaryCategory, secondaryCategory, language = 'en'
     }
   };
   
-  return detailedProfiles[primaryCategory] || detailedProfiles.balanced;
+  const profile = detailedProfiles[primaryCategory] || detailedProfiles.balanced;
+  
+  // For now, return English content but we can add full translations later
+  // The UI labels will be translated via the translations.js file
+  return profile;
 };
 
