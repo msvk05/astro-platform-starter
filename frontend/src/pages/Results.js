@@ -142,7 +142,7 @@ const Results = () => {
             <AccordionContent className="px-8 pb-6">
               <div className="space-y-6">
                 <div>
-                  <h4 className="font-semibold text-foreground mb-3">Your Strengths</h4>
+                  <h4 className="font-semibold text-foreground mb-3">{t('results.strengths')}</h4>
                   <div className="flex flex-wrap gap-2">
                     {primary.strengths.map((strength, index) => (
                       <span 
