@@ -60,6 +60,18 @@ export const questions = {
       category: "adaptability",
       positive: true,
       superhero: true
+    },
+    {
+      id: 11,
+      text: "When someone shares a problem with me, I genuinely care and want to help them feel better.",
+      category: "empathy",
+      positive: true
+    },
+    {
+      id: 12,
+      text: "When I commit to something, people can count on me to follow through.",
+      category: "responsibility",
+      positive: true
     }
   ],
   hi: [
