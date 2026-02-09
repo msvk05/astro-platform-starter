@@ -215,19 +215,19 @@ const Results = () => {
             <AccordionContent className="px-8 pb-6">
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
-                  <h4 className="font-semibold text-foreground mb-2">Environment</h4>
+                  <h4 className="font-semibold text-foreground mb-2">{t('results.environment')}</h4>
                   <p className="text-sm text-muted-foreground">{detailedInsights.workStyle.environment}</p>
                 </div>
                 <div>
-                  <h4 className="font-semibold text-foreground mb-2">Schedule</h4>
+                  <h4 className="font-semibold text-foreground mb-2">{t('results.schedule')}</h4>
                   <p className="text-sm text-muted-foreground">{detailedInsights.workStyle.schedule}</p>
                 </div>
                 <div>
-                  <h4 className="font-semibold text-foreground mb-2">Collaboration</h4>
+                  <h4 className="font-semibold text-foreground mb-2">{t('results.collaboration')}</h4>
                   <p className="text-sm text-muted-foreground">{detailedInsights.workStyle.collaboration}</p>
                 </div>
                 <div>
-                  <h4 className="font-semibold text-foreground mb-2">Tools</h4>
+                  <h4 className="font-semibold text-foreground mb-2">{t('results.tools')}</h4>
                   <p className="text-sm text-muted-foreground">{detailedInsights.workStyle.tools}</p>
                 </div>
               </div>
