@@ -704,7 +704,7 @@ const getDetailedInsights = (primaryCategory, secondaryCategory, language = 'en'
         }
       ],
       superhero: {
-        name: 'The Strategist',
+        name: 'The Hesitant',
         power: 'Considers all angles',
         motto: 'Measure twice, cut once (but actually cut)',
         strength: 'Your thoughtfulness prevents costly mistakes'
