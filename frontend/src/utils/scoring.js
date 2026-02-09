@@ -628,7 +628,7 @@ const getDetailedInsights = (primaryCategory, secondaryCategory, language = 'en'
         }
       ],
       superhero: {
-        name: 'The Guardian',
+        name: 'The Contributor',
         power: 'Protects the common good',
         motto: 'Be the change',
         strength: 'You take responsibility when others look away'
