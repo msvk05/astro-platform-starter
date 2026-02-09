@@ -210,6 +210,18 @@ export const questions = {
       category: "adaptability",
       positive: true,
       superhero: true
+    },
+    {
+      id: 11,
+      text: "ఎవరైనా నాతో సమస్యను పంచుకున్నప్పుడు, నేను నిజంగా శ్రద్ధ వహిస్తాను మరియు వారు మెరుగ్గా అనుభూతి చెందాలని కోరుకుంటాను.",
+      category: "empathy",
+      positive: true
+    },
+    {
+      id: 12,
+      text: "నేను ఏదైనా కట్టుబడినప్పుడు, నేను అనుసరిస్తానని ప్రజలు నమ్మవచ్చు.",
+      category: "responsibility",
+      positive: true
     }
   ]
 };
