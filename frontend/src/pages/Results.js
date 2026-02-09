@@ -270,7 +270,7 @@ const Results = () => {
                   <TrendingDown className="w-5 h-5 text-accent-foreground" />
                 </div>
                 <span className="text-xl font-heading font-semibold text-foreground">
-                  Growth Areas
+                  {t('results.growthAreas')}
                 </span>
               </div>
             </AccordionTrigger>
