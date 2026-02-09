@@ -88,7 +88,7 @@ const isQuestionPositive = (index) => {
   return index !== 5 && index !== 8;
 };
 
-const getStyleProfile = (category) => {
+const getStyleProfile = (category, language = 'en') => {
   const profiles = {
     en: {
       structure: {
