@@ -73,7 +73,7 @@ const getStyleProfile = (category) => {
         description: 'You approach problems with logic and reason',
         strengths: ['Problem-solving', 'Critical thinking', 'Pattern recognition', 'Research skills'],
         watchOuts: ['May overthink simple decisions', 'Could miss emotional aspects'],
-        patterns: 'You like understanding "why" things work. You're naturally curious about root causes.',
+        patterns: 'You like understanding "why" things work. You are naturally curious about root causes.',
         nextSteps: 'Pick one everyday problem and spend 10 minutes analyzing its root cause.'
       },
       social: {
