@@ -177,7 +177,7 @@ const Results = () => {
                   <Lightbulb className="w-5 h-5 text-secondary" />
                 </div>
                 <span className="text-xl font-heading font-semibold text-foreground">
-                  Your Life Patterns & Next Steps
+                  {t('results.lifePatternsNextSteps')}
                 </span>
               </div>
             </AccordionTrigger>
