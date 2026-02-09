@@ -104,7 +104,7 @@ const Results = () => {
               <BarChart3 className="w-5 h-5 text-accent-foreground" />
             </div>
             <h3 className="text-2xl font-heading font-semibold text-foreground">
-              Your Pattern Breakdown
+              {t('results.patternBreakdown')}
             </h3>
           </div>
           <div className="space-y-4">
