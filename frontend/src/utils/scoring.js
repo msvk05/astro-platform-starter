@@ -667,7 +667,7 @@ const getDetailedInsights = (primaryCategory, secondaryCategory, language = 'en'
         }
       ],
       superhero: {
-        name: 'The Keeper',
+        name: 'The Accountable',
         power: 'Unwavering integrity',
         motto: 'Own it, fix it, grow from it',
         strength: 'You are trustworthy in a world that needs more trust'
