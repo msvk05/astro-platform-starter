@@ -72,7 +72,9 @@ const getQuestionCategory = (index) => {
     'civic',          // Q7
     'responsibility', // Q8
     'decisiveness',   // Q9
-    'adaptability'    // Q10
+    'adaptability',   // Q10
+    'empathy',        // Q11 (second empathy question)
+    'responsibility'  // Q12 (second responsibility question)
   ];
   return categories[index] || 'balanced';
 };
