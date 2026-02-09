@@ -247,7 +247,7 @@ const Results = () => {
               </div>
             </AccordionTrigger>
             <AccordionContent className="px-8 pb-6">
-              <p className="text-sm text-muted-foreground mb-4">Based on your profile, these paths may align well with your natural strengths:</p>
+              <p className="text-sm text-muted-foreground mb-4">{t('results.careerPathsNote')}</p>
               <div className="grid md:grid-cols-2 gap-3">
                 {detailedInsights.careerPaths.map((path, index) => (
                   <div key={index} className="flex items-center gap-2 text-foreground bg-muted/50 rounded-xl px-4 py-3">
@@ -257,7 +257,7 @@ const Results = () => {
                 ))}
               </div>
               <p className="text-xs text-muted-foreground mt-4 italic">
-                Note: These are suggestions, not limitations. Your interests and circumstances matter most.
+                {t('results.careerPathsDisclaimer')}
               </p>
             </AccordionContent>
           </AccordionItem>
