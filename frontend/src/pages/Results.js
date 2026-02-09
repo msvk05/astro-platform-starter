@@ -135,7 +135,7 @@ const Results = () => {
                   <TrendingUp className="w-5 h-5 text-primary" />
                 </div>
                 <span className="text-xl font-heading font-semibold text-foreground">
-                  Strengths & Watch-outs
+                  {t('results.strengthsWatchouts')}
                 </span>
               </div>
             </AccordionTrigger>
