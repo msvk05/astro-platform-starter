@@ -138,7 +138,33 @@ export const translations = {
           title: 'Civic Responsibility',
           icon: '🌍',
           description: 'Small actions, big impact',
-          prompt: 'Think about your immediate surroundings (hostel, neighborhood, campus). What is one small problem you notice regularly? Write 2-3 sentences about one concrete action you could take this week to make a difference, no matter how small.'
+          questions: [
+            {
+              id: 'problem_area',
+              text: 'What problem do you notice regularly around you?',
+              type: 'choice',
+              options: ['Litter/Waste management', 'Traffic violations', 'Water wastage', 'Noise pollution', 'Public property damage', 'Other']
+            },
+            {
+              id: 'frequency',
+              text: 'How often do you notice this?',
+              type: 'choice',
+              options: ['Daily', 'Weekly', 'Occasionally', 'Rarely']
+            },
+            {
+              id: 'concrete_action',
+              text: 'What is one concrete action you could take?',
+              type: 'text',
+              placeholder: 'Example: Carry a reusable bag, report via app...',
+              maxLength: 150
+            },
+            {
+              id: 'action_commitment',
+              text: 'Will you take this action this week?',
+              type: 'choice',
+              options: ['Yes, definitely', 'Probably', 'Maybe later', 'Need more information']
+            }
+          ]
         }
       }
     }
