@@ -459,15 +459,43 @@ const Results = () => {
           </AccordionItem>
         </Accordion>
         
-        {/* LLM Enriched Insights */}
+        {/* LLM Enriched Insights - USER TRIGGERED ONLY */}
+        {!enrichedInsights && !loadingInsights && enrichmentCallCount < MAX_ENRICHMENT_CALLS && (
+          <div className="bg-gradient-to-br from-accent/10 to-primary/5 border border-accent/30 rounded-3xl p-8 text-center">
+            <h3 className="text-xl font-heading font-semibold text-foreground mb-3">
+              Get Personalized AI Insights
+            </h3>
+            <p className="text-sm text-muted-foreground mb-4">
+              Get deeper, personalized analysis of your results (uses AI, limited to {MAX_ENRICHMENT_CALLS} per session)
+            </p>
+            <button
+              data-testid="generate-insights-btn"
+              onClick={fetchEnrichedInsights}
+              className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-8 py-3 font-medium transition-all hover:scale-105 active:scale-95 shadow-[0_4px_14px_0_rgba(0,0,0,0.1)]"
+            >
+              Generate Insights
+            </button>
+            <p className="text-xs text-muted-foreground mt-3">
+              ({MAX_ENRICHMENT_CALLS - enrichmentCallCount} remaining this session)
+            </p>
+          </div>
+        )}
+        
         {loadingInsights && (
           <div className="bg-gradient-to-br from-accent/10 to-primary/5 border border-accent/30 rounded-3xl p-8 text-center">
             <div className="flex items-center justify-center gap-3 mb-2">
               <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
-              <div className="w-2 h-2 bg-primary rounded-full animate-pulse delay-75"></div>
-              <div className="w-2 h-2 bg-primary rounded-full animate-pulse delay-150"></div>
+              <div className="w-2 h-2 bg-primary rounded-full animate-pulse" style={{animationDelay: '0.2s'}}></div>
+              <div className="w-2 h-2 bg-primary rounded-full animate-pulse" style={{animationDelay: '0.4s'}}></div>
             </div>
             <p className="text-muted-foreground">Generating personalized insights...</p>
+            <p className="text-xs text-muted-foreground mt-2">This may take up to 7 seconds</p>
+          </div>
+        )}
+        
+        {enrichmentError && (
+          <div className="bg-destructive/10 border border-destructive/30 rounded-3xl p-6 text-center">
+            <p className="text-sm text-destructive">{enrichmentError}</p>
           </div>
         )}
         
@@ -504,7 +532,8 @@ const Results = () => {
             
             <button
               onClick={() => setShowDeeperInsights(true)}
-              className="text-primary hover:text-primary/80 font-medium text-sm flex items-center gap-2 transition-colors"
+              disabled={loadingInsights}
+              className="text-primary hover:text-primary/80 font-medium text-sm flex items-center gap-2 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Get Deeper Insights
               <ChevronDown className="w-4 h-4" />
