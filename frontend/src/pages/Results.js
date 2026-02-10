@@ -15,6 +15,9 @@ const Results = () => {
   const navigate = useNavigate();
   const { language, t } = useLanguage();
   const [results, setResults] = useState(null);
+  const [enrichedInsights, setEnrichedInsights] = useState(null);
+  const [loadingInsights, setLoadingInsights] = useState(false);
+  const [showDeeperInsights, setShowDeeperInsights] = useState(false);
   
   useEffect(() => {
     const savedAnswers = localStorage.getItem('seedling-answers');
@@ -26,7 +29,45 @@ const Results = () => {
     const answers = JSON.parse(savedAnswers);
     const calculatedResults = calculateResults(answers, language);
     setResults(calculatedResults);
+    
+    // Auto-fetch enriched insights on load
+    fetchEnrichedInsights(answers, calculatedResults);
   }, [navigate, language]);
+  
+  const fetchEnrichedInsights = async (answers, calculatedResults) => {
+    setLoadingInsights(true);
+    try {
+      const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+      
+      // Get micro-challenge data if exists
+      const challengeData = localStorage.getItem('seedling-challenge');
+      const microChallenge = challengeData ? JSON.parse(challengeData) : null;
+      
+      const response = await fetch(`${BACKEND_URL}/api/enrich-insights`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          answers: answers,
+          scores: calculatedResults.scores,
+          primary_style: calculatedResults.primary.title,
+          secondary_style: calculatedResults.secondary.title,
+          language: language,
+          micro_challenge: microChallenge
+        }),
+      });
+      
+      if (response.ok) {
+        const data = await response.json();
+        setEnrichedInsights(data);
+      }
+    } catch (error) {
+      console.error('Failed to fetch enriched insights:', error);
+    } finally {
+      setLoadingInsights(false);
+    }
+  };
   
   const handleRestart = () => {
     localStorage.removeItem('seedling-answers');
