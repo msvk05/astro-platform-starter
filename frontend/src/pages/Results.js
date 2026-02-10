@@ -21,7 +21,7 @@ const Results = () => {
   const [enrichmentCallCount, setEnrichmentCallCount] = useState(0);
   const [enrichmentError, setEnrichmentError] = useState(null);
   
-  const MAX_ENRICHMENT_CALLS = 2; // Rate limit per session
+  const MAX_ENRICHMENT_CALLS = 1; // Strict limit: 1 AI call per session
   const ENRICHMENT_TIMEOUT = 7000; // 7 seconds max
   
   useEffect(() => {
