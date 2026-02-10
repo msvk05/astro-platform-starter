@@ -106,7 +106,33 @@ export const translations = {
           title: 'Focus & Wellbeing',
           icon: '🎯',
           description: 'Managing attention in a distracted world',
-          prompt: "What is one thing that consistently distracts you from important tasks? It could be your phone, social media, or something else. Write 2-3 sentences about one small change you'll try this week to protect your focus time."
+          questions: [
+            {
+              id: 'distraction_source',
+              text: 'What distracts you most from important tasks?',
+              type: 'choice',
+              options: ['Phone notifications', 'Social media scrolling', 'YouTube/Videos', 'Friends/Family', 'Background noise', 'Other']
+            },
+            {
+              id: 'impact_level',
+              text: 'How much does this affect your productivity?',
+              type: 'choice',
+              options: ['A lot (I lose hours)', 'Moderate (30-60 min daily)', 'A little (under 30 min)', 'Not sure']
+            },
+            {
+              id: 'one_change',
+              text: 'What is one small change you will try this week?',
+              type: 'text',
+              placeholder: 'Example: Phone in another room during study...',
+              maxLength: 150
+            },
+            {
+              id: 'confidence_level',
+              text: 'How confident are you about this change?',
+              type: 'choice',
+              options: ['Very confident', 'Somewhat confident', 'Not very confident', 'Will need help']
+            }
+          ]
         },
         civic: {
           title: 'Civic Responsibility',
