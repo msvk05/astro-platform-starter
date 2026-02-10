@@ -7,9 +7,9 @@ import { calculateResults } from '../utils/scoring';
 
 const Challenges = () => {
   const navigate = useNavigate();
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const [selectedChallenge, setSelectedChallenge] = useState(null);
-  const [response, setResponse] = useState('');
+  const [responses, setResponses] = useState({});
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [copied, setCopied] = useState(false);
   const [results, setResults] = useState(null);
@@ -22,9 +22,9 @@ const Challenges = () => {
     }
     
     const answers = JSON.parse(savedAnswers);
-    const calculatedResults = calculateResults(answers);
+    const calculatedResults = calculateResults(answers, language);
     setResults(calculatedResults);
-  }, [navigate]);
+  }, [navigate, language]);
   
   const challenges = [
     {
@@ -32,55 +32,71 @@ const Challenges = () => {
       title: t('challenges.themes.cyber.title'),
       icon: t('challenges.themes.cyber.icon'),
       description: t('challenges.themes.cyber.description'),
-      prompt: t('challenges.themes.cyber.prompt')
+      questions: t('challenges.themes.cyber.questions') || []
     },
     {
       id: 'focus',
       title: t('challenges.themes.focus.title'),
       icon: t('challenges.themes.focus.icon'),
       description: t('challenges.themes.focus.description'),
-      prompt: t('challenges.themes.focus.prompt')
+      questions: t('challenges.themes.focus.questions') || []
     },
     {
       id: 'civic',
       title: t('challenges.themes.civic.title'),
       icon: t('challenges.themes.civic.icon'),
       description: t('challenges.themes.civic.description'),
-      prompt: t('challenges.themes.civic.prompt')
+      questions: t('challenges.themes.civic.questions') || []
     }
   ];
   
+  const handleResponseChange = (questionId, value) => {
+    setResponses(prev => ({
+      ...prev,
+      [questionId]: value
+    }));
+  };
+  
   const handleSubmit = () => {
-    if (response.trim()) {
+    const allAnswered = selectedChallenge.questions.every(q => 
+      responses[q.id] && responses[q.id].trim() !== ''
+    );
+    
+    if (allAnswered) {
+      // Save challenge responses to localStorage for LLM enrichment
+      localStorage.setItem('seedling-challenge', JSON.stringify({
+        challengeId: selectedChallenge.id,
+        responses: responses
+      }));
       setIsSubmitted(true);
     }
   };
   
   const generateSummary = () => {
-    if (!results || !selectedChallenge || !response) return '';
+    if (!results || !selectedChallenge || !responses) return '';
     
-    return `🌱 Seedling - My Reflection & Action
-
-Primary Style: ${results.primary.title}
-${results.primary.description}
-
-Challenge Completed: ${selectedChallenge.title}
-${selectedChallenge.description}
-
-My Response:
-${response}
-
-Key Strength: ${results.primary.strengths[0]}
-Next Step: ${results.primary.nextSteps}
-
----
-Completed via Seedling - Self-Reflection Tool`;
+    let summary = `🌱 Seedling - My Reflection & Action\n\n`;
+    summary += `Primary Style: ${results.primary.title}\n`;
+    summary += `${results.primary.description}\n\n`;
+    summary += `Challenge Completed: ${selectedChallenge.title}\n`;
+    summary += `${selectedChallenge.description}\n\n`;
+    summary += `My Responses:\n`;
+    
+    selectedChallenge.questions.forEach(q => {
+      summary += `${q.text}\n`;
+      summary += `→ ${responses[q.id]}\n\n`;
+    });
+    
+    summary += `Key Strength: ${results.primary.strengths[0]}\n`;
+    summary += `Next Step: ${results.primary.nextSteps}\n\n`;
+    summary += `---\nCompleted via Seedling - Self-Reflection Tool`;
+    
+    return summary;
   };
   
   const handleCopy = async () => {
     const summary = generateSummary();
     
-    // Try modern clipboard API first
     if (navigator.clipboard && window.isSecureContext) {
       try {
         await navigator.clipboard.writeText(summary);
@@ -92,7 +108,6 @@ Completed via Seedling - Self-Reflection Tool`;
       }
     }
     
-    // Fallback for non-secure contexts or if clipboard API fails
     const textArea = document.createElement('textarea');
     textArea.value = summary;
     textArea.style.position = 'fixed';
@@ -125,7 +140,6 @@ Completed via Seedling - Self-Reflection Tool`;
       <LanguageToggle />
       
       <div className="max-w-4xl mx-auto px-6 py-16">
-        {/* Header */}
         <div className="mb-12">
           <button
             data-testid="back-to-results-btn"
@@ -147,13 +161,16 @@ Completed via Seedling - Self-Reflection Tool`;
         </div>
         
         {!selectedChallenge ? (
-          // Challenge Selection
           <div className="grid md:grid-cols-3 gap-6">
             {challenges.map((challenge) => (
               <button
                 key={challenge.id}
                 data-testid={`challenge-${challenge.id}-btn`}
-                onClick={() => setSelectedChallenge(challenge)}
+                onClick={() => {
+                  setSelectedChallenge(challenge);
+                  setResponses({});
+                  setIsSubmitted(false);
+                }}
                 className="bg-card border border-border/50 rounded-3xl p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_12px_40px_rgb(0,0,0,0.08)] transition-all hover:scale-105 active:scale-95 text-left group"
               >
                 <div className="text-5xl mb-4 transform group-hover:scale-110 transition-transform">
@@ -169,10 +186,9 @@ Completed via Seedling - Self-Reflection Tool`;
             ))}
           </div>
         ) : !isSubmitted ? (
-          // Challenge Response
           <div className="space-y-6">
             <div className="bg-card border border-border/50 rounded-3xl p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
-              <div className="flex items-center gap-3 mb-4">
+              <div className="flex items-center gap-3 mb-6">
                 <span className="text-4xl">{selectedChallenge.icon}</span>
                 <div>
                   <h2 className="text-2xl font-heading font-bold text-foreground">
@@ -182,26 +198,51 @@ Completed via Seedling - Self-Reflection Tool`;
                 </div>
               </div>
               
-              <div className="bg-muted/50 rounded-2xl p-6 mb-6">
-                <p className="text-base text-foreground leading-relaxed">
-                  {selectedChallenge.prompt}
-                </p>
+              <div className="space-y-6">
+                {selectedChallenge.questions.map((question, index) => (
+                  <div key={question.id} className="space-y-3">
+                    <label className="block text-base font-medium text-foreground">
+                      {index + 1}. {question.text}
+                    </label>
+                    
+                    {question.type === 'choice' ? (
+                      <div className="space-y-2">
+                        {question.options.map((option, optIndex) => (
+                          <button
+                            key={optIndex}
+                            data-testid={`question-${question.id}-option-${optIndex}`}
+                            onClick={() => handleResponseChange(question.id, option)}
+                            className={`w-full text-left px-4 py-3 rounded-xl border-2 transition-all ${
+                              responses[question.id] === option
+                                ? 'border-primary bg-primary/5 font-medium'
+                                : 'border-border hover:border-primary/50 hover:bg-primary/5'
+                            }`}
+                          >
+                            {option}
+                          </button>
+                        ))}
+                      </div>
+                    ) : (
+                      <input
+                        type="text"
+                        data-testid={`question-${question.id}-input`}
+                        value={responses[question.id] || ''}
+                        onChange={(e) => handleResponseChange(question.id, e.target.value)}
+                        placeholder={question.placeholder}
+                        maxLength={question.maxLength}
+                        className="w-full p-4 rounded-xl border border-border bg-white/50 focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-base"
+                      />
+                    )}
+                  </div>
+                ))}
               </div>
-              
-              <textarea
-                data-testid="challenge-response-input"
-                value={response}
-                onChange={(e) => setResponse(e.target.value)}
-                placeholder="Write your thoughts here..."
-                className="w-full h-48 p-4 rounded-2xl border border-border bg-white/50 focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all resize-none text-base"
-              />
             </div>
             
             <div className="flex gap-4">
               <button
                 onClick={() => {
                   setSelectedChallenge(null);
-                  setResponse('');
+                  setResponses({});
                 }}
                 className="border-2 border-border text-foreground hover:bg-muted rounded-full px-6 py-3 font-medium transition-all"
               >
@@ -210,7 +251,7 @@ Completed via Seedling - Self-Reflection Tool`;
               <button
                 data-testid="submit-challenge-btn"
                 onClick={handleSubmit}
-                disabled={!response.trim()}
+                disabled={!selectedChallenge.questions.every(q => responses[q.id]?.trim())}
                 className="bg-primary text-primary-foreground hover:bg-primary/90 rounded-full px-8 py-3 font-medium transition-all hover:scale-105 active:scale-95 shadow-[0_4px_14px_0_rgba(0,0,0,0.1)] disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
               >
                 {t('challenges.submitButton')}
@@ -218,7 +259,6 @@ Completed via Seedling - Self-Reflection Tool`;
             </div>
           </div>
         ) : (
-          // Challenge Summary
           <div className="space-y-6">
             <div className="bg-accent/10 border border-accent/30 rounded-3xl p-8">
               <h2 className="text-2xl font-heading font-bold text-foreground mb-4 flex items-center gap-2">
