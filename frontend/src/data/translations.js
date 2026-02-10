@@ -74,7 +74,33 @@ export const translations = {
           title: 'Cyber Risk Thinking',
           icon: '🔒',
           description: 'Digital safety and smart decisions',
-          prompt: "Think of a recent online interaction (social media, app, website). What information did you share? What could go wrong if that information was misused? Write 2-3 sentences about how you'll be more cautious next time."
+          questions: [
+            {
+              id: 'app_choice',
+              text: 'Which app or website do you use most?',
+              type: 'choice',
+              options: ['Social Media (Instagram/Facebook)', 'Messaging (WhatsApp/Telegram)', 'Gaming', 'Shopping', 'Banking/Finance', 'Other']
+            },
+            {
+              id: 'risk_noticed',
+              text: 'What is the biggest risk you notice?',
+              type: 'choice',
+              options: ['Password reuse', 'Public WiFi usage', 'Sharing too much personal info', 'Clicking suspicious links', 'Not reading permissions', 'No two-factor authentication']
+            },
+            {
+              id: 'simple_fix',
+              text: 'What one simple fix would you apply?',
+              type: 'text',
+              placeholder: 'Example: Use a password manager, enable 2FA...',
+              maxLength: 150
+            },
+            {
+              id: 'action_timing',
+              text: 'Will you apply this fix?',
+              type: 'choice',
+              options: ['Today', 'This week', 'Later', 'Unsure']
+            }
+          ]
         },
         focus: {
           title: 'Focus & Wellbeing',
