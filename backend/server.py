@@ -16,6 +16,14 @@ from emergentintegrations.llm.chat import LlmChat, UserMessage
 ROOT_DIR = Path(__file__).parent
 load_dotenv(ROOT_DIR / '.env')
 
+# Startup check for LLM key
+EMERGENT_LLM_KEY = os.environ.get('EMERGENT_LLM_KEY')
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+logger.info(f"EMERGENT_LLM_KEY present: {bool(EMERGENT_LLM_KEY)}")
+if EMERGENT_LLM_KEY:
+    logger.info(f"EMERGENT_LLM_KEY format: {EMERGENT_LLM_KEY[:15]}...")
+
 # MongoDB connection
 mongo_url = os.environ['MONGO_URL']
 client = AsyncIOMotorClient(mongo_url)
