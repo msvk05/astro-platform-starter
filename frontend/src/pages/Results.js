@@ -18,6 +18,11 @@ const Results = () => {
   const [enrichedInsights, setEnrichedInsights] = useState(null);
   const [loadingInsights, setLoadingInsights] = useState(false);
   const [showDeeperInsights, setShowDeeperInsights] = useState(false);
+  const [enrichmentCallCount, setEnrichmentCallCount] = useState(0);
+  const [enrichmentError, setEnrichmentError] = useState(null);
+  
+  const MAX_ENRICHMENT_CALLS = 2; // Rate limit per session
+  const ENRICHMENT_TIMEOUT = 7000; // 7 seconds max
   
   useEffect(() => {
     const savedAnswers = localStorage.getItem('seedling-answers');
@@ -30,19 +35,36 @@ const Results = () => {
     const calculatedResults = calculateResults(answers, language);
     setResults(calculatedResults);
     
-    // Auto-fetch enriched insights on load
-    fetchEnrichedInsights(answers, calculatedResults);
+    // Check session enrichment count
+    const sessionCount = parseInt(sessionStorage.getItem('seedling-enrichment-count') || '0');
+    setEnrichmentCallCount(sessionCount);
+    
+    // DO NOT auto-fetch - user must trigger
   }, [navigate, language]);
   
-  const fetchEnrichedInsights = async (answers, calculatedResults) => {
+  const fetchEnrichedInsights = async () => {
+    // Rate limit check
+    if (enrichmentCallCount >= MAX_ENRICHMENT_CALLS) {
+      setEnrichmentError('Insight generation limit reached for this session. Please retake assessment for new insights.');
+      return;
+    }
+    
     setLoadingInsights(true);
+    setEnrichmentError(null);
+    
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), ENRICHMENT_TIMEOUT);
+    
     try {
       const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+      const savedAnswers = localStorage.getItem('seedling-answers');
+      const answers = JSON.parse(savedAnswers);
       
       // Get micro-challenge data if exists
       const challengeData = localStorage.getItem('seedling-challenge');
       const microChallenge = challengeData ? JSON.parse(challengeData) : null;
       
+      // PRIVACY: Only send anonymized data, no PII
       const response = await fetch(`${BACKEND_URL}/api/enrich-insights`, {
         method: 'POST',
         headers: {
@@ -50,22 +72,65 @@ const Results = () => {
         },
         body: JSON.stringify({
           answers: answers,
-          scores: calculatedResults.scores,
-          primary_style: calculatedResults.primary.title,
-          secondary_style: calculatedResults.secondary.title,
+          scores: results.scores,
+          primary_style: results.primary.title,
+          secondary_style: results.secondary.title,
           language: language,
           micro_challenge: microChallenge
         }),
+        signal: controller.signal
       });
+      
+      clearTimeout(timeoutId);
       
       if (response.ok) {
         const data = await response.json();
         setEnrichedInsights(data);
+        
+        // Increment session counter
+        const newCount = enrichmentCallCount + 1;
+        setEnrichmentCallCount(newCount);
+        sessionStorage.setItem('seedling-enrichment-count', newCount.toString());
+        
+        // Record anonymous analytics (no PII)
+        recordAnonymousAnalytics();
+      } else {
+        setEnrichmentError('Unable to generate insights. Please try again or continue with your results.');
       }
     } catch (error) {
+      clearTimeout(timeoutId);
+      if (error.name === 'AbortError') {
+        setEnrichmentError('Request timed out. Please try again.');
+      } else {
+        setEnrichmentError('Unable to generate insights. Your base results are still available below.');
+      }
       console.error('Failed to fetch enriched insights:', error);
     } finally {
       setLoadingInsights(false);
+    }
+  };
+  
+  const recordAnonymousAnalytics = async () => {
+    try {
+      const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+      const challengeData = localStorage.getItem('seedling-challenge');
+      
+      // PRIVACY: Only aggregated, non-PII data
+      await fetch(`${BACKEND_URL}/api/analytics/record`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          primary_style: results.primary.title,
+          challenge_selected: challengeData ? JSON.parse(challengeData).challengeId : null,
+          language: language
+          // NO raw answers, NO text responses, NO identifiable data
+        }),
+      });
+    } catch (error) {
+      // Silent fail - analytics not critical
+      console.log('Analytics recording skipped');
     }
   };
   
