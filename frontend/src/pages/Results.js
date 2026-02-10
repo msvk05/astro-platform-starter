@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Sprout, TrendingUp, AlertCircle, Lightbulb, Zap, RotateCcw, Briefcase, Target, TrendingDown, Shield, BarChart3, ChevronDown, Download } from 'lucide-react';
+import { Sprout, TrendingUp, AlertCircle, Lightbulb, Zap, RotateCcw, Briefcase, Target, TrendingDown, Shield, BarChart3, ChevronDown, Copy, Check } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { LanguageToggle } from '../components/LanguageToggle';
 import { calculateResults } from '../utils/scoring';
-import jsPDF from 'jspdf';
 import {
   Accordion,
   AccordionContent,
