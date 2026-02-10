@@ -49,7 +49,7 @@ const Results = () => {
       return;
     }
     
-    // Clear any previous errors and start loading
+    // Clear error and start loading
     setEnrichmentError(null);
     setLoadingInsights(true);
     
@@ -61,11 +61,9 @@ const Results = () => {
       const savedAnswers = localStorage.getItem('seedling-answers');
       const answers = JSON.parse(savedAnswers);
       
-      // Get micro-challenge data if exists
       const challengeData = localStorage.getItem('seedling-challenge');
       const microChallenge = challengeData ? JSON.parse(challengeData) : null;
       
-      // PRIVACY: Only send anonymized data, no PII
       const response = await fetch(`${BACKEND_URL}/api/enrich-insights`, {
         method: 'POST',
         headers: {
@@ -86,25 +84,25 @@ const Results = () => {
       
       if (response.ok) {
         const data = await response.json();
-        console.log('LLM Response received:', data);
         
-        // Validate response has required fields
-        const isValid = data && (data.why_this_fits || data.deeper_watchouts || data.shareable_summary);
+        const hasInsights = !!(data && (
+          data.insights ||
+          data.why_this_fits ||
+          data.deeper_watchouts ||
+          data.shareable_summary ||
+          data.micro_challenge_insight
+        ));
         
-        if (isValid) {
+        if (hasInsights) {
           setEnrichedInsights(data);
           setEnrichmentError(null);
+          setLoadingInsights(false);
           
-          // Increment session counter
           const newCount = enrichmentCallCount + 1;
           setEnrichmentCallCount(newCount);
           sessionStorage.setItem('seedling-enrichment-count', newCount.toString());
           
-          // Record anonymous analytics (no PII)
           recordAnonymousAnalytics();
-          
-          // IMPORTANT: return to avoid falling through
-          setLoadingInsights(false);
           return;
         } else {
           setEnrichmentError('Unable to generate insights. Please try again.');
