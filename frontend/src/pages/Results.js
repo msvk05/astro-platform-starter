@@ -394,6 +394,115 @@ const Results = () => {
           </AccordionItem>
         </Accordion>
         
+        {/* LLM Enriched Insights */}
+        {loadingInsights && (
+          <div className="bg-gradient-to-br from-accent/10 to-primary/5 border border-accent/30 rounded-3xl p-8 text-center">
+            <div className="flex items-center justify-center gap-3 mb-2">
+              <div className="w-2 h-2 bg-primary rounded-full animate-pulse"></div>
+              <div className="w-2 h-2 bg-primary rounded-full animate-pulse delay-75"></div>
+              <div className="w-2 h-2 bg-primary rounded-full animate-pulse delay-150"></div>
+            </div>
+            <p className="text-muted-foreground">Generating personalized insights...</p>
+          </div>
+        )}
+        
+        {enrichedInsights && !showDeeperInsights && (
+          <div className="bg-gradient-to-br from-accent/10 to-primary/5 border border-accent/30 rounded-3xl p-8 space-y-4">
+            <h3 className="text-xl font-heading font-semibold text-foreground flex items-center gap-2">
+              <Lightbulb className="w-5 h-5 text-accent-foreground" />
+              Personalized Insights
+            </h3>
+            
+            <div className="space-y-4 text-foreground/90">
+              <div>
+                <h4 className="font-semibold mb-2">Why This Fits You</h4>
+                <p className="text-sm leading-relaxed">{enrichedInsights.why_this_fits}</p>
+              </div>
+              
+              <div>
+                <h4 className="font-semibold mb-2">Watch Out For</h4>
+                <ul className="space-y-1 text-sm">
+                  {enrichedInsights.deeper_watchouts.slice(0, 2).map((item, i) => (
+                    <li key={i} className="flex items-start gap-2">
+                      <span className="text-accent-foreground mt-0.5">•</span>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              
+              <div>
+                <h4 className="font-semibold mb-2">Your Next Step</h4>
+                <p className="text-sm leading-relaxed">{enrichedInsights.personalized_next_steps}</p>
+              </div>
+            </div>
+            
+            <button
+              onClick={() => setShowDeeperInsights(true)}
+              className="text-primary hover:text-primary/80 font-medium text-sm flex items-center gap-2 transition-colors"
+            >
+              Get Deeper Insights
+              <ChevronDown className="w-4 h-4" />
+            </button>
+          </div>
+        )}
+        
+        {enrichedInsights && showDeeperInsights && (
+          <div className="bg-gradient-to-br from-accent/10 to-primary/5 border border-accent/30 rounded-3xl p-8 space-y-6">
+            <h3 className="text-xl font-heading font-semibold text-foreground flex items-center gap-2">
+              <Lightbulb className="w-5 h-5 text-accent-foreground" />
+              Complete Personalized Insights
+            </h3>
+            
+            <div className="space-y-6 text-foreground/90">
+              <div className="bg-card rounded-2xl p-6">
+                <h4 className="font-semibold mb-3">Why This Fits You</h4>
+                <p className="text-sm leading-relaxed">{enrichedInsights.why_this_fits}</p>
+              </div>
+              
+              <div className="bg-card rounded-2xl p-6">
+                <h4 className="font-semibold mb-3">Deeper Watch-Outs</h4>
+                <ul className="space-y-2 text-sm">
+                  {enrichedInsights.deeper_watchouts.map((item, i) => (
+                    <li key={i} className="flex items-start gap-2">
+                      <AlertCircle className="w-4 h-4 text-accent-foreground mt-0.5 flex-shrink-0" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              
+              <div className="bg-card rounded-2xl p-6">
+                <h4 className="font-semibold mb-3">Personalized Next Steps</h4>
+                <p className="text-sm leading-relaxed">{enrichedInsights.personalized_next_steps}</p>
+              </div>
+              
+              {enrichedInsights.micro_challenge_insight && (
+                <div className="bg-primary/10 rounded-2xl p-6">
+                  <h4 className="font-semibold mb-3 flex items-center gap-2">
+                    <Zap className="w-4 h-4 text-primary" />
+                    Your Challenge Insight
+                  </h4>
+                  <p className="text-sm leading-relaxed">{enrichedInsights.micro_challenge_insight}</p>
+                </div>
+              )}
+              
+              <div className="bg-card rounded-2xl p-6">
+                <h4 className="font-semibold mb-3">Share Your Learning</h4>
+                <p className="text-sm italic text-muted-foreground">"{enrichedInsights.shareable_summary}"</p>
+              </div>
+            </div>
+            
+            <button
+              onClick={() => setShowDeeperInsights(false)}
+              className="text-primary hover:text-primary/80 font-medium text-sm flex items-center gap-2 transition-colors"
+            >
+              Show Less
+              <ChevronDown className="w-4 h-4 rotate-180" />
+            </button>
+          </div>
+        )}
+        
         {/* Action Buttons */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <button
