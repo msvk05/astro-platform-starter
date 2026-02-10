@@ -135,27 +135,6 @@ const Results = () => {
     }
   };
   
-  const recordAnonymousAnalytics = async () => {
-    try {
-      const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-      const challengeData = localStorage.getItem('seedling-challenge');
-      
-      await fetch(`${BACKEND_URL}/api/analytics/record`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          primary_style: results.primary.title,
-          challenge_selected: challengeData ? JSON.parse(challengeData).challengeId : null,
-          language: language
-        }),
-      });
-    } catch (error) {
-      console.log('Analytics recording skipped');
-    }
-  };
-  
   const downloadPDF = () => {
     const doc = new jsPDF();
     const pageWidth = doc.internal.pageSize.getWidth();
