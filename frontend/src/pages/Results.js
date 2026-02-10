@@ -86,17 +86,25 @@ const Results = () => {
       
       if (response.ok) {
         const data = await response.json();
-        setEnrichedInsights(data);
+        console.log('LLM Response received:', data);
         
-        // Increment session counter
-        const newCount = enrichmentCallCount + 1;
-        setEnrichmentCallCount(newCount);
-        sessionStorage.setItem('seedling-enrichment-count', newCount.toString());
-        
-        // Record anonymous analytics (no PII)
-        recordAnonymousAnalytics();
+        // Validate response has required fields
+        if (data && data.why_this_fits) {
+          setEnrichedInsights(data);
+          setEnrichmentError(null); // Clear any previous errors
+          
+          // Increment session counter
+          const newCount = enrichmentCallCount + 1;
+          setEnrichmentCallCount(newCount);
+          sessionStorage.setItem('seedling-enrichment-count', newCount.toString());
+          
+          // Record anonymous analytics (no PII)
+          recordAnonymousAnalytics();
+        } else {
+          setEnrichmentError('Unable to generate insights. Please try again.');
+        }
       } else {
-        setEnrichmentError('Unable to generate insights. Please try again or continue with your results.');
+        setEnrichmentError('Unable to generate insights. Your base results are still available below.');
       }
     } catch (error) {
       clearTimeout(timeoutId);
