@@ -50,8 +50,9 @@ const Results = () => {
       return;
     }
     
-    setLoadingInsights(true);
+    // Clear any previous errors and start loading
     setEnrichmentError(null);
+    setLoadingInsights(true);
     
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), ENRICHMENT_TIMEOUT);
@@ -89,9 +90,11 @@ const Results = () => {
         console.log('LLM Response received:', data);
         
         // Validate response has required fields
-        if (data && data.why_this_fits) {
+        const isValid = data && (data.why_this_fits || data.deeper_watchouts || data.shareable_summary);
+        
+        if (isValid) {
           setEnrichedInsights(data);
-          setEnrichmentError(null); // Clear any previous errors
+          setEnrichmentError(null);
           
           // Increment session counter
           const newCount = enrichmentCallCount + 1;
@@ -100,6 +103,10 @@ const Results = () => {
           
           // Record anonymous analytics (no PII)
           recordAnonymousAnalytics();
+          
+          // IMPORTANT: return to avoid falling through
+          setLoadingInsights(false);
+          return;
         } else {
           setEnrichmentError('Unable to generate insights. Please try again.');
         }
