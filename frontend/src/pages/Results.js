@@ -673,7 +673,7 @@ const Results = () => {
           </div>
         )}
         
-        {enrichmentError && (
+        {enrichmentError && !enrichedInsights && (
           <div className="bg-destructive/10 border border-destructive/30 rounded-3xl p-6 text-center">
             <p className="text-sm text-destructive">{enrichmentError}</p>
           </div>
